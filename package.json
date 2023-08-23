@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.1.6",
-    "@angular/cli": "~16.1.6",
+    "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.1.0",
     "@angular/localize": "^16.1.0",
     "@capacitor/cli": "latest",
