@@ -1,0 +1,46 @@
+
+<app-loader></app-loader>
+<div *ngIf="g.getIsMobile(); else notMobile" class="bg-black w-100 h-100">
+    <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+    <div id="scanCancel">
+        <button type="button" class="btn btn-secondary" (click)="this.router.navigate([''])">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="reloadCamera()">Reload Camera</button>
+    </div>
+</div>
+<ng-template #notMobile>
+    <div id="hero" class="hero">
+        <div class="container position-relative">
+            <div id="heroMain" class="row justify-content-center my-5 py-4">
+                <div class="col-lg-5 text-center">
+                    <h2 class="fw-bolder">Desktop Scanning Is Not Supported!</h2>
+                    <p class="px-2">Please scan by using your smartphone or use the manual check-in with your login ID and password.</p>
+                    <button type="submit" class="btn btn-secondary mt-4" (click)="this.router.navigate([''])">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<!-- Modal: Walk In -->
+<ng-template #modalWalkInServiceType let-modal>
+    <div class="modal-body text-center p-4">
+        <h4 class="text-center fw-bold">Walk-In</h4>
+        <p class="text-secondary font-size-12 mt-3">Please select your prefered service:</p>
+        <div class="text-center mb-5">
+            <div class="btn-group">
+                <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
+                <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
+                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
+                <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
+            </div>
+        </div>
+        <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No'); this.router.navigate([''])">Cancel</button>
+        <button type="button" class="btn btn-success" (click)="modal.close('Yes')" [disabled]="selectedWalkInServiceType == ''" (click)="walkIn()">Confirm</button>
+    </div>
+</ng-template>
+<!-- Modal: Error message -->
+<ng-template #modalErrorMsg let-modal>
+    <div class="modal-body text-center p-4">
+        <h1 class="text-danger fw-bolder">{{ errMsgTitle }}</h1>
+        <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
+    </div>
+</ng-template>

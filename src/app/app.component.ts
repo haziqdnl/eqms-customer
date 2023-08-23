@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare let AOS: any;
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'eqms-customer';
+  
+  ngOnInit () { AOS.init(); }
 }

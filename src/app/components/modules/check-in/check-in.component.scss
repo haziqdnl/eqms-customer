@@ -1,0 +1,37 @@
+#scanCancel {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
+    button {
+        width: 50%;
+        height: 40px;
+        border-radius: 0;
+    }
+}
+
+::ng-deep {
+    zxing-scanner { height: 100%; width: 100%; }
+    video { height: 100% !important; }
+}
+
+/* Laptops/desktops, 1200px and up */
+@media only screen and (min-width: 1200px) {}
+
+/* Small laptops/desktops, 992px and up */
+@media only screen and (min-width: 992px) {}
+
+/* Landscape tablets, 992px and down */
+@media only screen and (max-width: 992px) {}
+
+/* Landscape tablets, 768px and up */
+@media only screen and (min-width: 768px) {}
+
+/* Portrait tablets and larger phones, 768px and down */
+@media only screen and (max-width: 768px) {}
+
+/* Portrait tablets and larger phones, 600px and up */
+@media only screen and (min-width: 600px) {}
+
+/* Phones, 600px and down */
+@media only screen and (max-width: 600px) {}

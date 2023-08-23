@@ -1,0 +1,52 @@
+.wave {
+	animation-name: wave-animation;
+	animation-duration: 2.5s;
+	animation-iteration-count: infinite;
+	transform-origin: 70% 70%;
+	display: inline-block;
+}
+@keyframes wave-animation {
+	0% { transform: rotate( 0.0deg) }
+	10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+	20% { transform: rotate(-8.0deg) }
+	30% { transform: rotate(14.0deg) }
+	40% { transform: rotate(-4.0deg) }
+	50% { transform: rotate(10.0deg) }
+	60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+	100% { transform: rotate( 0.0deg) }
+}
+
+.blink {
+    animation-name: blink-animation;
+	animation-duration: 2.5s;
+    animation-iteration-count: 3;
+	animation-timing-function: ease-in-out;
+}
+@keyframes blink-animation {
+    50% {
+        transform: scale(1.1);
+        color: #fff;
+        background: rgba(189, 160, 50, 0.3);
+    }
+}
+
+/* Laptops/desktops, 1200px and up */
+@media only screen and (min-width: 1200px) {}
+
+/* Small laptops/desktops, 992px and up */
+@media only screen and (min-width: 992px) {}
+
+/* Landscape tablets, 992px and down */
+@media only screen and (max-width: 992px) {}
+
+/* Landscape tablets, 768px and up */
+@media only screen and (min-width: 768px) {}
+
+/* Portrait tablets and larger phones, 768px and down */
+@media only screen and (max-width: 768px) {}
+
+/* Portrait tablets and larger phones, 600px and up */
+@media only screen and (min-width: 600px) {}
+
+/* Phones, 600px and down */
+@media only screen and (max-width: 600px) {}

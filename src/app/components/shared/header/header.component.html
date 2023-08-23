@@ -1,0 +1,29 @@
+<div id="topbar" class="navbar sticky-top navbar-expand-lg">
+    <div class="container">
+        <div id="navbarToggler" class="navbar-header me-auto">
+            <button class="navbar-toggler me-5" type="button" (click)="isNavCollapsed = !isNavCollapsed">
+                <span class="navbar-toggler-icon"></span><label class="d-none">Toggle</label>
+            </button>
+        </div>
+        <img id="navbarLogo" class="me-auto" src="assets/img/arx_logo.jpeg" alt="image">
+        <div id="navbarContent" class="navbar-collapse collapse text-center ms-5" [ngbCollapse]="isNavCollapsed">
+            <ul class="nav navbar-nav">
+                <li class="nav-item me-4"><a (click)="router.navigate([''])">Home</a></li>
+                <li class="nav-item me-4"><a (click)="scrollTo('news')">News</a></li>
+                <li class="nav-item"><a (click)="scrollTo('about')">About Us</a></li>
+            </ul>
+        </div>
+        <a id="navbarSetting" class="ms-auto" href="javascript: void(0);" (click)="openModalLogout()">
+            <fa-icon icon="power-off" class="my-auto me-2"></fa-icon><span class="font-size-14">Logout</span>
+        </a>
+    </div>
+</div>
+<!-- Modal: Logout Confirmation -->
+<ng-template #modalLogout let-modal>
+    <div class="modal-body text-center p-4">
+        <fa-icon icon="door-open" class="my-auto me-2" size="2x"></fa-icon>
+        <h6 class="my-3">Are you sure to logout?</h6>
+        <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
+        <button type="button" class="btn btn-danger" (click)="logout(); modal.close('Cancel Appointment')">Yes</button>
+    </div>
+</ng-template>

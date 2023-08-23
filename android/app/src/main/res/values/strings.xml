@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">EQMS</string>
+    <string name="title_activity_main">EQMS</string>
+    <string name="package_name">com.eqms.customer.angular</string>
+    <string name="custom_url_scheme">com.eqms.customer.angular</string>
+</resources>

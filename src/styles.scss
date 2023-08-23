@@ -1,1 +1,165 @@
-/* You can add global styles to this file, and also import other style files */
+/* To be credited
+	<a href="https://www.freepik.com/free-vector/linear-flat-abstract-lines-pattern_13859343.htm#query=geometric%20pattern&position=7&from_view=keyword&track=ais">Freepik</a>
+	<a href="https://www.freepik.com/free-vector/queue-concept-illustration_5639723.htm#query=queue&position=0&from_view=search&track=sph">Image by storyset</a> on Freepik
+	<a href="https://www.freepik.com/free-vector/stylish-hexagonal-line-pattern-background_5001147.htm#query=abstarct&position=12&from_view=search&track=sph">Image by starline</a> on Freepik
+	<a href="https://www.freepik.com/free-vector/abstract-geometric-pattern_1095036.htm#query=abstract%20pattern&position=13&from_view=keyword&track=ais">Image by vilmosvarga</a> on Freepik
+	<a href="https://www.freepik.com/free-photo/line-queue-row-waiting-standing-crowded-group_2761094.htm#query=queue&position=5&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
+*/
+//  Fonts
+@import url("https://fonts.googleapis.com/css?family=Oxygen:700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins");
+@import url("https://fonts.googleapis.com/css?family=Rokkitt");
+@import url("https://fonts.googleapis.com/css?family=Orbitron");
+//  Bootstrap SCSS
+@import 'bootstrap/scss/bootstrap';
+
+:root {
+	--primary-color: rgb(5, 115, 186);
+	--secondary-color: rgb(189, 160, 50);
+	--primary-font: "Rokkitt", sans-serif;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    height: 100vh !important;
+	max-width: 100vw;
+    background: #fff;
+}
+
+.bg-default {
+    background: linear-gradient(rgba(5, 115, 186, 0.7), rgba(5, 115, 186, 0.7)), url("../src/assets/img/queue_bg.png");
+    background-size: cover;
+    background-repeat: repeat repeat;
+}
+
+.bg-default-white {
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("../src/assets/img/queue_bg.png");
+    background-size: cover;
+    background-repeat: repeat repeat;
+}
+
+.wrap-center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+a {
+	text-decoration: none;
+	color: rgb(95, 95, 95);
+	font-weight: 500;
+    cursor: pointer;
+
+	&:hover { color: var(--secondary-color); }
+}
+
+h1, h2, h3, h4, h5, h6 { font-family: var(--primary-font); }
+
+.font-size-10 { font-size: 10px; }
+.font-size-11 { font-size: 11px; }
+.font-size-12 { font-size: 12px; }
+.font-size-13 { font-size: 13px; }
+.font-size-14 { font-size: 14px; }
+.font-size-15 { font-size: 15px; }
+.font-size-16 { font-size: 16px; }
+.font-size-25 { font-size: 25px; }
+.font-size-30 { font-size: 30px; }
+
+.input-err, .input-err-center {
+	color: #b90c0c;
+	font-weight: 500;
+	font-size: 12px;
+	text-align: left !important;
+}
+
+.input-err-center { text-align: center !important; }
+
+.card { border: none; }
+
+#btnScrollToTop {
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    font-size: 20px;
+    outline: none;
+    background-color: var(--secondary-color);
+
+	&:hover { transform: scale(0.95); }
+}
+
+form {
+    background: #fff;
+    background-size: cover;
+    width: 350px;
+
+	.form-group {
+        position: relative;
+        min-height: 4.7em;
+    }
+    
+    .form-select, .form-control {
+        position: absolute;
+        padding-top: 40px;
+        padding-bottom: 10px;
+        padding-left: 20px;
+        min-width: 100%;
+        font-size: 14px;
+    }
+
+    label {
+        font-size: 0.75em;
+        font-weight: 600;
+        color: gray;
+
+		&.form-control-label {
+			position: absolute;
+			padding-top: 15px;
+			padding-left: 20px;
+		}
+    }
+
+    #logo {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.row-container {
+    display: flex; 
+    width: 100%; 
+    height: 100%; 
+    flex-direction: column; 
+    overflow: hidden;
+
+    .second-row { 
+        flex-grow: 1; 
+        border: none; 
+        margin: 0; 
+        padding: 0; 
+    }
+}
+
+/* Laptops/desktops, 1200px and up */
+@media only screen and (min-width: 1200px) {}
+
+/* Small laptops/desktops, 992px and up */
+@media only screen and (min-width: 992px) {}
+
+/* Landscape tablets, 992px and down */
+@media only screen and (max-width: 992px) {}
+
+/* Landscape tablets, 768px and up */
+@media only screen and (min-width: 768px) {}
+
+/* Portrait tablets and larger phones, 768px and down */
+@media only screen and (max-width: 768px) {}
+
+/* Portrait tablets and larger phones, 600px and up */
+@media only screen and (min-width: 600px) {}
+
+/* Phones, 600px and down */
+@media only screen and (max-width: 600px) {}

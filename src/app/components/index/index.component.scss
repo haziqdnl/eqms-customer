@@ -1,0 +1,105 @@
+#hero {
+    .face-smile-beam { font-size: 30px; }
+
+    .icon-box {
+        padding: 25px;
+        background: linear-gradient(rgba(189, 159, 50, 0.9), rgba(189, 159, 50, 0.9)), url("../../../assets/img/linear_abstract.jpg") repeat-x;
+        background-size: cover;
+        h3      { line-height: 22px; }
+        button  { width: 180px; }
+    }
+}
+
+#panelDate {
+    .btn-success {
+        font-size: 12px;
+        width: 120px !important;
+    }
+}
+
+#panelTime {
+    .btn-warning {
+        font-size: 12px;
+        width: 90px !important;
+    }
+}
+
+.section-header {
+    text-align: center;
+    padding-bottom: 15px;
+
+    h2 {
+        font-size: 32px;
+        font-weight: 600;
+        padding-bottom: 20px;
+        position: relative;
+
+        &:after {
+            content: "";
+            position: absolute;
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+        color: #6f6f6f;
+    }
+}
+
+#news {
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        
+        & > [class*='col-'] {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}
+
+/* Laptops/desktops, 1200px and up */
+@media only screen and (min-width: 1200px) {}
+
+/* Small laptops/desktops, 992px and up */
+@media only screen and (min-width: 992px) {}
+
+/* Landscape tablets, 992px and down */
+@media only screen and (max-width: 992px) {
+    #panelDate {
+        .btn-success {
+            font-size: 11px;
+            width: 100px !important;
+        }
+    }
+}
+
+/* Landscape tablets, 768px and up */
+@media only screen and (min-width: 768px) {}
+
+/* Portrait tablets and larger phones, 768px and down */
+@media only screen and (max-width: 768px) {}
+
+/* Portrait tablets and larger phones, 600px and up */
+@media only screen and (min-width: 600px) {}
+
+/* Phones, 600px and down */
+@media only screen and (max-width: 600px) {
+    #hero {
+        .icon-box {
+            button { width: 125px; }
+        }
+    }
+
+    #walkin {
+        h1 { font-size: 10vw; }
+    }
+}
