@@ -21,7 +21,7 @@
 <!-- Modal: Logout Confirmation -->
 <ng-template #modalLogout let-modal>
     <div class="modal-body text-center p-4">
-        <fa-icon icon="door-open" class="my-auto me-2" size="2x"></fa-icon>
+        <fa-icon icon="door-open" class="my-auto" size="2x"></fa-icon>
         <h6 class="my-3">Are you sure to logout?</h6>
         <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
         <button type="button" class="btn btn-danger" (click)="logout(); modal.close('Cancel Appointment')">Yes</button>
