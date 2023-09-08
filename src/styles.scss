@@ -27,13 +27,13 @@ body {
 }
 
 .bg-default {
-    background: linear-gradient(rgba(5, 115, 186, 0.7), rgba(5, 115, 186, 0.7)), url("~src/assets/img/queue_bg.png");
+    background: linear-gradient(rgba(5, 115, 186, 0.7), rgba(5, 115, 186, 0.7)), url("^assets/img/queue_bg.png");
     background-size: cover;
     background-repeat: repeat repeat;
 }
 
 .bg-default-white {
-    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("~src/assets/img/queue_bg.png");
+    background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url("^assets/img/queue_bg.png");
     background-size: cover;
     background-repeat: repeat repeat;
 }
