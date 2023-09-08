@@ -13,14 +13,4 @@ export class ApiNewsfeedService {
     return this.http.get(`${this.appConfigService.apiBaseUrl}/${this.svcName}/GetCustNewsfeedInfo`, { 'headers': { 'content-type': 'application/json', 'SessionToken': token } } )
       .pipe( catchError( err => { throw err; } ) );
   }
-
-  private apiGetConsoleNewsfeedInfo(body: any, token: any): Observable<any> {
-    return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/GetConsoleNewsfeedInfo`, body, { 'headers': { 'content-type': 'application/json', 'SessionToken': token } } )
-      .pipe( catchError( err => { throw err; } ) );
-  }
-
-  private apiCRUD(body: any, token: any): Observable<any> {
-    return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/CRUD`, body, { 'headers': { 'content-type': 'application/json', 'SessionToken': token } })
-      .pipe( catchError( err => { throw err; } ) );
-  }
 }

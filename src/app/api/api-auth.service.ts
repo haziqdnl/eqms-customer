@@ -13,9 +13,4 @@ export class ApiAuthService {
     return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/CustomerLogin`, body, { 'headers': { 'content-type': 'application/json' } })
       .pipe( catchError( err => { throw err; } ) );
   }
-
-  private apiUserLogin(body: any): Observable<any> {
-    return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/UserLogin`, body, { 'headers': { 'content-type': 'application/json' } })
-      .pipe( catchError( err => { throw err; } ) );
-  }
 }

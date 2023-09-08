@@ -9,18 +9,8 @@ export class ApiOutletService {
   svcName: string = 'outletservice.svc';
   constructor(public http: HttpClient, private appConfigService: AppConfigService) {}
 
-  private apiGetOutletInfo(bodyData: any, headerData: any): Observable<any> {
-    return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/GetOutletInfo`, bodyData, { 'headers': { 'content-type': 'application/json', 'SessionToken': headerData } })
-      .pipe( catchError( err => { throw err; } ) );
-  }
-
   public apiGetListOutletByState(): Observable<any> {
     return this.http.get(`${this.appConfigService.apiBaseUrl}/${this.svcName}/ListOutletByState`, { 'headers': { 'content-type': 'application/json' } } )
-      .pipe( catchError( err => { throw err; } ) );
-  }
-
-  private apiGetComboboxListOutlet(data: any): Observable<any> {
-    return this.http.post(`${this.appConfigService.apiBaseUrl}/${this.svcName}/ComboboxListOutlet`, data, { 'headers': { 'content-type': 'application/json' } } )
       .pipe( catchError( err => { throw err; } ) );
   }
 }
