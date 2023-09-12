@@ -6,6 +6,12 @@ import { DatePipe, HashLocationStrategy, LocationStrategy, TitleCasePipe } from 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatStepperModule } from '@angular/material/stepper';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -32,6 +38,7 @@ import { CheckInComponent } from './components/modules/check-in/check-in.compone
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -60,6 +67,13 @@ import { VerificationComponent } from './components/auth/verification/verificati
     FormsModule,
     HttpClientModule,
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter, }, }),
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatPasswordStrengthModule.forRoot(),
+    MatSelectModule,
+    MatSnackBarModule,
+    MatStepperModule,
     NgbModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),

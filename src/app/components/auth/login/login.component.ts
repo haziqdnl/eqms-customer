@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
@@ -16,14 +16,13 @@ export class LoginComponent {
   constructor(
     private apiAuthService: ApiAuthService,
     private apiUtilityService: ApiUtilityService,
-    private g: GeneralService,
+    private fb: FormBuilder,
+    public  g: GeneralService,
     public  router: Router,
     private toastr: ToastrService,
   ) {}
 
-  ngOnInit() {
-    this.validateToken();
-  }
+  ngOnInit() { this.validateToken(); }
 
   /**
    *  Method: Auto login if token from previous login still valid
@@ -38,13 +37,24 @@ export class LoginComponent {
   }
 
   /**
+   *  Method: Form builder and controller
+   */
+  public formIdPasswordSubmitted = false;
+  public formIdPassword: FormGroup = this.fb.group({
+    id      : ['', [Validators.required, Validators.pattern('^[1-9]\\d*$')]],
+    password: ['', [Validators.required]],
+  });
+  get formIdPasswordControl()     { return this.formIdPassword.controls; }
+
+  /**
    *  Method: Submit login form
    */
-  public submit(loginForm: NgForm) {
+  public isIdPasswordValid: boolean = false;
+  public submit() {
     let request = {
       objRequest: {
-        LoginID   : loginForm.form.get("loginId")?.value,
-        Password  : loginForm.form.get("password")?.value
+        LoginID : '+60' + this.formIdPassword.value.id,
+        Password: this.formIdPassword.value.password
       }
     };
     this.apiAuthService.apiCustomerLogin(request).subscribe( rsp => {
