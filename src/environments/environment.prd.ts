@@ -1,5 +1,5 @@
 export const environment = {
     production  : true,
     environmentName: "production",
-    apiUrl      : 'https://snakeeyes.no-ip.org/eqmsjsonwebservice/services'
+    apiUrl      : 'https://dgseqms.ddns.net/eqmsjsonwebservice/services'
 };
