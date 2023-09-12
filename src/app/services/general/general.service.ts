@@ -14,6 +14,9 @@ export class GeneralService {
     private toastr: ToastrService,
   ) { }
 
+  /**
+   *  Method: Get environment details
+   */
   public getEnvName() { return environment.environmentName }
 
   /**
