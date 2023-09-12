@@ -21,7 +21,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 //  Services
-import { AppConfigService } from './services/app-config/app-config.service';
 import { LoaderInterceptor } from './services/loader/loader.interceptor';
 //  Components: Misc Modules
 import { LoaderComponent } from './services/loader/loader.component';
@@ -84,10 +83,6 @@ import { MatIconModule } from '@angular/material/icon';
     TitleCasePipe,
     { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor,    multi: true },
     { provide: LocationStrategy,  useClass: HashLocationStrategy },
-    {
-      provide: APP_INITIALIZER, multi: true, deps: [AppConfigService],
-      useFactory: (appConfigService: AppConfigService) => { return () => { return appConfigService.loadAppConfig(); }; }
-    }
   ],
   bootstrap: [AppComponent]
 })

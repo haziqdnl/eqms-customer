@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class GeneralService {
@@ -12,6 +13,8 @@ export class GeneralService {
     private router: Router,
     private toastr: ToastrService,
   ) { }
+
+  public getEnvName() { return environment.environmentName }
 
   /**
    *  Method: Customer Token
