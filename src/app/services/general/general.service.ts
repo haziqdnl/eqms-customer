@@ -17,7 +17,8 @@ export class GeneralService {
   /**
    *  Method: Get environment details
    */
-  public getEnvName() { return environment.environmentName }
+  public getEnvName()     { return environment.environmentName; }
+  public getEnvDomainUrl() { return environment.domainUrl; }
 
   /**
    *  Method: Customer Token

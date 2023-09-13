@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
   selector    : 'app-register-status',
@@ -11,6 +12,7 @@ export class RegisterStatusComponent {
 
   constructor(
     private routeParam: ActivatedRoute,
+    private g: GeneralService,
     public  location: Location,
     public  router: Router,
   ) {}
@@ -43,5 +45,5 @@ export class RegisterStatusComponent {
   /**
    *  Method: Back Button
    */
-  public back() { this.urlParamType == 'adhoc' ? window.location.href = 'https://snakeeyes.no-ip.org/eqms/kiosk/#/' : this.router.navigate(['login']); }
+  public back() { this.urlParamType == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.router.navigate(['login']); }
 }

@@ -1,5 +1,9 @@
+const domainUrl = "https://snakeeyes.no-ip.org/";
+
 export const environment = {
     production      : false,
     environmentName : "development",
-    apiUrl          : 'https://snakeeyes.no-ip.org/eqmsjsonwebservice/services'
+    domainUrl       : domainUrl,
+    webUrl          : domainUrl + 'eqmscustomer/#/',
+    apiUrl          : domainUrl + 'eqmsjsonwebservice/services'
 };

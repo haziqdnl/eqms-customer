@@ -117,5 +117,5 @@ export class RegisterComponent {
   /**
    *  Method: Back button
    */
-  public back() { this.urlParam == 'adhoc' ? window.location.href = 'https://snakeeyes.no-ip.org/eqms/kiosk/#/' : this.router.navigate(['login']); }
+  public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.router.navigate(['login']); }
 }

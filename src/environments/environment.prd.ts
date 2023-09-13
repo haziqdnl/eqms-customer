@@ -1,5 +1,9 @@
+const domainUrl = "https://dgseqms.ddns.net/";
+
 export const environment = {
     production      : true,
     environmentName : "production",
-    apiUrl          : 'https://dgseqms.ddns.net/eqmsjsonwebservice/services'
+    domainUrl       : domainUrl,
+    webUrl          : domainUrl + 'eqmscustomer/#/',
+    apiUrl          : domainUrl + 'eqmsjsonwebservice/services'
 };
