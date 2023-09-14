@@ -112,7 +112,7 @@ export class RegisterComponent {
       rsp.d.RespCode == "200" ? this.stateList = rsp.d.RespData : this.g.apiRespError(rsp.d);
     });
   }
-  public changeState(e: any) { this.formControl['state']?.setValue(e.target.value, { onlySelf: true }); }
+  public changeState(e: any) { this.formControl['state']?.setValue(e.value, { onlySelf: true }); }
 
   /**
    *  Method: Back button

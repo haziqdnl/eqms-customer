@@ -130,91 +130,66 @@
 <ng-template #modalAppt let-modal>
     <div id="modalApptDateTimeModalHeader" class="modal-header">
         <h5>Appoinment Booking</h5>
-        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('')"></button>
+        <button type="button" class="btn-close" aria-label="Close" (click)="getOutletList(''); modal.dismiss('')"></button>
     </div>
     <div class="modal-body">
-        <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-0" [closeOthers]="true">
-            <!-- Outlet -->
-            <ngb-panel>
-                <ng-template ngbPanelTitle>
-                    Prefered Outlet: <b class="ms-2">{{ selectedOutletDesc }}</b>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div id="panelOutlet" class="row justify-content-center">
-                        <div class="col-lg col-12">
-                            <label for="DrpState" class="form-label">State</label>
-                            <select id="DrpState" #DrpState class="form-select rounded-2" (change)="getOutletList(DrpState.value)">
-                                <option default value="">Select a state</option>
-                                <option *ngFor="let item of stateOutletData" [value]="item.StateID">{{ item.StateName }}</option>
-                            </select>
-                        </div>
-                        <div class="col-lg col-12 mt-3 mt-lg-0" *ngIf="selectedStateID != ''">
-                            <label for="DrpOutlet" class="form-label">Outlet</label>
-                            <select id="DrpOutlet" #DrpOutlet class="form-select rounded-2" (change)="getApptDates(DrpOutlet.value)">
-                                <option default value="">Select an outlet</option>
-                                <option *ngFor="let item of outletByStateData" [value]="item.OutletID + '|' + item.OutletSDesc">{{ item.OutletSDesc }}</option>
-                            </select>
-                        </div>
+        <mat-stepper #stepperBookAppt linear orientation="vertical" animationDuration="700">
+            <!-- Select State & Outlet -->
+            <mat-step>
+                <ng-template matStepLabel>Prefered Outlet: <b class="ms-2">{{ selectedOutletDesc }}</b></ng-template>
+                <div id="panelOutlet" class="row justify-content-center">
+                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
+                        <mat-label>State</mat-label>
+                        <mat-select placeholder="--select state--" (selectionChange)="getOutletList($event.value)" required>
+                            <mat-option *ngFor="let item of stateOutletData" [value]="item.StateID">{{ item.StateName }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="selectedStateID != ''" appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
+                        <mat-label>Outlet</mat-label>
+                        <mat-select placeholder="--select outlet--" (selectionChange)="getApptDates($event.value)" required>
+                            <mat-option *ngFor="let item of outletByStateData" [value]="item.OutletID + '|' + item.OutletSDesc">{{ item.OutletSDesc }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-step>
+            <!-- Select Date -->
+            <mat-step *ngIf="enableSelectApptDate()">
+                <ng-template matStepLabel>Available date: <b class="ms-2">{{ selectedDate_Disp }}</b></ng-template>
+                <div id="panelDate" class="text-center mt-3">
+                    <section *ngIf="this.apptDateList.length > 0">
+                        <button *ngFor="let item of apptDateList" type="button" class="btn btn-success m-1" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)">{{ item.ApptDate_Disp }}</button>
+                    </section>
+                    <p *ngIf="this.apptDateList.length == 0" class="text-secondary fst-italic">Sorry, there are no available dates. Please choose another outlet.</p>
+                </div>
+            </mat-step>
+            <!-- Select Time -->
+            <mat-step *ngIf="enableSelectApptTime()">
+                <ng-template matStepLabel>Available time slot: <b class="ms-2">{{ selectedTime_Disp }}</b></ng-template>
+                <div id="panelTime" class="text-center">
+                    <button *ngFor="let item of apptTimeList" class="col-auto" type="button" class="btn btn-warning m-1"
+                    (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)">{{ item.SlotTime_Disp }}</button>
+                </div>
+            </mat-step>
+            <!-- Select Service Type -->
+            <mat-step *ngIf="enableSelectServiceType()">
+                <ng-template matStepLabel>Prefered service: <b class="ms-2">{{ selectedServiceType_Disp }}</b></ng-template>
+                <div class="text-center mt-3">
+                    <div class="btn-group">
+                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
+                        <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
+                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
+                        <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
                     </div>
-                </ng-template>
-            </ngb-panel>
-            <!-- Date -->
-            <ngb-panel *ngIf="selectedOutletID != '' && apptDateList.length > 0;">
-                <ng-template ngbPanelTitle>
-                    Available date: <b class="ms-2">{{ selectedDate_Disp }}</b>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div id="panelDate" class="text-center">
-                        <button *ngFor="let item of apptDateList" type="button" class="btn btn-success m-1"
-                            (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)">{{ item.ApptDate_Disp }}</button>
-                    </div>
-                </ng-template>
-            </ngb-panel>
-            <ngb-panel *ngIf="selectedOutletID != '' && apptDateList.length == 0;" [disabled]="true">
-                <ng-template ngbPanelTitle>
-                    <span class="text-danger fw-bold">No available date for this outlet. Please choose other outlet.</span>
-                </ng-template>
-            </ngb-panel>
-            <!-- Time -->
-            <ngb-panel *ngIf="selectedOutletID != '' && selectedDate_Data != ''">
-                <ng-template ngbPanelTitle>
-                    Available time slot: <b class="ms-2">{{ selectedTime_Disp }}</b>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div id="panelTime" class="text-center">
-                        <button *ngFor="let item of apptTimeList" class="col-auto" type="button" class="btn btn-warning m-1"
-                        (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)">{{ item.SlotTime_Disp }}</button>
-                    </div>
-                </ng-template>
-            </ngb-panel>
-            <!-- Service -->
-            <ngb-panel *ngIf="selectedOutletID != '' && selectedDate_Data != '' && selectedTime_Data != ''">
-                <ng-template ngbPanelTitle>
-                    Prefered service: <b class="ms-2">{{ selectedServiceType_Disp }}</b>
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div class="text-center">
-                        <div class="btn-group">
-                            <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
-                            <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
-                            <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
-                            <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
-                        </div>
-                    </div>
-                </ng-template>
-            </ngb-panel>
+                </div>
+            </mat-step>
             <!-- Confirmation -->
-            <ngb-panel *ngIf="selectedOutletID != '' && selectedDate_Data != '' && selectedTime_Data != '' && selectedServiceType_Data != ''">
-                <ng-template ngbPanelTitle>
-                    Confirm appoinment?
-                </ng-template>
-                <ng-template ngbPanelContent>
-                    <div class="text-center">
-                        <button type="button" class="btn btn-secondary me-3" (click)="modal.close('Cancel')">Cancel</button>
-                        <button type="button" class="btn btn-success" (click)="createAppt(); modal.close('Confirmed')">Confirm</button>
-                    </div>
-                </ng-template>
-            </ngb-panel>
-        </ngb-accordion>
+            <mat-step *ngIf="enableConfirmation()">
+                <ng-template matStepLabel>Confirm appoinment?</ng-template>
+                <div class="mt-3 w-100 text-center">
+                    <button type="button" class="btn btn-secondary me-3" (click)="getOutletList(''); modal.close('Cancel')">Cancel</button>
+                    <button type="button" class="btn btn-success" (click)="createAppt(); modal.close('Confirmed')">Confirm</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
     </div>
 </ng-template>

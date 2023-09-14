@@ -10,7 +10,7 @@
             </section>
             <!-- Form: Login & Select Location -->
             <section>
-                <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-4">
+                <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-4">
                     <mat-label><fa-icon icon="user" class="me-2"></fa-icon>ID</mat-label>
                     <span matPrefix><i class="ms-3"></i>+60</span>
                     <input matInput formControlName="id" type="text" placeholder="Your ID" (keypress)="g.numberOnly($event)" autocapitalize="none" required />

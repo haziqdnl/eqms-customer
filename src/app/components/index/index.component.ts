@@ -1,5 +1,5 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { interval } from 'rxjs';
@@ -60,7 +60,7 @@ export class IndexComponent {
   @ViewChild('modalAppt') private modalAppt: any;
   public openModalAppt() {
     this.getStateList();
-    this.modalApptRef = this.ngbModal.open(this.modalAppt, { centered: true, scrollable: true, size: 'xl' });
+    this.modalApptRef = this.ngbModal.open(this.modalAppt, { centered: true, scrollable: true, size: 'xl', backdrop : 'static', keyboard : false });
   }
   /**/
   private modalCancelApptRef: any;
@@ -204,10 +204,8 @@ export class IndexComponent {
   public getOutletList(sId: any) {
     this.setOutlet("", "");
     this.selectedStateID = sId;
-    if (sId != "") {
-      for (let item of this.stateOutletData) {
-        if (item.StateID == sId) this.outletByStateData = item.OutletList;
-      }
+    if (sId) {
+      for (let item of this.stateOutletData) { if (item.StateID == sId) this.outletByStateData = item.OutletList; }
     }
   }
 
@@ -281,6 +279,11 @@ export class IndexComponent {
     this.selectedServiceType_Disp = sType != "" ? sType == '0' ? 'Redemption' : 'Pawn' : "";
   }
 
+  public enableSelectApptDate()     { return this.selectedOutletID ? true : false; }
+  public enableSelectApptTime()     { return this.selectedOutletID && this.selectedDate_Data ? true : false; }
+  public enableSelectServiceType()  { return this.selectedOutletID && this.selectedDate_Data && this.selectedTime_Data ? true : false; }
+  public enableConfirmation()       { return this.selectedOutletID && this.selectedDate_Data && this.selectedTime_Data && this.selectedServiceType_Data ? true : false; }
+
   /**
    *  Method: Create appt
    */
@@ -296,7 +299,7 @@ export class IndexComponent {
           Service : this.selectedServiceType_Data,
         }
       }
-    }
+    };
     this.apptCRUD(request);
   }
 
