@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 //  Packages
 import { DatePipe, HashLocationStrategy, LocationStrategy, TitleCasePipe } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -11,14 +11,15 @@ export class GeneralService {
   constructor(
     private deviceDetectorService: DeviceDetectorService,
     private router: Router,
-    private toastr: ToastrService,
+    private snackBar: MatSnackBar,
   ) { }
 
   /**
    *  Method: Get environment details
    */
-  public getEnvName()     { return environment.environmentName; }
-  public getEnvDomainUrl() { return environment.domainUrl; }
+  public getEnvName()       { return environment.environmentName; }
+  public getEnvDomainUrl()  { return environment.domainUrl; }
+  public getEnvApiUrl()     { return environment.apiUrl; }
 
   /**
    *  Method: Customer Token
@@ -30,8 +31,14 @@ export class GeneralService {
    *  Method: Error Handling
    */
   public apiRespError(rsp: any) {
-    if (rsp.RespCode != '401') 
-      this.toastr.error(`${rsp.RespCode}: ${rsp.RespMessage}`);
+    if (rsp.RespCode != '401') {
+      this.snackBar.open(rsp.RespMessage, 'Close', {
+        duration          : 7000,
+        horizontalPosition: 'center',
+        verticalPosition  : 'bottom',
+        panelClass        : 'error',
+      });
+    }
     else 
       this.endSession();
   }

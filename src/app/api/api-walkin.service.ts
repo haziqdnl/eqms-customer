@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { AppConfigService } from '../services/app-config/app-config.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError } from 'rxjs';
+import { GeneralService } from '../services/general/general.service';
 
 @Injectable({ providedIn: 'root' })
 export class ApiWalkinService {
 
   svcName: string = 'walkinservice.svc';
-  constructor(public http: HttpClient, private appConfigService: AppConfigService) {}
+  constructor(public http: HttpClient, private g: GeneralService) {}
 
   public apiGetWalkinByProfile(data:any): Observable<any> {
-    return this.http.get(`${this.appConfigService.apiBaseUrl}/${this.svcName}/GetWalkinByProfile`, { 'headers': { 'content-type': 'application/json', 'SessionToken': data } } )
+    return this.http.get(`${this.g.getEnvApiUrl()}/${this.svcName}/GetWalkinByProfile`, { 'headers': { 'content-type': 'application/json', 'SessionToken': data } } )
       .pipe( catchError( err => { throw err; } ) );
   }
 }
