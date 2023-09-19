@@ -93,6 +93,7 @@ export class IndexComponent {
    *  Method: Validate customer/token
    */
   private validateToken() {
+    console.log(this.g.getCustToken());
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
