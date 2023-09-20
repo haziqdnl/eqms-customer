@@ -1,11 +1,12 @@
 #scanCancel {
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
+    padding: 0;
 
     button {
         width: 50%;
-        height: 40px;
+        height: 8vh;
         border-radius: 0;
     }
 }
