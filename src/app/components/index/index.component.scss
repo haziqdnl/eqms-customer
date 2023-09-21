@@ -10,20 +10,6 @@
     }
 }
 
-#panelDate {
-    .btn-success {
-        font-size: 12px;
-        width: 120px !important;
-    }
-}
-
-#panelTime {
-    .btn-warning {
-        font-size: 12px;
-        width: 90px !important;
-    }
-}
-
 .section-header {
     text-align: center;
     padding-bottom: 15px;
@@ -73,14 +59,7 @@
 @media only screen and (min-width: 992px) {}
 
 /* Landscape tablets, 992px and down */
-@media only screen and (max-width: 992px) {
-    #panelDate {
-        .btn-success {
-            font-size: 11px;
-            width: 100px !important;
-        }
-    }
-}
+@media only screen and (max-width: 992px) {}
 
 /* Landscape tablets, 768px and up */
 @media only screen and (min-width: 768px) {}

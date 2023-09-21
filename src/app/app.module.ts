@@ -38,6 +38,8 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { MatIconModule } from '@angular/material/icon';
+import { IonicModule } from '@ionic/angular';
+import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,7 @@ import { MatIconModule } from '@angular/material/icon';
     //  Components: Main Modules
     CheckInComponent,
     VerificationComponent,
+    BookApptComponent,
   ],
   imports: [
     AppRoutingModule,
@@ -65,6 +68,7 @@ import { MatIconModule } from '@angular/material/icon';
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
+    IonicModule.forRoot(),
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter, }, }),
     MatFormFieldModule,
     MatIconModule,
@@ -76,7 +80,8 @@ import { MatIconModule } from '@angular/material/icon';
     NgbModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
-    ZXingScannerModule
+    ZXingScannerModule,
+    IonicModule.forRoot()
   ],
   providers: [
     DatePipe,

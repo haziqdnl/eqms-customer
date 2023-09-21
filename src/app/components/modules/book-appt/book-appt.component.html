@@ -1,0 +1,74 @@
+<ion-header>
+    <ion-toolbar class="pt-5 pt-lg-0">
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Book Appointment</ion-title>
+    </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+    <section *ngIf="isWalkIn || isAppt" class="text-center pt-5">
+        <fa-icon icon="triangle-exclamation" size="5x" class="text-warning"></fa-icon>
+        <p class="mt-3">You already have an active appointment. <br> Therefore, you are not allowed to book another one.</p>
+    </section>
+    <section *ngIf="!isWalkIn && !isAppt">
+        <mat-stepper #stepperBookAppt linear orientation="vertical" animationDuration="700">
+            <!-- Select State & Outlet -->
+            <mat-step>
+                <ng-template matStepLabel>Prefered Outlet: <b class="ms-2">{{ selectedOutletDesc }}</b></ng-template>
+                <div id="panelOutlet" class="row justify-content-center">
+                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
+                        <mat-label>State</mat-label>
+                        <mat-select placeholder="--select state--" (selectionChange)="getOutletList($event.value)" required>
+                            <mat-option *ngFor="let item of stateOutletData" [value]="item.StateID">{{ item.StateName }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="selectedStateID != ''" appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
+                        <mat-label>Outlet</mat-label>
+                        <mat-select placeholder="--select outlet--" (selectionChange)="getApptDates($event.value)" required>
+                            <mat-option *ngFor="let item of outletByStateData" [value]="item.OutletID + '|' + item.OutletSDesc">{{ item.OutletSDesc }}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </mat-step>
+            <!-- Select Date -->
+            <mat-step *ngIf="enableSelectApptDate()">
+                <ng-template matStepLabel>Available date: <b class="ms-2">{{ selectedDate_Disp }}</b></ng-template>
+                <div id="panelDate" class="text-center mt-3">
+                    <section *ngIf="this.apptDateList.length > 0">
+                        <button *ngFor="let item of apptDateList" type="button" class="btn btn-success m-1" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)">{{ item.ApptDate_Disp }}</button>
+                    </section>
+                    <p *ngIf="this.apptDateList.length == 0" class="text-secondary fst-italic">Sorry, there are no available dates. Please choose another outlet.</p>
+                </div>
+            </mat-step>
+            <!-- Select Time -->
+            <mat-step *ngIf="enableSelectApptTime()">
+                <ng-template matStepLabel>Available time slot: <b class="ms-2">{{ selectedTime_Disp }}</b></ng-template>
+                <div id="panelTime" class="text-center">
+                    <button *ngFor="let item of apptTimeList" class="col-auto" type="button" class="btn btn-warning m-1"
+                    (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)">{{ item.SlotTime_Disp }}</button>
+                </div>
+            </mat-step>
+            <!-- Select Service Type -->
+            <mat-step *ngIf="enableSelectServiceType()">
+                <ng-template matStepLabel>Prefered service: <b class="ms-2">{{ selectedServiceType_Disp }}</b></ng-template>
+                <div class="text-center mt-3">
+                    <div class="btn-group">
+                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
+                        <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
+                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
+                        <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
+                    </div>
+                </div>
+            </mat-step>
+            <!-- Confirmation -->
+            <mat-step *ngIf="enableConfirmation()">
+                <ng-template matStepLabel>Confirm appoinment?</ng-template>
+                <div class="mt-3 w-100 text-center">
+                    <button type="button" class="btn btn-secondary me-3" (click)="getOutletList('')">Reset</button>
+                    <button type="button" class="btn btn-success" (click)="createAppt()">Confirm</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </section>
+</ion-content>

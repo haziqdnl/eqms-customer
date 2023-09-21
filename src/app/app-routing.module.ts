@@ -13,6 +13,7 @@ import { IndexComponent } from './components/index/index.component';
 import { CheckInComponent } from './components/modules/check-in/check-in.component';
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
+import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
 
 const appName = "EQMS Customer";
 const routes: Routes = [
@@ -50,15 +51,25 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        pathMatch: 'full',
+        redirectTo: 'home'
+      },
+      {
+        path: 'home',
         component: IndexComponent,
         title: `${appName} | Home`
       },
+      {
+        path: 'book-appt',
+        component: BookApptComponent,
+        title: `${appName} | Book Appointment`
+      },
+      { 
+        path: 'checkin', 
+        component: CheckInComponent, 
+        title: `${appName} | Check-In`
+      },
     ]
-  },
-  { 
-    path: 'checkin', 
-    component: CheckInComponent, 
-    title: `${appName} | Check-In`
   },
   /** ========================
    *  Components: Misc Modules

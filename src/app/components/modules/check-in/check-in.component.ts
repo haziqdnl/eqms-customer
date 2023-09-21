@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
+import { ApiWalkinService } from 'src/app/api/api-walkin.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
@@ -13,20 +15,19 @@ export class CheckInComponent {
 
   constructor(
     private routeParam: ActivatedRoute,
+    private apiApptService: ApiApptService,
     private apiUtilityService: ApiUtilityService,
+    private apiWalkInService: ApiWalkinService,
     public  g: GeneralService,
     private ngbModal: NgbModal,
     public  router: Router,
   ) {}
   
-  ngOnInit() {
-    this.validateToken();
-  }
+  ngOnInit() { this.validateToken(); }
 
   ngOnDestroy() {
     if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();
     if (typeof this.modalErrorMsgRef          !== 'undefined')  this.modalErrorMsgRef.close();
-    localStorage.removeItem('eqmsCustomer_apptData');
   }
 
   /**
@@ -47,7 +48,7 @@ export class CheckInComponent {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
-        this.validateIsAppt();
+        this.getWalkInInfo()
       else {
         rsp.d.RespCode = '401';
         this.g.apiRespError(rsp.d);
@@ -56,18 +57,47 @@ export class CheckInComponent {
   }
 
   /**
-   *  Method: 
+   *  Method: Get walk-in data
    */
-  private isAppt: Boolean = false;
-  private validateIsAppt() {
-    this.routeParam.queryParamMap.subscribe( paramMap => {
-      if      (paramMap.get('t') == '0' && localStorage['eqmsCustomer_apptData'] === '""' && localStorage['eqmsCustomer_apptData'] !== undefined) {}
-      else if (paramMap.get('t') == '1' && localStorage['eqmsCustomer_apptData'] !== '""' && localStorage['eqmsCustomer_apptData'] !== undefined) {
-        JSON.parse(localStorage['eqmsCustomer_apptData']).forEach( (e: any) => {
-          if ((new Date(e.ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime()) this.isAppt = true;
-        });
+  public  isWalkIn: Boolean = false;
+  private getWalkInInfo() {
+    this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
+      this.isWalkIn = false;
+      if (rsp.d.RespCode == "200") {
+        this.g.setCustToken(rsp.d.ExtendedToken)
+        if (rsp.d.RespData !== '' && rsp.d.RespData !== undefined) {
+          this.enableCheckIn = false;
+          this.msgErrCheckIn = "You already checked in.";
+        }
+        else this.getApptInfo();
       }
-      else this.router.navigate(['']);
+      else this.g.apiRespError(rsp.d);
+    });
+  }
+
+  /**
+   *  Method: Get appt data
+   */
+  public  isAppt: Boolean = false;
+  public  enableCheckIn: Boolean = false;
+  public  msgErrCheckIn: string = "";
+  private getApptInfo() {
+    this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
+      this.isAppt = false;
+      if (rsp.d.RespCode == "200") {
+        this.g.setCustToken(rsp.d.ExtendedToken)
+        if (rsp.d.RespData !== '' && rsp.d.RespData !== undefined) {
+          this.isAppt = true;
+          if ((new Date(rsp.d.RespData[0].ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime())
+            this.enableCheckIn = true;
+          else {
+            this.enableCheckIn = false;
+            this.msgErrCheckIn = "You're only allowed to check-in on the booked date and time.";
+          }
+        }
+        else this.enableCheckIn = true;
+      }
+      else this.g.apiRespError(rsp.d);
     });
   }
 
@@ -79,7 +109,6 @@ export class CheckInComponent {
   private qrValue: string = "";
   public  onCodeResult(resultString: string) {
     if (resultString !== undefined && !this.qrValue) {
-      console.log(resultString);
       this.qrValue = resultString;
       let request = {
         objRequest  : { 
@@ -116,8 +145,6 @@ export class CheckInComponent {
       }
     }
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
-      console.log(this.selectedWalkInServiceType);
-      console.log(this.qrValue);
       if (rsp.d.RespCode == "200")
         this.router.navigate([''], { queryParams: { scan: '1' } });
       else {
@@ -133,9 +160,4 @@ export class CheckInComponent {
    */
   public selectedWalkInServiceType: any = '';
   public setApptServiceType(sType: any) { this.selectedWalkInServiceType = sType; }
-
-  /**
-   * Method: Reload camera/scanner
-   */
-  public reloadCamera() { window.location.reload(); }
 }

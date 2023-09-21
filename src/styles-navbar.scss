@@ -1,15 +1,15 @@
-#topbar {
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-    a {
+#navbar  {
+    --background: var(--primary-color);
+    padding: 0 30px;
+
+    #navbarLogo { width: 180px; }
+    
+	a {
         color: #fff;
         &:hover {
-            font-weight: 600;
             color: var(--secondary-color);
         }
     }
-    #navbarLogo { width: 180px; }
 }
 
 /* Laptops/desktops, 1200px and up */
@@ -20,42 +20,8 @@
 
 /* Landscape tablets, 992px and down */
 @media only screen and (max-width: 992px) {
-	#topbar {
+	#navbar {
 		#navbarLogo { width: 150px; }
-	
-		#navbarContent {
-			margin: 15px 0 !important;
-	
-			li {
-				text-align: left;
-				margin: 3px auto !important;
-	
-				&:hover {
-					margin-left: 10px;
-					transition: 1s all;
-				}
-			}
-		}
-
-		.navbar-collapse {
-			background: #fff;
-			border-radius: 10px 10px;
-			padding-top: 10px;
-			padding-bottom: 10px;
-			
-			ul li {
-				text-align: center !important;
-
-				a { color: #000 !important; }
-			}
-		}
-	
-		.container {
-			#navbarToggler	{ order: 0; }
-			#navbarLogo 	{ order: 1; }
-			#navbarSetting	{ order: 2; }
-			#navbarContent	{ order: 3; }
-		}
 	}
 }
 
@@ -70,7 +36,7 @@
 
 /* Phones, 600px and down */
 @media only screen and (max-width: 600px) {
-	#topbar {
-		#navbarSetting { span#logout { display: none; } }
+	#navbar {
+		#navbarLogout { span { display: none; } }
 	}
 }

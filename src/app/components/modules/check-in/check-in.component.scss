@@ -1,23 +1,20 @@
-#scanCancel {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    padding: 0;
-
-    button {
-        width: 50%;
-        height: 8vh;
-        border-radius: 0;
+::ng-deep {
+    zxing-scanner { 
+        position: absolute;
+        bottom: 35%;
+        width: 100%;
     }
 }
 
-::ng-deep {
-    zxing-scanner { height: 100%; width: 100%; }
-    video { height: 100% !important; }
-}
-
 /* Laptops/desktops, 1200px and up */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+    ::ng-deep {
+        zxing-scanner {
+            bottom: 0;
+            height: 100%;
+        }
+    }
+}
 
 /* Small laptops/desktops, 992px and up */
 @media only screen and (min-width: 992px) {}
