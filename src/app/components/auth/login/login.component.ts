@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -17,12 +15,10 @@ export class LoginComponent {
     private apiAuthService: ApiAuthService,
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
-    public  g: GeneralService,
-    public  router: Router,
-    private toastr: ToastrService,
+    public  g: GeneralService
   ) {}
 
-  ngOnInit() { this.validateToken(); }
+  ionViewWillEnter() { this.validateToken(); }
 
   /**
    *  Method: Auto login if token from previous login still valid
@@ -30,9 +26,7 @@ export class LoginComponent {
   private validateToken() {
     if (this.g.getCustToken() != "") {
       let request = { objRequest: { Token: this.g.getCustToken() } };
-      this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
-        if (rsp.d.RespCode == "200")  this.router.navigate(['']);
-      });
+      this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
     }
   }
 
@@ -60,10 +54,10 @@ export class LoginComponent {
     this.apiAuthService.apiCustomerLogin(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.RespData[0].Token);
-        this.router.navigate(['']);
+        this.g.redirectTo('');
       }
       else {
-        this.toastr.error("Invalid ID/Password !");   
+        this.g.toastError("Invalid ID/Password !");   
         this.g.setCustToken("");
       }
     });

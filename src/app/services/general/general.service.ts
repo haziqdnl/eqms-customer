@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from 'src/environments/environment';
 
@@ -10,8 +10,8 @@ export class GeneralService {
 
   constructor(
     private deviceDetectorService: DeviceDetectorService,
-    private router: Router,
     private snackBar: MatSnackBar,
+    private navController: NavController,
   ) { }
 
   /**
@@ -28,27 +28,40 @@ export class GeneralService {
   public getCustToken()    { return localStorage.getItem('eqmsCustomer_jwtToken'); }
 
   /**
-   *  Method: Error Handling
+   *  Method: Success/Error Handling
    */
-  public apiRespError(rsp: any) {
-    if (rsp.RespCode != '401') {
-      this.snackBar.open(rsp.RespMessage, 'Close', {
-        duration          : 7000,
-        horizontalPosition: 'center',
-        verticalPosition  : 'bottom',
-        panelClass        : 'error',
-      });
-    }
-    else 
-      this.endSession();
+  public toastSuccess(msg: any) {
+    this.snackBar.open(msg, 'OK', {
+      duration          : 5000,
+      horizontalPosition: 'center',
+      verticalPosition  : 'bottom',
+      panelClass        : 'success',
+    });
   }
+  public toastError(msg: any) {
+    this.snackBar.open(msg, 'Close', {
+      duration          : 5000,
+      horizontalPosition: 'center',
+      verticalPosition  : 'bottom',
+      panelClass        : 'error',
+    });
+  }
+  public apiRespError(rsp: any) {
+    rsp.RespCode != '401' ? this.toastError(rsp.RespMessage) : this.endSession();
+  }
+
+  /**
+   *  Method: URL redirect/navigation
+   */
+  public redirectTo   (c: string) { this.navController.navigateForward(c); }
+  public redirectBack (c: string) { this.navController.navigateBack(c); }
 
   /**
    *  Method: End Session / Reset Token
    */
   public endSession() {
     this.setCustToken("");
-    this.router.navigate(['login']);
+    this.redirectBack('login');
   }
 
   /**

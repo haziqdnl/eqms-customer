@@ -84,17 +84,6 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--primary-font); }
 
 .card { border: none; }
 
-#btnScrollToTop {
-    position: fixed;
-    bottom: 35px;
-    right: 35px;
-    font-size: 20px;
-    outline: none;
-    background-color: var(--secondary-color);
-
-	&:hover { transform: scale(0.95); }
-}
-
 form {
     background: #fff;
     background-size: cover;
@@ -118,8 +107,7 @@ form {
     --mdc-snackbar-supporting-text-color: #ffffff;
     
     button  { 
-        color: #000 !important;
-        background-color: #fff;
+        color: #fff !important;
         font-size: 13px;
         transition: 0.3s;
         &:hover { transform: scale(0.9);}

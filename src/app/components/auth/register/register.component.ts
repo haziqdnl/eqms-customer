@@ -1,8 +1,7 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiStateService } from 'src/app/api/api-state.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -20,12 +19,10 @@ export class RegisterComponent {
     private apiStateService: ApiStateService,
     private fb: FormBuilder,
     public  g: GeneralService,
-    public  router: Router,
     public  titleCasePipe: TitleCasePipe,
-    private toastr: ToastrService,
   ) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     this.getUrlParam();
     this.getStateList();
   }
@@ -86,13 +83,10 @@ export class RegisterComponent {
         let status = 'success';
         if (rsp.d.RespCode == "200") {
           localStorage['eqmsCustomer_registertoken'] = JSON.stringify(this.registerForm.value);
-          this.toastr.success(rsp.d.RespMessage);
-          if (this.urlParam == 'adhoc')
-            this.router.navigate(['register/status'], { queryParams: { is: status, t: this.urlParam } });
-          else
-            this.router.navigate(['register/status'], { queryParams: { is: status } });
+          this.g.toastSuccess(rsp.d.RespMessage);
+          this.g.redirectTo(`register/status?is=${status}` + (this.urlParam == 'adhoc' ? `&t=${this.urlParam}` : ''));
         }
-        else this.toastr.error(rsp.d.RespMessage);
+        else this.g.toastError(rsp.d.RespMessage);
       });
     }
   }
@@ -117,5 +111,5 @@ export class RegisterComponent {
   /**
    *  Method: Back button
    */
-  public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.router.navigate(['login']); }
+  public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
 }

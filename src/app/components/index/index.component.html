@@ -1,6 +1,20 @@
 
-<app-header></app-header>
+<ion-header class="ion-no-border">
+    <ion-toolbar id="navbar" class="pt-5 pt-lg-0 pb-2">
+        <ion-img slot="start" id="navbarLogo" src="assets/img/arx_logo.jpeg" alt="image"></ion-img>
+        <ion-buttons slot="end">
+            <a id="navbarLogout" class="ms-auto" href="javascript: void(0);" (click)="openModalLogout()">
+                <fa-icon icon="power-off" class="my-auto me-2"></fa-icon><span class="font-size-14">Logout</span>
+            </a>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
 <ion-content>
+    <!-- <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="pe-3">
+        <ion-fab-button (click)="scrollToTop()" color="secondary" matTooltip="Scroll to top">
+            <fa-icon icon="plane-up" class="text-light"></fa-icon>
+        </ion-fab-button>
+    </ion-fab> -->
     <section id="hero" class="hero">
         <div class="container position-relative">
             <div id="heroMain" class="row pb-4">
@@ -92,11 +106,6 @@
             </div>
         </section>
     </main>
-    <!-- Button: Scroll to Top -->
-    <button type="button" id="btnScrollToTop" class="btn px-3 py-2" *ngIf="isShow" (click)="scrolltoTop()">
-        <fa-icon icon="plane-up" class="text-light"></fa-icon>
-        <p class="d-none">up</p>
-    </button>
     <!-- Modal: Check-In Success -->
     <ng-template #modalCheckInSuccess let-modal>
         <div class="modal-body text-center p-4">
@@ -111,6 +120,15 @@
             <p>Are you sure to cancel this appointment?</p>
             <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
             <button type="button" class="btn btn-danger" (click)="deleteAppt(); modal.close('Yes')">Yes</button>
+        </div>
+    </ng-template>
+    <!-- Modal: Logout Confirmation -->
+    <ng-template #modalLogout let-modal>
+        <div class="modal-body text-center p-4">
+            <fa-icon icon="door-open" class="my-auto" size="2x"></fa-icon>
+            <h6 class="my-3">Are you sure to logout?</h6>
+            <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
+            <button type="button" class="btn btn-danger" (click)="g.endSession(); modal.close('Cancel Appointment')">Yes</button>
         </div>
     </ng-template>
 </ion-content>

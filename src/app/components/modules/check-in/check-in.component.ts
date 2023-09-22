@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -20,7 +20,6 @@ export class CheckInComponent {
     private apiWalkInService: ApiWalkinService,
     public  g: GeneralService,
     private ngbModal: NgbModal,
-    public  router: Router,
   ) {}
   
   ngOnInit() { this.validateToken(); }
@@ -115,11 +114,11 @@ export class CheckInComponent {
           Service   : this.isAppt ? '1' : null,
           QRCodeData: resultString 
         }
-      }
+      };
       this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
         this.errMsgTitle = '';
         if (rsp.d.RespCode == "200") 
-          this.router.navigate([''], { queryParams: { scan: '1' } });
+          this.g.redirectBack('?scan=1');
         else if (rsp.d.RespCode == "400") {
           this.errMsgTitle = rsp.d.RespMessage;
           this.openModalErrorMsg();
@@ -127,7 +126,7 @@ export class CheckInComponent {
         else if (rsp.d.RespCode == "444") this.openModalWalkInServiceType();
         else {
           localStorage['eqmsCustomer_errScan'] = JSON.stringify(rsp.d);
-          this.router.navigate([''], { queryParams: { scan: '0' } });
+          this.g.redirectBack('?scan=1');
         }
       });
     }
@@ -143,14 +142,14 @@ export class CheckInComponent {
         Service   : this.selectedWalkInServiceType,
         QRCodeData: this.qrValue
       }
-    }
+    };
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
-        this.router.navigate([''], { queryParams: { scan: '1' } });
+        this.g.redirectBack('?scan=1');
       else {
         rsp.d.RespMessage = rsp.d.RespMessage.includes('Bad Request') ? 'Check-in failed! Please try again.' : '';
         localStorage['eqmsCustomer_errScan'] = JSON.stringify(rsp.d);
-        this.router.navigate([''], { queryParams: { scan: '0' } });
+        this.g.redirectBack('?scan=0');
       }
     });
   }

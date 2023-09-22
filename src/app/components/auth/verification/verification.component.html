@@ -8,9 +8,9 @@
                 <p class="font-size-14">
                     {{ isTokenValid ? 'Congratulations! You have been verified.' : 'It seems that this verification link is invalid or already expired.' }}
                 </p>
-                <button *ngIf="isTokenValid" type="button" class="btn btn-secondary mt-2" (click)="router.navigate(['login'])">Proceed to Login</button>
+                <button *ngIf="isTokenValid" type="button" class="btn btn-secondary mt-2" (click)="g.redirectBack('login')">Proceed to Login</button>
                 <div *ngIf="!isTokenValid" class="btn-group w-100 mt-2">
-                    <button type="button" class="btn btn-secondary w-50" (click)="router.navigate(['login'])">Cancel</button>
+                    <button type="button" class="btn btn-secondary w-50" (click)="g.redirectBack('login')">Cancel</button>
                     <button type="button" class="btn btn-primary w-50">Resend link</button>
                 </div>
             </div>

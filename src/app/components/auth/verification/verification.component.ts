@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
   selector    : 'app-verification',
@@ -10,14 +11,10 @@ export class VerificationComponent {
 
   constructor(
     private routeParam: ActivatedRoute,
-    public router: Router,
+    public  g: GeneralService
   ) {}
 
-  ngOnInit() {
-    this.getUrlParam();
-  }
-
-  ngOnDestroy() {}
+  ionViewWillEnter() { this.getUrlParam(); }
 
   /**
    *  Method: get URL param
@@ -25,10 +22,7 @@ export class VerificationComponent {
   public isTokenValid: boolean = false;
   private getUrlParam() {
     this.routeParam.queryParamMap.subscribe( paramMap => { 
-      if (!paramMap.get('t')) 
-        this.router.navigate(['login'])
-      else 
-        this.isTokenValid = true;
+      !paramMap.get('t') ? this.g.redirectBack('login') : this.isTokenValid = true;
     });
   }
 }

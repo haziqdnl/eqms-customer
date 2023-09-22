@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiOutletService } from 'src/app/api/api-outlet.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -19,10 +18,9 @@ export class BookApptComponent {
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
     private g: GeneralService,
-    public  router: Router,
   ) {} 
   
-  ngOnInit() { this.validateToken(); }
+  ionViewWillEnter() { this.validateToken(); }
 
   /**
    *  Method: Validate customer/token
@@ -188,7 +186,7 @@ export class BookApptComponent {
       }
     };
     this.apiApptService.apiCRUD(request, this.g.getCustToken()).subscribe( rsp => {
-      rsp.d.RespCode == "200" ? this.router.navigate(['']) : this.g.apiRespError(rsp.d);
+      rsp.d.RespCode == "200" ? this.g.redirectBack('') : this.g.apiRespError(rsp.d);
     });
   }
 }

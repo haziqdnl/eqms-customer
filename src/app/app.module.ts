@@ -12,6 +12,7 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
@@ -29,7 +30,6 @@ import { UnauthorizedComponent } from './components/error/unauthorized/unauthori
 //  Components: Auth Modules
 import { LoginComponent } from './components/auth/login/login.component';
 //  Components: Layout Modules
-import { HeaderComponent } from './components/shared/header/header.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
 //  Components: Main Modules
@@ -53,7 +53,6 @@ import { BookApptComponent } from './components/modules/book-appt/book-appt.comp
     RegisterStatusComponent,
     LoginComponent,
     //  Components: Layout Modules
-    HeaderComponent,
     LayoutComponent,
     IndexComponent,
     //  Components: Main Modules
@@ -77,6 +76,7 @@ import { BookApptComponent } from './components/modules/book-appt/book-appt.comp
     MatSelectModule,
     MatSnackBarModule,
     MatStepperModule,
+    MatTooltipModule,
     NgbModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),

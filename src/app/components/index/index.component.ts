@@ -1,11 +1,13 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { IonContent, NavController } from '@ionic/angular';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { interval } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiNewsfeedService } from 'src/app/api/api-newsfeed.service';
-import { ApiOutletService } from 'src/app/api/api-outlet.service';
+7
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
@@ -26,14 +28,13 @@ export class IndexComponent {
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
     private datePipe: DatePipe,
-    private g: GeneralService,
+    public  g: GeneralService,
+    private jwtHelper: JwtHelperService,
     private ngbModal: NgbModal,
-    public  router: Router,
     private titleCasePipe: TitleCasePipe,
   ) {}
   
-  ngOnInit() {
-    this.getLastActive();
+  ionViewWillEnter() {
     this.validateToken();
     this.getUrlParam();
   }
@@ -41,6 +42,7 @@ export class IndexComponent {
   ngOnDestroy() {
     if (typeof this.modalCancelApptRef      !== 'undefined')  this.modalCancelApptRef.close();
     if (typeof this.modalCheckInSuccessRef  !== 'undefined')  this.modalCheckInSuccessRef.close();
+    if (typeof this.modalLogoutRef          !== 'undefined')  this.modalLogoutRef.close();
     
     if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
     if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
@@ -49,7 +51,6 @@ export class IndexComponent {
   /**
    *  Method: Modal
    */
-  /**/
   private modalCancelApptRef: any;
   @ViewChild('modalCancelAppt') private modalCancelAppt: any;
   public  openModalCancelAppt() { this.modalCancelApptRef = this.ngbModal.open(this.modalCancelAppt, { centered: true }); }
@@ -57,12 +58,22 @@ export class IndexComponent {
   private modalCheckInSuccessRef: any;
   @ViewChild('modalCheckInSuccess') private modalCheckInSuccess: any;
   public  openModalCheckInSuccess() { this.modalCheckInSuccessRef = this.ngbModal.open(this.modalCheckInSuccess, { centered: true }); }
+  /**/
+  private modalLogoutRef: any;
+  @ViewChild('modalLogout') private modalLogout : any;
+  public openModalLogout() { this.modalLogoutRef = this.ngbModal.open(this.modalLogout, { centered: true }); }
 
   /**
    *  Method: Last Active
    */
-  public  lastActive: any = "";
-  private getLastActive() { this.lastActive = this.datePipe.transform(new Date(), 'EEEE, dd MMMM yyyy, hh:mm a'); }
+  public lastActive: any = this.datePipe.transform(new Date(), 'EEEE, dd MMMM yyyy, hh:mm a');
+
+  /**
+   *  Method: Validate JWT token every 2 minutes (120000 ms)
+   */
+  private subs: Subscription = interval(120000).subscribe( v => {
+    this.jwtHelper.isTokenExpired(this.g.getCustToken()) ? this.g.redirectBack('login') : 'Token validated'; 
+  });
 
   /**
    *  Method: get URL param
@@ -191,11 +202,6 @@ export class IndexComponent {
   /**
    *  Method: Scroll to top
    */
-  public  isShow: boolean = false;
-  private topPosToStartShowing = 100;
-  @HostListener('window:scroll') public checkScroll() {
-    const scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
-    this.isShow = scrollPosition >= this.topPosToStartShowing ? true : false;
-  }
-  public scrolltoTop() { window.scroll({ top: 0, left: 0, behavior: 'smooth' }); }
+  @ViewChild(IonContent) content!: IonContent;
+  public scrollToTop() { this.content.scrollToTop(500); }
 }
