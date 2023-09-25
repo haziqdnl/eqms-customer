@@ -1,13 +1,12 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
-import { Component, HostListener, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { IonContent, NavController } from '@ionic/angular';
+import { IonContent } from '@ionic/angular';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription, interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiNewsfeedService } from 'src/app/api/api-newsfeed.service';
-7
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
@@ -39,7 +38,7 @@ export class IndexComponent {
     this.getUrlParam();
   }
 
-  ngOnDestroy() {
+  ionViewWillLeave() {
     if (typeof this.modalCancelApptRef      !== 'undefined')  this.modalCancelApptRef.close();
     if (typeof this.modalCheckInSuccessRef  !== 'undefined')  this.modalCheckInSuccessRef.close();
     if (typeof this.modalLogoutRef          !== 'undefined')  this.modalLogoutRef.close();
@@ -72,7 +71,7 @@ export class IndexComponent {
    *  Method: Validate JWT token every 2 minutes (120000 ms)
    */
   private subs: Subscription = interval(120000).subscribe( v => {
-    this.jwtHelper.isTokenExpired(this.g.getCustToken()) ? this.g.redirectBack('login') : 'Token validated'; 
+    this.jwtHelper.isTokenExpired(this.g.getCustToken()) ? this.g.redirectBack('login') : console.log('Token validated'); 
   });
 
   /**
@@ -112,6 +111,7 @@ export class IndexComponent {
   public  username = "";
   private getProfileInfo(pid: any) {
     let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
+    
     this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
         this.username = this.titleCasePipe.transform(rsp.d.RespData[0].Name);

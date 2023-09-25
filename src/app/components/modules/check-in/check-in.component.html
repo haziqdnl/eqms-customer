@@ -1,4 +1,4 @@
-
+<app-loader></app-loader>
 <ion-header>
     <ion-toolbar class="pt-5 pt-lg-0">
         <ion-buttons slot="start">
@@ -10,7 +10,7 @@
 <ion-content>
     <section *ngIf="enableCheckIn; else invalidCheckIn">
         <div *ngIf="g.getIsMobile(); else notMobile">
-            <zxing-scanner (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+            <zxing-scanner previewFitMode="cover" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
         </div>
         <ng-template #notMobile>
             <div class="text-center mt-5">

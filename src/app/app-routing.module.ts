@@ -6,14 +6,15 @@ import { NotFoundComponent } from './components/error/not-found/not-found.compon
 import { UnauthorizedComponent } from './components/error/unauthorized/unauthorized.component';
 //  Components: Auth Modules
 import { RegisterComponent } from './components/auth/register/register.component';
+import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
+import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
 //  Components: Main Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
 import { CheckInComponent } from './components/modules/check-in/check-in.component';
-import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
-import { VerificationComponent } from './components/auth/verification/verification.component';
 import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
+import { ProfileComponent } from './components/modules/profile/profile.component';
 
 const appName = "EQMS Customer";
 const routes: Routes = [
@@ -68,6 +69,11 @@ const routes: Routes = [
         path: 'checkin', 
         component: CheckInComponent, 
         title: `${appName} | Check-In`
+      },
+      { 
+        path: 'profile', 
+        component: ProfileComponent, 
+        title: `${appName} | Profile`
       },
     ]
   },

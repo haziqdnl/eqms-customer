@@ -1,11 +1,12 @@
-::ng-deep {
-    zxing-scanner { 
-        position: fixed;
-        height: 100vh;
-        width: 100%;
-    }
-    video { height: 100% !important; }
+ion-item { 
+    margin: 10px auto; 
+    border-bottom: 1px solid #cacaca;
+
+    fa-icon { font-size: 20px; }
+    p, h2   { font-weight: 600; }
 }
+
+ion-button#btnChangePwd { --background: var(--secondary-color); }
 
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}

@@ -37,7 +37,6 @@
     "@zxing/browser": "^0.1.4",
     "@zxing/library": "^0.20.0",
     "@zxing/ngx-scanner": "^16.0.1",
-    "aos": "^2.3.4",
     "bootstrap": "^5.2.3",
     "jwt-decode": "^3.1.2",
     "ngx-device-detector": "^6.0.2",

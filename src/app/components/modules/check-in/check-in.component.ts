@@ -1,5 +1,4 @@
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -14,7 +13,6 @@ import { GeneralService } from 'src/app/services/general/general.service';
 export class CheckInComponent {
 
   constructor(
-    private routeParam: ActivatedRoute,
     private apiApptService: ApiApptService,
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
@@ -22,9 +20,9 @@ export class CheckInComponent {
     private ngbModal: NgbModal,
   ) {}
   
-  ngOnInit() { this.validateToken(); }
+  ionViewWillEnter() { this.validateToken(); }
 
-  ngOnDestroy() {
+  ionViewWillLeave() {
     if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();
     if (typeof this.modalErrorMsgRef          !== 'undefined')  this.modalErrorMsgRef.close();
   }

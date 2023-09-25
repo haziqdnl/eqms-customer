@@ -21,7 +21,7 @@ export class RegisterStatusComponent {
     this.getUrlParam();
   }
 
-  ngOnDestroy() {
+  ionViewWillLeave() {
     localStorage['eqmsCustomer_registertoken'] = '';
   }
 

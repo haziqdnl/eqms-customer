@@ -36,7 +36,6 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/indigo-pink.css",
-              "node_modules/aos/dist/aos.css",
               "src/styles.scss",
               "src/styles-animation.scss",
               "src/styles-button.scss",
@@ -77,9 +76,6 @@
               {
                 "input": "src/theme/variables.css"
               }
-            ],
-            "scripts": [
-              "node_modules/aos/dist/aos.js"
             ]
           },
           "configurations": {

@@ -7,6 +7,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
 import { MatSelectModule } from '@angular/material/select';
@@ -28,18 +29,18 @@ import { LoaderComponent } from './services/loader/loader.component';
 import { NotFoundComponent } from './components/error/not-found/not-found.component';
 import { UnauthorizedComponent } from './components/error/unauthorized/unauthorized.component';
 //  Components: Auth Modules
+import { RegisterComponent } from './components/auth/register/register.component';
+import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
+import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
 //  Components: Layout Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
 //  Components: Main Modules
 import { CheckInComponent } from './components/modules/check-in/check-in.component';
-import { RegisterComponent } from './components/auth/register/register.component';
-import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
-import { VerificationComponent } from './components/auth/verification/verification.component';
-import { MatIconModule } from '@angular/material/icon';
 import { IonicModule } from '@ionic/angular';
 import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
+import { ProfileComponent } from './components/modules/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -51,14 +52,15 @@ import { BookApptComponent } from './components/modules/book-appt/book-appt.comp
     //  Components: Auth Modules
     RegisterComponent,
     RegisterStatusComponent,
+    VerificationComponent,
     LoginComponent,
     //  Components: Layout Modules
     LayoutComponent,
     IndexComponent,
     //  Components: Main Modules
     CheckInComponent,
-    VerificationComponent,
     BookApptComponent,
+    ProfileComponent,
   ],
   imports: [
     AppRoutingModule,

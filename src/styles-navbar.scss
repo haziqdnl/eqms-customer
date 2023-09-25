@@ -12,6 +12,18 @@
     }
 }
 
+ion-header {
+    ion-title { --color: gray; }
+}
+
+ion-toolbar, ion-tab-bar {
+    --background: #fff;
+}
+
+ion-tab-bar { 
+    ion-tab-button { --color: #bdbdbd !important; }
+}
+
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}
 

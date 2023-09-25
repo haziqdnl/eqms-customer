@@ -14,40 +14,6 @@
         height: 50px;
         position: relative;
 
-        p {
-            top: 0;
-            padding: 0;
-            margin: 0;
-            color: #5389a6;
-            font-family: "Oxygen", sans-serif;
-            animation: text 3.5s ease both infinite;
-            font-size: 12px;
-            letter-spacing: 1px;
-
-            @keyframes text {
-                0% {
-                    letter-spacing: 1px;
-                    transform: translateX(0px);
-                }
-                40% {
-                    letter-spacing: 2px;
-                    transform: translateX(26px);
-                }
-                80% {
-                    letter-spacing: 1px;
-                    transform: translateX(32px);
-                }
-                90% {
-                    letter-spacing: 2px;
-                    transform: translateX(0px);
-                }
-                100% {
-                    letter-spacing: 1px;
-                    transform: translateX(0px);
-                }
-            }
-        }
-
         span {
             background-color: #5389a6;
             border-radius: 50px;
