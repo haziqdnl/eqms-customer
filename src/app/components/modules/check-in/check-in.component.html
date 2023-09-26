@@ -10,7 +10,7 @@
 <ion-content>
     <section *ngIf="enableCheckIn; else invalidCheckIn">
         <div *ngIf="g.getIsMobile(); else notMobile">
-            <zxing-scanner previewFitMode="cover" (scanSuccess)="onCodeResult($event)"></zxing-scanner>
+            <zxing-scanner previewFitMode="cover" (scanSuccess)="onScanSuccess($event)"></zxing-scanner>
         </div>
         <ng-template #notMobile>
             <div class="text-center mt-5">

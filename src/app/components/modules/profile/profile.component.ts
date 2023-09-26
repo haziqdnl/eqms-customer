@@ -25,7 +25,7 @@ export class ProfileComponent {
   /**
    *  Method: Validate customer/token
    */
-  private validateToken() {
+  private async validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
@@ -41,7 +41,7 @@ export class ProfileComponent {
    *  Method: Get customer profile
    */
   public  profileData: any = {};
-  private getProfileInfo(pid: any) {
+  private async getProfileInfo(pid: any) {
     let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
     this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode == "200")

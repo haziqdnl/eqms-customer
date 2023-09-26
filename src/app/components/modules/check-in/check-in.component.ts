@@ -25,6 +25,7 @@ export class CheckInComponent {
   ionViewWillLeave() {
     if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();
     if (typeof this.modalErrorMsgRef          !== 'undefined')  this.modalErrorMsgRef.close();
+    window.location.reload();
   }
 
   /**
@@ -41,7 +42,7 @@ export class CheckInComponent {
   /**
    *  Method: Validate customer token
    */
-  private validateToken() {
+  private async validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
@@ -57,7 +58,7 @@ export class CheckInComponent {
    *  Method: Get walk-in data
    */
   public  isWalkIn: Boolean = false;
-  private getWalkInInfo() {
+  private async getWalkInInfo() {
     this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
       this.isWalkIn = false;
       if (rsp.d.RespCode == "200") {
@@ -78,7 +79,7 @@ export class CheckInComponent {
   public  isAppt: Boolean = false;
   public  enableCheckIn: Boolean = false;
   public  msgErrCheckIn: string = "";
-  private getApptInfo() {
+  private async getApptInfo() {
     this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
       this.isAppt = false;
       if (rsp.d.RespCode == "200") {
@@ -104,7 +105,7 @@ export class CheckInComponent {
    */
   public  errMsgTitle: any = '';
   private qrValue: string = "";
-  public  onCodeResult(resultString: string) {
+  public  async onScanSuccess(resultString: string) {
     if (resultString !== undefined && !this.qrValue) {
       this.qrValue = resultString;
       let request = {
@@ -134,7 +135,7 @@ export class CheckInComponent {
   /**
    *  Method: Set Walk-In service type
    */
-  public walkIn() {
+  public async walkIn() {
     let request = {
       objRequest: { 
         Service   : this.selectedWalkInServiceType,

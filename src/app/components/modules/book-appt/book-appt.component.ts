@@ -25,7 +25,7 @@ export class BookApptComponent {
   /**
    *  Method: Validate customer/token
    */
-  private validateToken() {
+  private async validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
@@ -45,7 +45,7 @@ export class BookApptComponent {
    */
   private selectedAgencyID: any = "39";
   public  isAppt: Boolean = false;
-  private getApptInfo() {
+  private async getApptInfo() {
     this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
       this.isAppt = false;
       if (rsp.d.RespCode == "200") {
@@ -60,7 +60,7 @@ export class BookApptComponent {
    *  Method: Get walk-in data
    */
   public  isWalkIn: Boolean = false;
-  private getWalkInInfo() {
+  private async getWalkInInfo() {
     this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
       this.isWalkIn = false;
       if (rsp.d.RespCode == "200") {
@@ -76,7 +76,7 @@ export class BookApptComponent {
    */
   public  selectedStateID: any = "";
   public  stateOutletData: Array<any> = [];
-  private getStateList() {
+  private async getStateList() {
     this.apiOutletService.apiGetListOutletByState().subscribe( rsp => {
       rsp.d.RespCode == "200" ? this.stateOutletData = rsp.d.RespData : this.g.apiRespError(rsp.d);
     });
@@ -86,7 +86,7 @@ export class BookApptComponent {
    *  Method: Get available time of appt based on the selected date
    */
   public apptTimeList: Array<any> = [];
-  public getApptTime(dData:any, dDisp:any) {
+  public async getApptTime(dData:any, dDisp:any) {
     this.setApptDate(dData, dDisp)
     let request = { objRequest: {  OutletID: this.selectedOutletID, ApptDate: dData } }
     this.apiApptService.apiGetApptTime(request, this.g.getCustToken()).subscribe( rsp => {
@@ -114,7 +114,7 @@ export class BookApptComponent {
    *  Method: Get available date of appt
    */
   public apptDateList: Array<any> = [];
-  public getApptDates(oData: any) {
+  public async getApptDates(oData: any) {
     let arr = oData.split('|');
     this.setOutlet(arr[0], arr[1]); 
     let request = { objRequest: {  OutletID: arr[0], DaysInAdvanced: "7" } };
@@ -172,7 +172,7 @@ export class BookApptComponent {
   /**
    *  Method: Create appt
    */
-  public createAppt() {
+  public async createAppt() {
     let request = {
       objRequest: { 
         Mode    : "CREATE",
