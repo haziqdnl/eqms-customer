@@ -42,7 +42,7 @@ export class CheckInComponent {
   /**
    *  Method: Validate customer token
    */
-  private async validateToken() {
+  private validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
@@ -58,11 +58,11 @@ export class CheckInComponent {
    *  Method: Get walk-in data
    */
   public  isWalkIn: Boolean = false;
-  private async getWalkInInfo() {
+  private getWalkInInfo() {
     this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
       this.isWalkIn = false;
       if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken)
+        this.g.setCustToken(rsp.d.ExtendedToken);
         if (rsp.d.RespData !== '' && rsp.d.RespData !== undefined) {
           this.enableCheckIn = false;
           this.msgErrCheckIn = "You already checked in.";
@@ -79,7 +79,7 @@ export class CheckInComponent {
   public  isAppt: Boolean = false;
   public  enableCheckIn: Boolean = false;
   public  msgErrCheckIn: string = "";
-  private async getApptInfo() {
+  private getApptInfo() {
     this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
       this.isAppt = false;
       if (rsp.d.RespCode == "200") {
@@ -135,7 +135,7 @@ export class CheckInComponent {
   /**
    *  Method: Set Walk-In service type
    */
-  public async walkIn() {
+  public walkIn() {
     let request = {
       objRequest: { 
         Service   : this.selectedWalkInServiceType,

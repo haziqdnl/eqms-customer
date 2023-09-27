@@ -1,7 +1,7 @@
 #registerForm {
     background: linear-gradient(rgba(255, 255, 255, 0.985), rgba(255, 255, 255, 0.985)), url("^assets/img/linear_abstract.jpg");
     background-size: cover;
-    width: 550px;
+    width: 60vw;
 }
 
 /* Laptops/desktops, 1200px and up */
@@ -17,12 +17,12 @@
 @media only screen and (min-width: 768px) {}
 
 /* Portrait tablets and larger phones, 768px and down */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+    #registerForm { width: 90vw !important; }
+}
 
 /* Portrait tablets and larger phones, 600px and up */
 @media only screen and (min-width: 600px) {}
 
 /* Phones, 600px and down */
-@media only screen and (max-width: 600px) {
-    #registerForm { max-width: 300px !important; }
-}
+@media only screen and (max-width: 600px) {}

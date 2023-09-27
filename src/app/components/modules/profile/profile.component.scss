@@ -1,12 +1,70 @@
+ion-toolbar {
+    --background: var(--primary-color);
+    ion-title { --color: #fff; --border: none; }
+}
+
+::ng-deep .mat-form-field-appearance-outline.specific-border .mat-form-field-outline  {
+    background-color: lightgray !important;
+    border-radius: 5px;  
+}
+
+div#profileTop {
+    background: var(--primary-color) !important;
+    img#avatar {
+        width: 160px;
+        padding: 10px;
+        border: 4px solid var(--secondary-color);
+    }
+    h2, h5 { margin: 0; margin-top: 10px; }
+}
+
 ion-item { 
     margin: 10px auto; 
     border-bottom: 1px solid #cacaca;
 
-    fa-icon { font-size: 20px; }
-    p, h2   { font-weight: 600; }
+    fa-icon     { font-size: 20px; }
+    h2, fa-icon { color: var(--secondary-color); }
+    h2, p       { font-weight: 600; }
 }
 
-ion-button#btnChangePwd { --background: var(--secondary-color); }
+button#btnChangePwd { 
+    color: #fff;
+    background: #ff8800 !important; 
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -2;
+        background-color: #ff9720;
+    }
+    &:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        transition: all 0.3s;
+        z-index: -1;
+        background-color: #d68b00;
+    }
+    &:hover:before { width: 100%; }
+}
+
+ion-modal {
+    form#formChangePwd { width: 100% !important; }
+
+    ion-toolbar  {
+        ion-title, ion-button { --color: #fff !important; }
+        &.modalChangePwd    {  --background: #ff9720 !important; }
+        &.modalEdit         {  --background: var(--primary-color) !important; }
+    }
+}
+
+
 
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}

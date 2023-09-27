@@ -1,4 +1,5 @@
 import { DatePipe, TitleCasePipe } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -28,6 +29,7 @@ export class IndexComponent {
     private apiWalkInService: ApiWalkinService,
     private datePipe: DatePipe,
     public  g: GeneralService,
+    public  http: HttpClient,
     private jwtHelper: JwtHelperService,
     private ngbModal: NgbModal,
     private titleCasePipe: TitleCasePipe,
@@ -71,7 +73,7 @@ export class IndexComponent {
    *  Method: Validate JWT token every 2 minutes (120000 ms)
    */
   private subs: Subscription = interval(120000).subscribe( v => {
-    this.jwtHelper.isTokenExpired(this.g.getCustToken()) ? this.g.redirectBack('login') : console.log('Token validated'); 
+    this.jwtHelper.isTokenExpired(this.g.getCustToken()) ? this.g.redirectBack('login') : console.log('Token validated');
   });
 
   /**
@@ -93,10 +95,10 @@ export class IndexComponent {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
-          this.getProfileInfo(rsp.d.RespData[0].pid);
-          this.getNewsFeed();
-          this.getApptInfo();
-          this.getWalkInInfo();
+        this.getProfileInfo(rsp.d.RespData[0].pid);
+        this.getNewsFeed();
+        this.getApptInfo();
+        this.getWalkInInfo();
       }
       else {
         rsp.d.RespCode = "401";
@@ -111,7 +113,6 @@ export class IndexComponent {
   public  username = "";
   private getProfileInfo(pid: any) {
     let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
-    
     this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
         this.username = this.titleCasePipe.transform(rsp.d.RespData[0].Name);

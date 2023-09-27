@@ -117,6 +117,8 @@ form {
     &.success   { --mdc-snackbar-container-color: #1a9d48; }    
 }
 
+ion-title { text-align: center; }
+
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}
 

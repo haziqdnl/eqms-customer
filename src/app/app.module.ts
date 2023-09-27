@@ -69,7 +69,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    IonicModule.forRoot(),
+    IonicModule.forRoot({ mode: 'ios' }),
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter, }, }),
     MatFormFieldModule,
     MatIconModule,
@@ -83,7 +83,6 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     ReactiveFormsModule,
     ToastrModule.forRoot(),
     ZXingScannerModule,
-    IonicModule.forRoot()
   ],
   providers: [
     DatePipe,
