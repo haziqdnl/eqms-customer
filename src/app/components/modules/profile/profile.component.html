@@ -3,14 +3,19 @@
         <ion-title>My Profile</ion-title>
     </ion-toolbar>
     <div id="profileTop" class="text-center text-light py-4">
-        <img id="avatar" src="https://www.svgrepo.com/show/454585/animal-cat-domestic-2.svg" alt="" class="rounded-circle bg-light" />
+        <div id="avatar" class="mx-auto bg-light rounded-circle">
+            <img src="https://www.svgrepo.com/show/530198/fox.svg" alt="" class="rounded-circle" />
+            <button class="overlay rounded-circle" (click)="openCloseModalEditProfile(true, '2')">
+                <span class="icon"><fa-icon icon="pen"></fa-icon></span>
+            </button>
+        </div>
         <h2 class="fw-bold py-0">
             {{ profileData.Name }}
-            <button class="btn text-light px-2 py-1" (click)="openCloseModalEditProfile(true, '0')"><fa-icon icon="pencil"></fa-icon></button>
+            <button class="btn text-light p-1" (click)="openCloseModalEditProfile(true, '0')"><fa-icon icon="pen"></fa-icon></button>
         </h2>
         <h5>
             {{ profileData.UniqCallID }}
-            <button class="btn text-light px-2 py-1" (click)="openCloseModalEditProfile(true, '1')"><fa-icon icon="pencil"></fa-icon></button>
+            <button class="btn text-light p-1" (click)="openCloseModalEditProfile(true, '1')"><fa-icon icon="pen"></fa-icon></button>
         </h5>
     </div>
     <ion-list class="px-3 pt-1 pb-3">
@@ -49,7 +54,7 @@
     <ion-modal [isOpen]="isOpenModalEditProfile" [canDismiss]="!isOpenModalEditProfile">
         <ng-template>
             <ion-header>
-                <ion-toolbar [class]="modeModal == '3' ? 'modalChangePwd' : 'modalEdit'">
+                <ion-toolbar class="pt-5 pt-lg-0" [class]="modeModal == '3' ? 'modalChangePwd' : 'modalEdit'">
                     <ion-title>{{ titleModal }}</ion-title>
                 </ion-toolbar>
             </ion-header>
@@ -125,6 +130,20 @@
                 <form *ngIf="modeModal == '1'" class="mx-auto">
                     <div class="mt-3 btn-group w-100">
                         <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '1')">Cancel</button>
+                        <button type="submit" class="btn btn-success w-50" [disabled]="!this.formChangePwd.valid">Confirm</button>
+                    </div>
+                </form>
+                <!-- Form: Change Profile Picture -->
+                <form *ngIf="modeModal == '2'" class="mx-auto">
+                    <ion-grid id="availableProfileImg">
+                        <ion-row class="ion-justify-content-center">
+                            <ion-col *ngFor="let item of availableProfileImg" size="auto">
+                                <img [src]="item" alt="" class="rounded-circle" />
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <div class="mt-3 btn-group w-100">
+                        <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '2')">Cancel</button>
                         <button type="submit" class="btn btn-success w-50" [disabled]="!this.formChangePwd.valid">Confirm</button>
                     </div>
                 </form>

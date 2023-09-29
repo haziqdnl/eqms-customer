@@ -191,4 +191,21 @@ export class ProfileComponent {
       if (mode == "3")  this.formChangePwd.reset();
     }
   }
+
+  /**
+   *  Method: Get available profile images
+   */
+  private urlSvgRepo: string = "https://www.svgrepo.com/show/";
+  public  availableProfileImg: any = [
+    this.urlSvgRepo + "530182/crab.svg",
+    this.urlSvgRepo + "530183/elk.svg",
+    this.urlSvgRepo + "530184/jellyfish.svg",
+    this.urlSvgRepo + "530185/penguin.svg",
+    this.urlSvgRepo + "530189/shrimp.svg",
+    this.urlSvgRepo + "530190/rabbit.svg",
+    this.urlSvgRepo + "530194/raccoon.svg",
+    this.urlSvgRepo + "530196/crocodile.svg",
+    this.urlSvgRepo + "530197/hedgehog.svg",
+    this.urlSvgRepo + "530198/fox.svg",
+  ];
 }

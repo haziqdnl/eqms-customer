@@ -10,10 +10,35 @@ ion-toolbar {
 
 div#profileTop {
     background: var(--primary-color) !important;
-    img#avatar {
-        width: 160px;
+
+    div#avatar {
+        position: relative;
+        width: 160px; height: 160px;
         padding: 10px;
         border: 4px solid var(--secondary-color);
+        text-align: center;
+        
+        img { width: 100%; height: 100%; }
+
+        .overlay {
+            position: absolute;
+            top: 0; bottom: 0; left: 0; right: 0;
+            height: 100%; width: 100%;
+            opacity: 0;
+            transition: .3s ease;
+        
+            .icon {
+                color: #9e9e9e;
+                font-size: 30px;
+                position: absolute;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                text-align: center;
+            }
+        }
+        
+        &:hover .overlay { opacity: 0.8; }
     }
     h2, h5 { margin: 0; margin-top: 10px; }
 }
@@ -55,16 +80,21 @@ button#btnChangePwd {
 }
 
 ion-modal {
-    form#formChangePwd { width: 100% !important; }
-
     ion-toolbar  {
         ion-title, ion-button { --color: #fff !important; }
         &.modalChangePwd    {  --background: #ff9720 !important; }
         &.modalEdit         {  --background: var(--primary-color) !important; }
     }
+
+    form#formChangePwd { width: 100% !important; }
+
+    #availableProfileImg {
+        img {
+            border: 4px solid var(--secondary-color);
+            width: 100px !important;
+        }
+    }
 }
-
-
 
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}
