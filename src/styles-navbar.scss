@@ -48,7 +48,5 @@ ion-tab-bar {
 
 /* Phones, 600px and down */
 @media only screen and (max-width: 600px) {
-	#navbar {
-		#navbarLogout { span { display: none; } }
-	}
+    #navbarLogout { span { display: none; } }
 }

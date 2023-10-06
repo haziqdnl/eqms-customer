@@ -34,11 +34,11 @@ export class LoginComponent {
    *  Method: Form builder and controller
    */
   public formIdPasswordSubmitted = false;
+  public get formIdPasswordControl()  { return this.formIdPassword.controls; }
   public formIdPassword: FormGroup = this.fb.group({
     id      : ['', [Validators.required, Validators.pattern('^[1-9]\\d*$')]],
     password: ['', [Validators.required]],
   });
-  get formIdPasswordControl()     { return this.formIdPassword.controls; }
 
   /**
    *  Method: Submit login form
@@ -57,7 +57,7 @@ export class LoginComponent {
         this.g.redirectTo('');
       }
       else {
-        this.g.toastError("Invalid ID/Password !");   
+        this.g.toastError("Invalid ID/Password !");
         this.g.setCustToken("");
       }
     });

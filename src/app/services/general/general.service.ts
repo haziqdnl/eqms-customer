@@ -46,9 +46,7 @@ export class GeneralService {
       panelClass        : 'error',
     });
   }
-  public apiRespError(rsp: any) {
-    rsp.RespCode != '401' ? this.toastError(rsp.RespMessage) : this.endSession();
-  }
+  public apiRespError(rsp: any) { rsp.RespCode != '401' ? this.toastError(rsp.RespMessage) : this.endSession(); }
 
   /**
    *  Method: URL redirect/navigation

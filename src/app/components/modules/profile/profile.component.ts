@@ -48,8 +48,7 @@ export class ProfileComponent {
         this.stateList = rsp.d.RespData;
         this.getProfileInfo(pid);
       }
-      else
-        this.g.apiRespError(rsp.d);
+      else this.g.apiRespError(rsp.d);
     });
   }
 

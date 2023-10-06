@@ -1,4 +1,4 @@
-const domainUrl = "https://dgseqms.ddns.net/";
+const domainUrl = "https://eqms.dgss.com.my";
 
 export const environment = {
     production      : true,
