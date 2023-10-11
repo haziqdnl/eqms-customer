@@ -2,7 +2,7 @@
     <ion-toolbar id="navbar" class="pt-5 pt-lg-0 pb-2">
         <ion-img slot="start" id="navbarLogo" src="assets/img/arx_logo.jpeg" alt="image"></ion-img>
         <ion-buttons slot="end">
-            <a id="navbarLogout" class="ms-auto" href="javascript: void(0);" (click)="openModalLogout()">
+            <a id="navbarLogout" class="ms-auto" href="javascript: void(0);" (click)="openAlertLogout()">
                 <fa-icon icon="power-off" class="my-auto me-2"></fa-icon><span class="font-size-14">Logout</span>
             </a>
         </ion-buttons>
@@ -67,12 +67,12 @@
                                     {{ apptData[0].ApptStat == 'QUEUING' ? '*Please wait in the waiting area, we\'ll call and serve you in a few moments.' : '' }}
                                 </p>
                                 <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
-                                    <button type="button" class="btn btn-danger" (click)="openModalCancelAppt();">Cancel</button>
+                                    <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">Cancel</button>
                                 </div>
                             </div>
                             <div *ngIf="!isAppt && !isWalkIn">
                                 <fa-icon icon="calendar-xmark" size="4x" class="text-danger"></fa-icon>
-                                <h5 class="mt-3">You don't have any appointment with us at the moment :(</h5>
+                                <h5 class="mt-3">You don't have any appointment with us at the moment</h5>
                             </div>
                         </div>
                     </div>
@@ -109,23 +109,6 @@
             <h1 class="text-success fw-bolder">Check-In Successful</h1>
             <h6>Please wait at the waiting area. We'll call and serve you in a few minutes.</h6>
             <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
-        </div>
-    </ng-template>
-    <!-- Modal: Appointment Cancel -->
-    <ng-template #modalCancelAppt let-modal>
-        <div class="modal-body text-center p-4">
-            <p>Are you sure to cancel this appointment?</p>
-            <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
-            <button type="button" class="btn btn-danger" (click)="deleteAppt(); modal.close('Yes')">Yes</button>
-        </div>
-    </ng-template>
-    <!-- Modal: Logout Confirmation -->
-    <ng-template #modalLogout let-modal>
-        <div class="modal-body text-center p-4">
-            <fa-icon icon="door-open" class="my-auto" size="2x"></fa-icon>
-            <h6 class="my-3">Are you sure to logout?</h6>
-            <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No')">No</button>
-            <button type="button" class="btn btn-danger" (click)="g.endSession(); modal.close('Cancel Appointment')">Yes</button>
         </div>
     </ng-template>
 </ion-content>

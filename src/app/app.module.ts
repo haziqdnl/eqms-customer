@@ -69,7 +69,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     FontAwesomeModule,
     FormsModule,
     HttpClientModule,
-    IonicModule.forRoot({ mode: 'ios' }),
+    IonicModule.forRoot({ mode: 'ios', innerHTMLTemplatesEnabled: true }),
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter, }, }),
     MatFormFieldModule,
     MatIconModule,

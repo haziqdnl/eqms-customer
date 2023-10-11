@@ -1,13 +1,13 @@
 <ion-content>
-    <section id="hero" class="hero shadow h-100">
-        <div class="container position-relative">
-            <div id="heroMain" class="py-lg-5 wrap-center text-center">
-                <fa-icon icon="ban" size="10x" class="text-danger mb-3"></fa-icon>
-                <h1 class="m-0">401</h1>
-                <h4 class="m-0">Unauthorized</h4>
+    <div class="bg-default">
+        <div class="wrap-center">
+            <div class="text-center bg-light rounded-4 shadow p-5 m-2">
+                <fa-icon icon="ban" size="10x" class="text-danger"></fa-icon>
+                <h1 class="m-0 mt-3 fw-bolder">401</h1>
+                <h4 class="m-0 fw-bolder">Unauthorized</h4>
                 <h6>Oh no! It seems like your session has ended. Please log in again to proceed.</h6>
                 <button type="button" class="btn btn-secondary mt-3" (click)="g.endSession()">to login page</button>
             </div>
         </div>
-    </section>
+    </div>
 </ion-content>

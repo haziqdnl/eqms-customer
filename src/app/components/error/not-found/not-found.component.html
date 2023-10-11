@@ -1,13 +1,13 @@
 <ion-content>
-    <section id="hero" class="hero shadow h-100">
-        <div class="container position-relative">
-            <div id="heroMain" class="py-lg-5 wrap-center text-center">
-                <fa-icon icon="question" size="10x" class="text-danger mb-3"></fa-icon>
-                <h1 class="m-0">404</h1>
-                <h4 class="m-0">Not Found</h4>
-                <h6>Sorry! We cannot find your requested page. Maybe you can go back to the previous page and start again from there.</h6>
+    <div class="bg-default">
+        <div class="wrap-center">
+            <div class="text-center bg-light rounded-4 shadow p-5 m-2">
+                <fa-icon icon="clipboard-question" size="10x" class="text-danger"></fa-icon>
+                <h1 class="m-0 mt-3 fw-bolder">404</h1>
+                <h4 class="m-0 fw-bolder">Not Found</h4>
+                <h6>Sorry! We cannot find the requested page.</h6>
                 <button type="button" class="btn btn-secondary mt-3" (click)="location.back()">Go Back</button>
             </div>
         </div>
-    </section>
+    </div>
 </ion-content>
