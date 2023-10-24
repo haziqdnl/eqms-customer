@@ -17,13 +17,11 @@ export class RegisterStatusComponent {
   ) {}
 
   ionViewWillEnter() {
-    if (localStorage['eqmsCustomer_registertoken'] == '') this.g.redirectBack('login');
+    if (localStorage['eqmsCustomer_registerData'] == '') this.g.redirectBack('login');
     this.getUrlParam();
   }
 
-  ionViewWillLeave() {
-    localStorage['eqmsCustomer_registertoken'] = '';
-  }
+  ionViewWillLeave() { localStorage['eqmsCustomer_registerData'] = ''; }
 
   /**
    *  Method: get URL param

@@ -27,4 +27,9 @@ export class ApiUtilityService {
     return this.http.post(`${this.g.getEnvApiUrl()}/${this.svcName}/CheckInByQRCode`, body, { 'headers': { 'content-type': 'application/json', 'SessionToken': token } })
       .pipe( catchError( err => { throw err; } ) );
   }
+
+  public SendOTPEmail(body: any): Observable<any> {
+    return this.http.post(`${this.g.getEnvApiUrl()}/${this.svcName}/SendOTPEmail`, body, { 'headers': { 'content-type': 'application/json' } })
+      .pipe( catchError( err => { throw err; } ) );
+  }
 }

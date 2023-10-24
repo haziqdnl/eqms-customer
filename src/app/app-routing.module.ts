@@ -33,14 +33,14 @@ const routes: Routes = [
     title: `${appName} | Register`
   },
   { 
+    path: 'register/verification', 
+    component: VerificationComponent, 
+    title: `${appName} | Verification`
+  },
+  { 
     path: 'register/status', 
     component: RegisterStatusComponent, 
     title: `${appName} | Register`
-  },
-  { 
-    path: 'verification', 
-    component: VerificationComponent, 
-    title: `${appName} | Verification`
   },
   /** ========================
    *  Components: Main Modules

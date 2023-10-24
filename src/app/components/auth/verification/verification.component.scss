@@ -1,7 +1,25 @@
-#customerVerificationForm {
+.content {
     background: linear-gradient(rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.97)), url("^assets/img/linear_abstract.jpg");
     background-size: cover;
-    width: 550px;
+
+    .title {
+        color: var(--primary-color);
+        letter-spacing: 1.5px;
+    }
+
+    #formOTPVerification {
+        background: none !important;
+        input {
+            height: 40px;
+            width: 50px;
+            margin: 0 5px;
+            border: 0;
+            border-bottom: 3px solid var(--secondary-color);
+            background: none;
+            text-align: center;
+            font-size: 20px;
+        }
+    }
 }
 
 /* Laptops/desktops, 1200px and up */
@@ -17,12 +35,21 @@
 @media only screen and (min-width: 768px) {}
 
 /* Portrait tablets and larger phones, 768px and down */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+    .content {
+        #formOTPVerification {
+            input {
+                height: 30px;
+                width: 35px;
+            }
+        }
+    }
+}
 
 /* Portrait tablets and larger phones, 600px and up */
 @media only screen and (min-width: 600px) {}
 
 /* Phones, 600px and down */
 @media only screen and (max-width: 600px) {
-    #customerVerificationForm { max-width: 275px; }
+    .content { width: 95%; }
 }

@@ -1,160 +1,159 @@
-<div class="bg-default">
-    <div class="wrap-center">
-        <form id="registerForm" class="bg-light shadow-lg rounded-3 px-lg-4 py-3" [formGroup]="registerForm" (ngSubmit)="submit()">
-            <!-- Logo & Title -->
-            <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
-            <h5 class="mt-2 text-center fw-bold">Create Account</h5>
-            <!-- Form: Register -->
-            <mat-stepper #stepperRegister linear animationDuration="700" style="background: none;">
-                <mat-step>
-                    <ng-template matStepLabel><fa-icon icon="address-card"></fa-icon></ng-template>
-                    <!-- Fullname -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-2">
-                        <mat-label>Fullname</mat-label>
-                        <input matInput #fullname formControlName="fullname" type="text" placeholder="Fullname" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
-                        <mat-error *ngIf="(formControl['fullname'].touched || formSubmitted) && formControl['fullname'].invalid">
-                            <span *ngIf="formControl['fullname'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formControl['fullname'].errors?.['pattern'] || formControl['fullname'].errors?.['minlength'] || formControl['fullname'].errors?.['maxlength']">
-                                <strong>invalid fullname</strong>
-                            </span>
-                        </mat-error>
-                        <mat-hint align="end">{{ fullname.value.length }} / 60</mat-hint>
-                    </mat-form-field>
-                    <div class="row">
-                        <!-- Gender -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Gender</mat-label>
-                            <mat-select formControlName="gender" placeholder="--select gender--" (selectionChange)="changeGender($event)" required>
-                                <mat-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="(formControl['gender'].touched || formSubmitted) && formControl['gender'].invalid">
-                                <span *ngIf="formControl['gender'].errors?.['required']"><strong>required</strong></span>
-                            </mat-error>
-                        </mat-form-field>
-                        <!-- NRIC -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>NRIC Number</mat-label>
-                            <input matInput #identificationNo formControlName="identificationNo" type="text" placeholder="NRIC number" maxlength="12" (keypress)="g.numberOnly($event)" required />
-                            <mat-error *ngIf="(formControl['identificationNo'].touched || formSubmitted) && formControl['identificationNo'].invalid">
-                                <span *ngIf="formControl['identificationNo'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['identificationNo'].errors?.['minlength'] || formControl['identificationNo'].errors?.['maxlength']"><strong>invalid NRIC</strong></span>
-                            </mat-error>
-                            <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
-                        </mat-form-field>
-                    </div>
-                    <div class="row">
-                        <!-- Email -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Email Address</mat-label>
-                            <input matInput #email formControlName="email" type="text" placeholder="Email address" maxlength="30" oninput="this.value = this.value.toUpperCase()" required />
-                            <mat-error *ngIf="(formControl['email'].touched || formSubmitted) && formControl['email'].invalid">
-                                <span *ngIf="formControl['email'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['email'].errors?.['pattern'] || formControl['email'].errors?.['maxlength']"><strong>invalid email</strong></span>
-                            </mat-error>
-                        </mat-form-field>
-                        <!-- Mobile No. -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Mobile No.</mat-label>
-                            <span matPrefix><i class="ms-3"></i>+60</span>
-                            <input matInput #mobileNo formControlName="mobileNo" type="text" placeholder="191234567" maxlength="10" (keypress)="g.numberOnly($event)" required />
-                            <mat-error *ngIf="(formControl['mobileNo'].touched || formSubmitted) && formControl['mobileNo'].invalid">
-                                <span *ngIf="formControl['mobileNo'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['mobileNo'].errors?.['pattern'] || formControl['mobileNo'].errors?.['minlength'] || formControl['mobileNo'].errors?.['maxlength']"><strong>invalid number</strong></span>
-                            </mat-error>
-                            <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
-                        </mat-form-field>
-                    </div>
-                    <div class="mt-3 btn-group w-100">
-                        <button type="button" class="btn btn-secondary w-50" (click)="back()">Back</button>
-                        <button matStepperNext type="button" class="btn btn-primary w-50">Next</button>
-                    </div>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel><fa-icon icon="map"></fa-icon></ng-template>
-                    <!-- Address: Line 1 -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                        <mat-label>Address Line 1</mat-label>
-                        <input matInput #address1 formControlName="address1" type="text" placeholder="Address line 1" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
-                        <mat-error *ngIf="(formControl['address1'].touched || formSubmitted) && formControl['address1'].invalid">
-                            <span *ngIf="formControl['address1'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formControl['address1'].errors?.['pattern'] || formControl['address1'].errors?.['maxlength']"><strong>invalid address</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ address1.value.length }} / 60</mat-hint>
-                    </mat-form-field>
-                    <!-- Address: Line 2 -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                        <mat-label>Address Line 2</mat-label>
-                        <input matInput #address2 formControlName="address2" type="text" placeholder="Address line 2 - optional" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" />
-                        <mat-error *ngIf="(formControl['address2'].touched || formSubmitted) && formControl['address2'].invalid">
-                            <span *ngIf="formControl['address2'].errors?.['pattern'] || formControl['address2'].errors?.['maxlength']"><strong>invalid address</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ address2.value.length }} / 60</mat-hint>
-                    </mat-form-field>
-                    <div class="row">
-                        <!-- Postcode -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Postcode</mat-label>
-                            <input matInput #postcode formControlName="postcode" type="text" placeholder="Postcode" minlength="5" maxlength="5" (keypress)="g.numberOnly($event)" required />
-                            <mat-error *ngIf="(formControl['postcode'].touched || formSubmitted) && formControl['postcode'].invalid">
-                                <span *ngIf="formControl['postcode'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['postcode'].errors?.['pattern'] || formControl['postcode'].errors?.['maxlength']"><strong>invalid postcode</strong></span>
-                            </mat-error>
-                        </mat-form-field>
-                        <!-- State -->
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>State</mat-label>
-                            <mat-select formControlName="state" placeholder="--select state--" (selectionChange)="changeState($event)" required>
-                                <mat-option *ngFor="let item of stateList" [value]="item.StateID">{{ item.StateSDesc }}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="(formControl['state'].touched || formSubmitted) && formControl['state'].invalid">
-                                <span *ngIf="formControl['state'].errors?.['required']"><strong>required</strong></span>
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="mt-3 btn-group w-100">
-                        <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                        <button matStepperNext type="button" class="btn btn-primary w-50">Next</button>
-                    </div>
-                </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel><fa-icon icon="lock"></fa-icon></ng-template>
-                    <!-- Password -->
-                    <div class="row">
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Password</mat-label>
-                            <mat-pass-toggle-visibility #togglePwdVisbility matSuffix></mat-pass-toggle-visibility>
-                            <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="Your password" minlength="8" maxlength="30" required />
-                            <mat-error *ngIf="(formControl['password'].touched || formSubmitted) && formControl['password'].invalid">
-                                <span *ngIf="formControl['password'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['password'].errors?.['pattern']"><strong>invalid password</strong></span>
-                            </mat-error>
-                            <mat-hint align="end">{{ password.value.length }} / 30</mat-hint>
-                        </mat-form-field>
-                        <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                            <mat-label>Confirm Password</mat-label>
-                            <mat-pass-toggle-visibility #toggleCfrmPwdVisbility matSuffix></mat-pass-toggle-visibility>
-                            <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="Re-type password" maxlength="30" required />
-                            <mat-error *ngIf="(formControl['confirmPassword'].touched || formSubmitted) && formControl['confirmPassword'].invalid">
-                                <span *ngIf="formControl['confirmPassword'].errors?.['required']"><strong>required</strong></span>
-                                <span *ngIf="formControl['confirmPassword'].errors?.['passwordMismatch']"><strong>passwords not match</strong></span>
-                            </mat-error>
-                            <mat-hint align="end">{{ confirmPassword.value.length }} / 30</mat-hint>
-                        </mat-form-field>
-                    </div>
-                    <div class="my-2">
-                        <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="false"></mat-password-strength>
-                        <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
-                    </div>
-                    <div class="mt-3 btn-group w-100">
-                        <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                        <button type="submit" class="btn btn-success w-50">Submit</button>
-                    </div>
-                </mat-step>
-                <!-- Override Icon -->
-                <ng-template matStepperIcon="profile"></ng-template>
-                <ng-template matStepperIcon="address"><fa-icon icon="home"></fa-icon></ng-template>
-                <ng-template matStepperIcon="password"><fa-icon icon="lock"></fa-icon></ng-template>
-            </mat-stepper>
-        </form>
+<ion-content>
+    <div class="bg-default">
+        <div class="wrap-center">
+            <div id="formRegister" class="bg-light shadow-lg rounded-3 px-lg-4 py-3 text-center">
+                <!-- Logo & Title -->
+                <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
+                <h5 class="mt-2 fw-bold">Create Account</h5>
+                <!-- Forms -->
+                <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.getIsMobile() ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
+                    <!-- Step 1: Fullname & NRIC no. verification -->
+                    <mat-step [stepControl]="formRegisterBasicInfo" editable="true">
+                        <ng-template matStepLabel><fa-icon icon="id-card"></fa-icon></ng-template>
+                        <form [formGroup]="formRegisterBasicInfo" class="w-100">
+                            <!-- Fullname -->
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>Fullname</mat-label>
+                                <input matInput #fullname formControlName="fullname" type="text" placeholder="Ahmad Ali" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
+                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['fullname'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['fullname'].invalid">
+                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['pattern'] || formRegisterBasicInfoCtrl['fullname'].errors?.['minlength'] || formRegisterBasicInfoCtrl['fullname'].errors?.['maxlength']">
+                                        <strong>invalid fullname</strong>
+                                    </span>
+                                </mat-error>
+                                <mat-hint align="end">{{ fullname.value.length }} / 60</mat-hint>
+                            </mat-form-field>
+                            <!-- Gender -->
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>Gender</mat-label>
+                                <mat-select #gender formControlName="gender" placeholder="--select gender--" (selectionChange)="changeGender($event)" required>
+                                    <mat-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['gender'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['gender'].invalid">
+                                    <span *ngIf="formRegisterBasicInfoCtrl['gender'].errors?.['required']"><strong>required</strong></span>
+                                </mat-error>
+                            </mat-form-field>
+                            <!-- NRIC no. -->
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>NRIC Number</mat-label>
+                                <input matInput #identificationNo formControlName="identificationNo" type="text" placeholder="010203045060" maxlength="12" (keypress)="g.numberOnly($event)" required />
+                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['identificationNo'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['identificationNo'].invalid">
+                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['minlength'] || formRegisterBasicInfoCtrl['identificationNo'].errors?.['maxlength']"><strong>invalid NRIC</strong></span>
+                                </mat-error>
+                                <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
+                            </mat-form-field>
+                        </form>
+                        <div class="mt-3 btn-group w-100">
+                            <button type="button" class="btn btn-secondary w-50" (click)="back()">Back</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterBasicInfo()" [disabled]="!formRegisterBasicInfo.valid">Next</button>
+                        </div>
+                        <button #btnNextBasicInfo matStepperNext type="button" class="d-none"></button>
+                    </mat-step>
+                    <!-- Step 2: Email verification -->
+                    <mat-step [stepControl]="formRegisterEmail" editable="true">
+                        <ng-template matStepLabel><fa-icon icon="envelope"></fa-icon></ng-template>
+                        <form [formGroup]="formRegisterEmail" class="w-100">
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>Email Address</mat-label>
+                                <input matInput #email formControlName="email" type="text" placeholder="example@mail.com" maxlength="30" oninput="this.value = this.value.toUpperCase()" required />
+                                <mat-error *ngIf="(formRegisterEmailCtrl['email'].touched || formRegisterEmailSubmitted) && formRegisterEmailCtrl['email'].invalid">
+                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['pattern'] || formRegisterEmailCtrl['email'].errors?.['maxlength']"><strong>invalid email</strong></span>
+                                </mat-error>
+                            </mat-form-field>
+                        </form>
+                        <div class="mt-3 btn-group w-100">
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterEmail()" [disabled]="!formRegisterEmail.valid">Next</button>
+                        </div>
+                        <button #btnNextEmail matStepperNext type="button" class="d-none"></button>
+                    </mat-step>
+                    <!-- Step 3: Mobile no. verification -->
+                    <mat-step [stepControl]="formRegisterMobileNo" editable="true">
+                        <ng-template matStepLabel><fa-icon icon="phone"></fa-icon></ng-template>
+                        <form [formGroup]="formRegisterMobileNo" class="w-100">
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>Mobile Number</mat-label>
+                                <span matPrefix><i class="ms-3"></i>+60</span>
+                                <input matInput #mobileNo formControlName="mobileNo" type="text" placeholder="191234567" maxlength="10" (keypress)="g.numberOnly($event)" required />
+                                <mat-error *ngIf="(formRegisterMobileNoCtrl['mobileNo'].touched || formRegisterMobileNoSubmitted) && formRegisterMobileNoCtrl['mobileNo'].invalid">
+                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['pattern'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['minlength'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['maxlength']"><strong>invalid number</strong></span>
+                                </mat-error>
+                                <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
+                            </mat-form-field>
+                        </form>
+                        <div class="mt-3 btn-group w-100">
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterMobileNo()" [disabled]="!formRegisterMobileNo.valid">Next</button>
+                        </div>
+                        <button #btnNextMobileNo matStepperNext type="button" class="d-none"></button>
+                    </mat-step>
+                    <!-- Step 4: Unique Call ID verification -->
+                    <mat-step [stepControl]="formRegisterUniqCallId" editable="true">
+                        <ng-template matStepLabel><fa-icon icon="signature"></fa-icon></ng-template>
+                        <form [formGroup]="formRegisterUniqCallId" class="w-100">
+                            <div class="font-size-12 text-start pt-2">
+                                <ion-note>Enter any term that comes to mind, much like a username. We'll call you when you're next in queue.</ion-note>
+                            </div>
+                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
+                                <mat-label>Unique Call ID</mat-label>
+                                <input matInput #uniqCallID formControlName="uniqCallID" type="text" placeholder="ARRAHNU2023" minlength="5" maxlength="20" oninput="this.value = this.value.toUpperCase()" required />
+                                <mat-error *ngIf="(formRegisterUniqCallIdCtrl['uniqCallID'].touched || formRegisterUniqCallIdSubmitted) && formRegisterUniqCallIdCtrl['uniqCallID'].invalid">
+                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['pattern'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['minlength'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['maxlength']"><strong>invalid call ID</strong></span>
+                                </mat-error>
+                                <mat-hint align="end">{{ uniqCallID.value.length }} / 20</mat-hint>
+                            </mat-form-field>
+                        </form>
+                        <div class="my-2">
+                            <mat-password-strength #uniqCallIDStrength [password]="uniqCallID.value" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [min]="5" [max]="20"></mat-password-strength>
+                            <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="contains at least one letter" class="font-size-10"></mat-password-strength-info>
+                        </div>
+                        <div class="mt-3 btn-group w-100">
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="!formRegisterUniqCallId.valid">Next</button>
+                        </div>
+                        <button #btnNextUniqCallId matStepperNext type="button" class="d-none"></button>
+                    </mat-step>
+                    <!-- Step 5: Password confirmation -->
+                    <mat-step [stepControl]="formRegisterPassword" editable="true">
+                        <ng-template matStepLabel><fa-icon icon="lock"></fa-icon></ng-template>
+                        <form [formGroup]="formRegisterPassword" class="w-100">
+                            <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
+                                <mat-label>Password</mat-label>
+                                <mat-pass-toggle-visibility #togglePwdVisbility matSuffix></mat-pass-toggle-visibility>
+                                <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="Your password" minlength="8" maxlength="30" required />
+                                <mat-error *ngIf="(formRegisterPasswordCtrl['password'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['password'].invalid">
+                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['pattern']"><strong>invalid password</strong></span>
+                                </mat-error>
+                                <mat-hint align="end">{{ password.value.length }} / 30</mat-hint>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
+                                <mat-label>Confirm Password</mat-label>
+                                <mat-pass-toggle-visibility #toggleCfrmPwdVisbility matSuffix></mat-pass-toggle-visibility>
+                                <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="Re-type password" maxlength="30" required />
+                                <mat-error *ngIf="(formRegisterPasswordCtrl['confirmPassword'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['confirmPassword'].invalid">
+                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['passwordMismatch']"><strong>passwords not match</strong></span>
+                                </mat-error>
+                                <mat-hint align="end">{{ confirmPassword.value.length }} / 30</mat-hint>
+                            </mat-form-field>
+                        </form>
+                        <div class="my-2">
+                            <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="false"></mat-password-strength>
+                            <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
+                        </div>
+                        <div class="mt-3 btn-group w-100">
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
+                            <button type="button" class="btn btn-success w-50" (click)="submitFormRegisterPassword()" [disabled]="!formRegisterPassword.valid">Submit</button>
+                        </div>
+                        <button #btnNextPassword matStepperNext type="button" class="d-none"></button>
+                    </mat-step>
+                </mat-stepper>
+            </div>
+        </div>
     </div>
-</div>
+</ion-content>

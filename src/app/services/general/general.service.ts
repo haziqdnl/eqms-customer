@@ -33,16 +33,16 @@ export class GeneralService {
   public toastSuccess(msg: any) {
     this.snackBar.open(msg, 'OK', {
       duration          : 5000,
-      horizontalPosition: 'center',
-      verticalPosition  : 'bottom',
+      horizontalPosition: 'right',
+      verticalPosition  : 'top',
       panelClass        : 'success',
     });
   }
   public toastError(msg: any) {
     this.snackBar.open(msg, 'Close', {
       duration          : 5000,
-      horizontalPosition: 'center',
-      verticalPosition  : 'bottom',
+      horizontalPosition: 'right',
+      verticalPosition  : 'top',
       panelClass        : 'error',
     });
   }

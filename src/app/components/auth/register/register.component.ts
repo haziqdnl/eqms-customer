@@ -1,9 +1,10 @@
 import { TitleCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
-import { ApiStateService } from 'src/app/api/api-state.service';
+import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
@@ -15,98 +16,157 @@ export class RegisterComponent {
 
   constructor(
     private routeParam: ActivatedRoute,
+    private alertCtrl: AlertController,
     private apiProfileService: ApiProfileService,
-    private apiStateService: ApiStateService,
+    private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
     public  g: GeneralService,
     public  titleCasePipe: TitleCasePipe,
   ) { }
 
-  ionViewWillEnter() {
-    this.getUrlParam();
-    this.getStateList();
-  }
+  ionViewWillEnter() { this.getUrlParam(); }
 
   /**
    *  Method: get URL param
    */
   private urlParam: any;
-  private getUrlParam() {
-    this.routeParam.queryParamMap.subscribe(paramMap => { this.urlParam = paramMap.get('t'); });
-  }
+  private getUrlParam() { this.routeParam.queryParamMap.subscribe(paramMap => { this.urlParam = paramMap.get('t'); }); }
 
   /**
-   *  Method: Form builder and control
+   *  Method: Form basic profile info
    */
-  public hidePwd: boolean = true;
-  public formSubmitted = false;
-  public registerForm: FormGroup = this.fb.group({
+  @ViewChild('btnNextBasicInfo') private btnNextBasicInfo: any;
+  public formRegisterBasicInfoSubmitted = false;
+  public get formRegisterBasicInfoCtrl() { return this.formRegisterBasicInfo.controls; }
+  public formRegisterBasicInfo = this.fb.group({ 
     fullname        : ['', [Validators.required,  Validators.minLength(3),  Validators.maxLength(60), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
     gender          : ['', [Validators.required]],
-    identificationNo: ['', [Validators.required,  Validators.minLength(12), Validators.maxLength(12)]],
-    address1        : ['', [Validators.required,  Validators.minLength(3),  Validators.maxLength(60), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
-    address2        : ['', [                      Validators.minLength(3),  Validators.maxLength(60), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
-    postcode        : ['', [Validators.required,  Validators.minLength(5),  Validators.maxLength(5),  Validators.pattern('^[0-9]{5}$')]],
-    state           : ['', [Validators.required]],
-    email           : ['', [Validators.required,  Validators.maxLength(30), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]],
-    mobileNo        : ['', [Validators.required,  Validators.minLength(9),  Validators.maxLength(12), Validators.pattern('^[1-9]\\d*$')]],
-    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')]],
-    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$')]],
-  }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
-  get formControl() { return this.registerForm.controls; }
+    identificationNo: ['', [Validators.required,  Validators.minLength(12), Validators.maxLength(12)]]
+  });
+  public submitFormRegisterBasicInfo() {
+    this.formRegisterBasicInfoSubmitted = true;
+    if (this.formRegisterBasicInfo.valid) {
+      let request = { objRequest: { Mode: "NRIC", SearchValue: this.formRegisterBasicInfo.value.identificationNo } };
+      this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
+        if (rsp.d.RespCode == "200")
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this NRIC number") : this.btnNextBasicInfo.nativeElement.click();
+        else this.g.toastError(rsp.d.RespMessage)
+      });
+    }
+  }
+  /**
+   *  Method: Get gender data
+   */
+  public genderList: any = [{ id: 'M', desc: 'MALE' }, { id: 'F', desc: 'FEMALE' },];
+  public changeGender(e: any) { this.formRegisterBasicInfoCtrl['gender']?.setValue(e.value, { onlySelf: true }); }
 
   /**
-   *  Method: Submit register form
+   *  Method: Form email
    */
-  public submit() {
-    this.formSubmitted = true;
-    if (this.registerForm.valid) {
-      let request = {
-        objRequest: {
-          Mode    : "CREATE",
-          ProfileData : {
-            Email     : this.registerForm.value.email,
-            MobileNo  : '+60' + this.registerForm.value.mobileNo,
-            Name      : this.registerForm.value.fullname,
-            Sex       : this.registerForm.value.gender,
-            Address1  : this.registerForm.value.address1,
-            Address2  : this.registerForm.value.address2,
-            PostCode  : this.registerForm.value.postcode,
-            State     : this.registerForm.value.state,
-            Password  : this.registerForm.value.password,
-            IDNum     : this.registerForm.value.identificationNo,
-            UniqCallID: '',
-          },
-        }
-      }
-      this.apiProfileService.apiCRUD(request, "").subscribe(rsp => {
-        let status = 'success';
-        if (rsp.d.RespCode == "200") {
-          localStorage['eqmsCustomer_registertoken'] = JSON.stringify(this.registerForm.value);
-          this.g.toastSuccess(rsp.d.RespMessage);
-          this.g.redirectTo(`register/status?is=${status}` + (this.urlParam == 'adhoc' ? `&t=${this.urlParam}` : ''));
-        }
-        else this.g.toastError(rsp.d.RespMessage);
+  @ViewChild('btnNextEmail') private btnNextEmail: any;
+  public formRegisterEmailSubmitted = false;
+  public get formRegisterEmailCtrl() { return this.formRegisterEmail.controls; }
+  public formRegisterEmail = this.fb.group({ email: ['', [Validators.required,  Validators.maxLength(30), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]] });
+  public submitFormRegisterEmail() {
+    this.formRegisterEmailSubmitted = true;
+    if (this.formRegisterEmail.valid) {
+      let request = { objRequest: { Mode: "EMAIL", SearchValue: this.formRegisterEmail.value.email } };
+      this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
+        if (rsp.d.RespCode == "200")
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this email") : this.btnNextEmail.nativeElement.click();
+        else this.g.toastError(rsp.d.RespMessage)
       });
     }
   }
 
   /**
-   *  Method: Get gender data
+   *  Method: Form mobile no.
    */
-  public genderList: any = [{ id: 'M', desc: 'MALE' }, { id: 'F', desc: 'FEMALE' },];
-  public changeGender(e: any) { this.formControl['gender']?.setValue(e.value, { onlySelf: true }); }
+  @ViewChild('btnNextMobileNo') private btnNextMobileNo: any;
+  public formRegisterMobileNoSubmitted = false;
+  public get formRegisterMobileNoCtrl() { return this.formRegisterMobileNo.controls; }
+  public formRegisterMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(12), Validators.pattern('^[1-9]\\d*$')]], });
+  public submitFormRegisterMobileNo() {
+    this.formRegisterMobileNoSubmitted = true;
+    if (this.formRegisterMobileNo.valid) {
+      let request = { objRequest: { Mode: "MOBILENO", SearchValue: '+60' + this.formRegisterMobileNo.value.mobileNo } };
+      this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
+        if (rsp.d.RespCode == "200")
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this mobile number") : this.btnNextMobileNo.nativeElement.click();
+        else this.g.toastError(rsp.d.RespMessage)
+      });
+    }
+  }
 
   /**
-   *  Method: Get state data
+   *  Method: Form unique call ID
    */
-  public  stateList: any = [];
-  private getStateList() {
-    this.apiStateService.apiGetComboboxListState().subscribe(rsp => {
-      rsp.d.RespCode == "200" ? this.stateList = rsp.d.RespData : this.g.apiRespError(rsp.d);
-    });
+  @ViewChild('btnNextUniqCallId') private btnNextUniqCallId: any;
+  public formRegisterUniqCallIdSubmitted = false;
+  public get formRegisterUniqCallIdCtrl() { return this.formRegisterUniqCallId.controls; }
+  public formRegisterUniqCallId = this.fb.group({ uniqCallID: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('^(?=.*[A-Z])(?=.*\\d)[A-Z\\d]{5,20}$')]] });
+  public submitFormRegisterUniqCallId() {
+    this.formRegisterUniqCallIdSubmitted = true;
+    if (this.formRegisterUniqCallId.valid) {
+      let request = { objRequest: { Mode: "UNIQCALLID", SearchValue: this.formRegisterUniqCallId.value.uniqCallID } };
+      this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
+        if (rsp.d.RespCode == "200")
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("The unique call ID is not available") : this.btnNextUniqCallId.nativeElement.click();
+        else this.g.toastError(rsp.d.RespMessage)
+      });
+    }
   }
-  public changeState(e: any) { this.formControl['state']?.setValue(e.value, { onlySelf: true }); }
+
+  /**
+   *  Method: Form password
+   */
+  @ViewChild('btnNextPassword') private btnNextPassword: any;
+  public formRegisterPasswordSubmitted = false;
+  public get formRegisterPasswordCtrl() { return this.formRegisterPassword.controls; }
+  public formRegisterPassword = this.fb.group({ 
+    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')]],
+    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')]],
+  }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
+  public async submitFormRegisterPassword() {
+    this.formRegisterPasswordSubmitted = true;
+    if (this.formRegisterPassword.valid) {
+      const alert = await this.alertCtrl.create({
+        header    : 'Please ensure all details are correct.',
+        message   : 'We\'ll send an OTP verification to the provided email address.',
+        buttons   : [
+          {
+            text: 'Cancel', role: 'cancel', cssClass: 'text-primary',
+            handler: () => {},
+          },
+          {
+            text: 'Proceed', role: 'confirm', cssClass: 'text-primary',
+            handler: () => {
+              this.g.toastSuccess("Sending OTP verification...");
+              let request = { objRequest: { Email: this.formRegisterEmail.value.email } };
+              this.apiUtilityService.SendOTPEmail(request).subscribe(rsp => {
+                if (rsp.d.RespCode == "200") {
+                  localStorage['eqmsCustomer_registerData'] = JSON.stringify({
+                    Email     : this.formRegisterEmail.value.email,
+                    MobileNo  : '+60' + this.formRegisterMobileNo.value.mobileNo,
+                    Name      : this.formRegisterBasicInfo.value.fullname,
+                    Sex       : this.formRegisterBasicInfo.value.gender,
+                    Password  : this.formRegisterPassword.value.password,
+                    IDNum     : this.formRegisterBasicInfo.value.identificationNo,
+                    UniqCallID: this.formRegisterUniqCallId.value.uniqCallID,
+                    OTP       : rsp.d.RespData[0].OTP,
+                  });
+                  this.g.toastSuccess(rsp.d.RespData[0].Status);
+                  this.g.redirectTo(`register/verification` + (this.urlParam == 'adhoc' ? `?t=${this.urlParam}` : ''));
+                }
+                else this.g.toastError(rsp.d.RespMessage);
+              });
+            },
+          },
+        ],
+      });
+      await alert.present();
+    }
+  }
 
   /**
    *  Method: Back button

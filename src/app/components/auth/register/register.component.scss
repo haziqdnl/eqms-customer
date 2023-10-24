@@ -1,4 +1,4 @@
-#registerForm {
+#formRegister {
     background: linear-gradient(rgba(255, 255, 255, 0.985), rgba(255, 255, 255, 0.985)), url("^assets/img/linear_abstract.jpg");
     background-size: cover;
     width: 60vw;
@@ -18,7 +18,7 @@
 
 /* Portrait tablets and larger phones, 768px and down */
 @media only screen and (max-width: 768px) {
-    #registerForm { width: 90vw !important; }
+    #formRegister { width: 90vw !important; }
 }
 
 /* Portrait tablets and larger phones, 600px and up */

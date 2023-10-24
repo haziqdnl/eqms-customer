@@ -89,6 +89,7 @@ export class IndexComponent {
   private getProfileInfo(pid: any) {
     let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
     this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
+      console.log(rsp.d.RespData[0])
       if (rsp.d.RespCode == "200")
         this.username = this.titleCasePipe.transform(rsp.d.RespData[0].Name);
       else 

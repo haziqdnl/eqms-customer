@@ -14,6 +14,11 @@ export class ApiProfileService {
       .pipe( catchError( err => { throw err; } ) );
   }
 
+  public apiCheckExists(body: any): Observable<any> {
+    return this.http.post(`${this.g.getEnvApiUrl()}/${this.svcName}/CheckExists`, body, { 'headers': { 'content-type': 'application/json' } })
+      .pipe( catchError( err => { throw err; } ) );
+  }
+
   public apiCRUD(body: any, token: any): Observable<any> {
     return this.http.post(`${this.g.getEnvApiUrl()}/${this.svcName}/CRUD`, body, { 'headers': { 'content-type': 'application/json', 'SessionToken': token } })
       .pipe( catchError( err => { throw err; } ) );
