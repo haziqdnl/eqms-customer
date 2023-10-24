@@ -41,4 +41,7 @@ testem.log
 .DS_Store
 Thumbs.db
 ios/App/Podfile.lock
+ios/App/Podfile
+android/app/capacitor.build.gradle
+android/capacitor.settings.gradle
 package-lock.json
