@@ -1,8 +1,6 @@
-#navbar  {
+.topbar  {
     --background: var(--primary-color);
-    padding: 0 30px;
-
-    #navbarLogo { width: 180px; }
+    #topbarLogo { width: 70px; }
     
 	a {
         color: #fff;
@@ -13,7 +11,11 @@
 }
 
 ion-header {
-    ion-title { --color: gray; }
+    ion-toolbar {
+        ion-buttons ion-back-button, ion-title {
+            --color: #fff;
+        }
+    }
 }
 
 ion-toolbar, ion-tab-bar {
@@ -32,8 +34,8 @@ ion-tab-bar {
 
 /* Landscape tablets, 992px and down */
 @media only screen and (max-width: 992px) {
-	#navbar {
-		#navbarLogo { width: 150px; }
+	.topbar {
+		#topbarLogo { width: 150px; }
 	}
 }
 
@@ -48,5 +50,5 @@ ion-tab-bar {
 
 /* Phones, 600px and down */
 @media only screen and (max-width: 600px) {
-    #navbarLogout { span { display: none; } }
+    #topbarLogout { span { display: none; } }
 }

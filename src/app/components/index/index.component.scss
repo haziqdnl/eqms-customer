@@ -1,23 +1,72 @@
-#hero {
-    .face-smile-beam { font-size: 30px; }
+#topbarLogo { width: 180px; }
 
-    .icon-box {
-        padding: 25px;
-        background: linear-gradient(rgba(189, 159, 50, 0.9), rgba(189, 159, 50, 0.9)), url("^assets/img/linear_abstract.jpg") repeat-x;
-        background-size: cover;
-        h3      { line-height: 22px; }
-        button  { width: 180px; }
+ion-content {
+    * { 
+        font-family: "Poppins", sans-serif; 
+        letter-spacing: 1px;
+    }
+
+    .header {
+        height: 200px;
+        background: var(--primary-color);
+        box-shadow: 0 1px 10px var(--ion-color-light);
+        border-radius: 0 0 10% 10%;
+    }
+
+    ion-grid {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 10vh;
+        padding-bottom: 8vh;
+        
+        ion-row {
+            ion-col {
+                ion-label {
+                    ion-note { line-height: 8px; }
+                }
+
+                ion-card {
+                    margin: 3px 0;
+                    cursor: pointer;
+
+                    ion-card-content {
+                        display: flex;
+                        flex-flow: column;
+                        background-size: cover;
+                        background: linear-gradient(rgba(189, 159, 50, 0.9), rgba(189, 159, 50, 0.9)), url("^assets/img/linear_abstract.jpg") repeat-x !important;
+                        color: #fff;
+                        padding: 30px !important;
+                        
+                        h2      { line-height: 28px; font-size: 30px; font-weight: 600; }
+                        h3      { line-height: 25px; font-size: 20px; font-weight: 600; margin: 10px 0px; }
+                        button  { width: 180px; }
+                    }
+
+                    &:hover { transform: scale(0.95); }
+                }
+            }
+        }
+
+        ion-list {
+            background: transparent;
+            ion-item {
+                --background: transparent;
+                width: 95%;
+                margin: auto;
+            }
+        }
     }
 }
 
-.section-header {
+ion-list {
     text-align: center;
     padding-bottom: 15px;
 
-    h2 {
-        font-size: 32px;
+    ion-list-header {
+        font-size: 25px;
         font-weight: 600;
-        padding-bottom: 20px;
+        padding-bottom: 10px;
         position: relative;
 
         &:after {
@@ -38,16 +87,16 @@
         margin-bottom: 0;
         color: #6f6f6f;
     }
-}
 
-#news {
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        
-        & > [class*='col-'] {
+    #news {
+        .row {
             display: flex;
-            flex-direction: column;
+            flex-wrap: wrap;
+            
+            & > [class*='col-'] {
+                display: flex;
+                flex-direction: column;
+            }
         }
     }
 }
@@ -59,7 +108,9 @@
 @media only screen and (min-width: 992px) {}
 
 /* Landscape tablets, 992px and down */
-@media only screen and (max-width: 992px) {}
+@media only screen and (max-width: 992px) {
+    ion-grid { top: 15vh !important; }
+}
 
 /* Landscape tablets, 768px and up */
 @media only screen and (min-width: 768px) {}

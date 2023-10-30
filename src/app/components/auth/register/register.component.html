@@ -1,7 +1,7 @@
 <ion-content>
     <div class="bg-default">
         <div class="wrap-center">
-            <div id="formRegister" class="bg-light shadow-lg rounded-3 px-lg-4 py-3 text-center">
+            <div id="formRegister" class="bg-light shadow-lg rounded-3 px-lg-4 py-3 my-3 text-center">
                 <!-- Logo & Title -->
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
                 <h5 class="mt-2 fw-bold">Create Account</h5>
@@ -93,10 +93,20 @@
                     <!-- Step 4: Unique Call ID verification -->
                     <mat-step [stepControl]="formRegisterUniqCallId" editable="true">
                         <ng-template matStepLabel><fa-icon icon="signature"></fa-icon></ng-template>
-                        <form [formGroup]="formRegisterUniqCallId" class="w-100">
-                            <div class="font-size-12 text-start pt-2">
-                                <ion-note>Enter any term that comes to mind, much like a username. We'll call you when you're next in queue.</ion-note>
-                            </div>
+                        <div class="text-lg-center text-start">
+                            <mat-radio-group aria-label="Select an option" (change)="onChangeOptionUniqCallId($event)">
+                                <mat-radio-button value="1" checked>Create custom</mat-radio-button>
+                                <mat-radio-button value="0" class="ms-lg-4">Use default</mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div [class]="(isCustom ? 'pt-3 text-start' : 'py-4 text-center')">
+                            <ion-note *ngIf="isCustom" class="font-size-12">Enter any term that comes to mind, much like a username. We'll call you when you're next in queue.</ion-note>
+                            <ion-note *ngIf="!isCustom" class="font-size-16">
+                                A random Unique Call ID will be generated based on the information provided.<br>
+                                You can change it later in the profile section once the registration completed.
+                            </ion-note>
+                        </div>
+                        <form *ngIf="isCustom" [formGroup]="formRegisterUniqCallId" class="w-100">
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
                                 <mat-label>Unique Call ID</mat-label>
                                 <input matInput #uniqCallID formControlName="uniqCallID" type="text" placeholder="ARRAHNU2023" minlength="5" maxlength="20" oninput="this.value = this.value.toUpperCase()" required />
@@ -106,14 +116,14 @@
                                 </mat-error>
                                 <mat-hint align="end">{{ uniqCallID.value.length }} / 20</mat-hint>
                             </mat-form-field>
+                            <div class="my-2">
+                                <mat-password-strength #uniqCallIDStrength [password]="uniqCallID.value" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [min]="5" [max]="20"></mat-password-strength>
+                                <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="contains at least one letter" class="font-size-10"></mat-password-strength-info>
+                            </div>
                         </form>
-                        <div class="my-2">
-                            <mat-password-strength #uniqCallIDStrength [password]="uniqCallID.value" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [min]="5" [max]="20"></mat-password-strength>
-                            <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="contains at least one letter" class="font-size-10"></mat-password-strength-info>
-                        </div>
                         <div class="mt-3 btn-group w-100">
                             <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="!formRegisterUniqCallId.valid">Next</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="isCustom ? (formRegisterUniqCallId.valid ? false : true) : false">Next</button>
                         </div>
                         <button #btnNextUniqCallId matStepperNext type="button" class="d-none"></button>
                     </mat-step>
@@ -143,7 +153,7 @@
                             </mat-form-field>
                         </form>
                         <div class="my-2">
-                            <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="false"></mat-password-strength>
+                            <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="true"></mat-password-strength>
                             <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
                         </div>
                         <div class="mt-3 btn-group w-100">

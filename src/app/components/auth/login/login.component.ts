@@ -24,7 +24,7 @@ export class LoginComponent {
    *  Method: Auto login if token from previous login still valid
    */
   private validateToken() {
-    if (this.g.getCustToken() != "") {
+    if (this.g.getCustToken()) {
       let request = { objRequest: { Token: this.g.getCustToken() } };
       this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
     }

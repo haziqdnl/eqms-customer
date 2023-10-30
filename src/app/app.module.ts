@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPasswordStrengthModule } from '@angular-material-extensions/password-strength';
+import { MatRadioModule} from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatStepperModule } from '@angular/material/stepper';
@@ -75,6 +76,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     MatIconModule,
     MatInputModule,
     MatPasswordStrengthModule.forRoot(),
+    MatRadioModule,
     MatSelectModule,
     MatSnackBarModule,
     MatStepperModule,

@@ -101,6 +101,7 @@ export class RegisterComponent {
   /**
    *  Method: Form unique call ID
    */
+  public isCustom: boolean = true;
   @ViewChild('btnNextUniqCallId') private btnNextUniqCallId: any;
   public formRegisterUniqCallIdSubmitted = false;
   public get formRegisterUniqCallIdCtrl() { return this.formRegisterUniqCallId.controls; }
@@ -116,6 +117,10 @@ export class RegisterComponent {
       });
     }
   }
+  public onChangeOptionUniqCallId(e: any) {
+    this.isCustom = e.value == "1" ? true : false; 
+    this.formRegisterUniqCallId.setValue({ uniqCallID: this.isCustom ? "" : "DEFAULT123" });
+  }
 
   /**
    *  Method: Form password
@@ -124,8 +129,8 @@ export class RegisterComponent {
   public formRegisterPasswordSubmitted = false;
   public get formRegisterPasswordCtrl() { return this.formRegisterPassword.controls; }
   public formRegisterPassword = this.fb.group({ 
-    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')]],
-    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$')]],
+    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
+    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
   }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
   public async submitFormRegisterPassword() {
     this.formRegisterPasswordSubmitted = true;
@@ -152,7 +157,7 @@ export class RegisterComponent {
                     Sex       : this.formRegisterBasicInfo.value.gender,
                     Password  : this.formRegisterPassword.value.password,
                     IDNum     : this.formRegisterBasicInfo.value.identificationNo,
-                    UniqCallID: this.formRegisterUniqCallId.value.uniqCallID,
+                    UniqCallID: this.formRegisterUniqCallId.value.uniqCallID == "DEFAULT123" ? '' : this.formRegisterUniqCallId.value.uniqCallID,
                     OTP       : rsp.d.RespData[0].OTP,
                   });
                   this.g.toastSuccess(rsp.d.RespData[0].Status);

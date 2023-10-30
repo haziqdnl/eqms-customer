@@ -1,4 +1,3 @@
-import { DatePipe, TitleCasePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -26,18 +25,19 @@ export class IndexComponent {
     private apiProfileService: ApiProfileService,
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
-    private datePipe: DatePipe,
     public  g: GeneralService,
     public  http: HttpClient,
-    private titleCasePipe: TitleCasePipe,
   ) {}
   
   ionViewWillEnter() {
     this.validateToken();
     this.getUrlParam();
   }
+  ionViewWillLeave()  { this.destroy() }
+  ngOnDestroy()       { this.destroy() }
 
-  ionViewWillLeave() {
+  private destroy() {
+    console.log('des')
     if (this.alertLogout)         this.alertLogout.dismiss();
     if (this.alertCheckInSuccess) this.alertCheckInSuccess.dismiss();
     if (this.alertCancelAppt)     this.alertCancelAppt.dismiss();
@@ -45,11 +45,6 @@ export class IndexComponent {
     if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
     if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
   }
-
-  /**
-   *  Method: Last Active
-   */
-  public lastActive: any = this.datePipe.transform(new Date(), 'EEEE, dd MMMM yyyy, hh:mm a');
 
   /**
    *  Method: get URL param
@@ -86,12 +81,14 @@ export class IndexComponent {
    *  Method: Get customer profile
    */
   public  username = "";
+  public  uniqCallID = "";
   private getProfileInfo(pid: any) {
     let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
     this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
-      console.log(rsp.d.RespData[0])
-      if (rsp.d.RespCode == "200")
-        this.username = this.titleCasePipe.transform(rsp.d.RespData[0].Name);
+      if (rsp.d.RespCode == "200") {
+        this.username   = rsp.d.RespData[0].Name;
+        this.uniqCallID = rsp.d.RespData[0].UniqCallID;
+      }
       else 
         this.g.apiRespError(rsp.d);
     });
@@ -126,6 +123,7 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken)
           this.apptData = rsp.d.RespData;
+          //console.log(this.apptData)
           if (this.apptData !== '' && this.apptData !== undefined)
             this.isAppt = this.apptData[0].ApptStat !== "COMPLETE" && this.apptData[0].ApptStat !== "NOSHOW" ? true : false;
         }
@@ -148,6 +146,7 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken)
           this.walkInData = rsp.d.RespData;
+          //console.log(this.walkInData)
           if (this.walkInData !== '' && this.walkInData !== undefined)
             this.isWalkIn = (this.walkInData[0].WalkInStat !== "COMPLETE" && this.walkInData[0].WalkInStat !== "NOSHOW") ? true : false;
         }
