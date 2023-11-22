@@ -66,7 +66,7 @@ export class RegisterComponent {
   @ViewChild('btnNextEmail') private btnNextEmail: any;
   public formRegisterEmailSubmitted = false;
   public get formRegisterEmailCtrl() { return this.formRegisterEmail.controls; }
-  public formRegisterEmail = this.fb.group({ email: ['', [Validators.required,  Validators.maxLength(30), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]] });
+  public formRegisterEmail = this.fb.group({ email: ['', [Validators.required,  Validators.maxLength(255), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]] });
   public submitFormRegisterEmail() {
     this.formRegisterEmailSubmitted = true;
     if (this.formRegisterEmail.valid) {
@@ -101,7 +101,6 @@ export class RegisterComponent {
   /**
    *  Method: Form unique call ID
    */
-  public isCustom: boolean = true;
   @ViewChild('btnNextUniqCallId') private btnNextUniqCallId: any;
   public formRegisterUniqCallIdSubmitted = false;
   public get formRegisterUniqCallIdCtrl() { return this.formRegisterUniqCallId.controls; }
@@ -117,6 +116,7 @@ export class RegisterComponent {
       });
     }
   }
+  public isCustom: boolean = true;
   public onChangeOptionUniqCallId(e: any) {
     this.isCustom = e.value == "1" ? true : false; 
     this.formRegisterUniqCallId.setValue({ uniqCallID: this.isCustom ? "" : "DEFAULT123" });

@@ -14,6 +14,9 @@ export class LayoutComponent {
     private g: GeneralService,
     private jwtHelper: JwtHelperService,
   ) {}
+
+  ionViewWillLeave()  { this.subs.unsubscribe(); }
+  ngOnDestroy()       { this.subs.unsubscribe(); }
   
   /**
    * Method: Validate JWT token every 2 minutes (120000 ms)

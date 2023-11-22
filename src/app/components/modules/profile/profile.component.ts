@@ -126,6 +126,7 @@ export class ProfileComponent {
    */
   public formChangePwdSubmitted = false;
   public get formChangePwdControl() { return this.formChangePwd.controls; }
+  
   public formChangePwd: FormGroup = this.fb.group({
     password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
     confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],

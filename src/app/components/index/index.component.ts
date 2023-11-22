@@ -37,7 +37,6 @@ export class IndexComponent {
   ngOnDestroy()       { this.destroy() }
 
   private destroy() {
-    console.log('des')
     if (this.alertLogout)         this.alertLogout.dismiss();
     if (this.alertCheckInSuccess) this.alertCheckInSuccess.dismiss();
     if (this.alertCancelAppt)     this.alertCancelAppt.dismiss();
@@ -123,7 +122,6 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken)
           this.apptData = rsp.d.RespData;
-          //console.log(this.apptData)
           if (this.apptData !== '' && this.apptData !== undefined)
             this.isAppt = this.apptData[0].ApptStat !== "COMPLETE" && this.apptData[0].ApptStat !== "NOSHOW" ? true : false;
         }
@@ -146,7 +144,6 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken)
           this.walkInData = rsp.d.RespData;
-          //console.log(this.walkInData)
           if (this.walkInData !== '' && this.walkInData !== undefined)
             this.isWalkIn = (this.walkInData[0].WalkInStat !== "COMPLETE" && this.walkInData[0].WalkInStat !== "NOSHOW") ? true : false;
         }

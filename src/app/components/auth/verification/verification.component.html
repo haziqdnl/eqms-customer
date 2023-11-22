@@ -4,7 +4,9 @@
             <div class="content bg-light shadow-lg rounded-3 p-lg-5 p-4 text-center">
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
                 <h1 class="text-center fw-bold text-uppercase title">OTP Verification</h1>
-                <ion-note class="font-size-14">Please enter the 6-digit OTP sent to your email address</ion-note>
+                <ion-note class="font-size-14">
+                    Please enter the 6-digit OTP sent to <br><b>{{ registerData.Email }}</b>
+                </ion-note>
                 <form id="formOTPVerification" [formGroup]="formOTPVerification" class="mt-3 w-100">
                     <input #otp1 formControlName="otp1" type="text" maxlength="1" (keypress)="g.numberOnly($event)" (keyup)="keyupOTP1($event)" required />
                     <input #otp2 formControlName="otp2" type="text" maxlength="1" (keypress)="g.numberOnly($event)" (keyup)="keyupOTP2($event)" required />

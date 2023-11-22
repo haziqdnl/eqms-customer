@@ -22,7 +22,7 @@ export class VerificationComponent {
     private fb: FormBuilder,
   ) {}
 
-  private registerData: any = {};
+  public registerData: any = {};
   ionViewWillEnter() { 
     if (localStorage['eqmsCustomer_registerData'] === undefined || localStorage['eqmsCustomer_registerData'] === "") 
       this.g.redirectBack('login');
@@ -109,9 +109,7 @@ export class VerificationComponent {
             },
           }
         };
-        console.log(request)
         this.apiProfileService.apiCRUD(request, "").subscribe(rsp => {
-          console.log(rsp.d)
           if (rsp.d.RespCode == "200") {
             this.g.toastSuccess(rsp.d.RespMessage);
             this.g.redirectTo(`register/status?is=success` + (this.urlParamType == 'adhoc' ? `&t=${this.urlParamType}` : ''));
