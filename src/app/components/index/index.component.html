@@ -25,51 +25,55 @@
             <ion-col size="auto">
                 <ion-card class="ion-text-center shadow-sm rounded-4">
                     <ion-card-content>
-                        <div id="walkin" *ngIf="isWalkIn">
-                            <!-- Walk-In: Icon -->
-                            <fa-icon *ngIf="walkInData[0].WalkInStat == 'QUEUING'" icon="check-double"   size="5x" class="text-success"></fa-icon>
-                            <fa-icon *ngIf="walkInData[0].WalkInStat == 'UNKNOWN'" icon="phone-volume"   size="5x" class="text-danger-emphasis wave"></fa-icon>
-                            <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
-                            <!-- Walk-In: Message -->
-                            <p class="font-size-12 my-3">
-                                {{ walkInData[0].WalkInStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : ''}}
-                                {{ walkInData[0].WalkInStat == 'UNKNOWN' ? 'It\'s your turn! Please head to the calling counter' : '' }}
-                                {{ walkInData[0].WalkInStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
-                            </p>
-                            <!-- Walk-In: Status Title / UniqCallID -->
-                            <h2>{{ this.uniqCallID | uppercase }}</h2>
-                            <h3>{{ walkInData[0].Service }}</h3>
-                            <!-- Walk-In: Notice -->
-                            <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3"> *Please wait in the waiting area, we'll call and serve you in a few minutes.</p>
-                        </div>
-                        <div id="appt" *ngIf="isAppt">
-                            <!-- Appt: Icon -->
-                            <fa-icon *ngIf="apptData[0].ApptStat == 'NEW'"     icon="calendar-check" size="5x" class="text-primary"></fa-icon>
-                            <fa-icon *ngIf="apptData[0].ApptStat == 'QUEUING'" icon="check-double"   size="5x" class="text-success"></fa-icon>
-                            <fa-icon *ngIf="apptData[0].ApptStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
-                            <!-- Appt: Message -->
-                            <p class="font-size-12 my-3">
-                                {{ apptData[0].ApptStat == 'NEW'     ? 'Don\'t forget you\'ve an appointment with us!' : ''}}
-                                {{ apptData[0].ApptStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : '' }}
-                                {{ apptData[0].ApptStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
-                            </p>
-                            <!-- Appt: Status Title / UniqCallID -->
-                            <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{ this.uniqCallID | uppercase }}</h2>
-                            <h3>
-                                {{ apptData[0].Service }}<br>
-                                {{ apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp + '\<br\>' : '' }}
-                                {{ apptData[0].ApptStat == 'NEW' ? apptData[0].OutletDesc : '' }}
-                            </h3>
-                            <!-- Appt: Notice -->
-                            <p *ngIf="apptData[0].ApptStat == 'NEW' || apptData[0].ApptStat == 'QUEUING'" class="font-size-12 mt-3">
-                                {{ apptData[0].ApptStat == 'NEW'     ? '*Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.' : '' }}
-                                {{ apptData[0].ApptStat == 'QUEUING' ? '*Please wait in the waiting area, we\'ll call and serve you in a few minutes.' : '' }}
-                            </p>
-                            <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
-                                <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">Cancel</button>
+                        <section *ngIf="walkInData[0] != null && walkInData[0].WalkInStat != 'COMPLETE'">
+                            <div id="walkin">
+                                <!-- Walk-In: Icon -->
+                                <fa-icon *ngIf="walkInData[0].WalkInStat == 'QUEUING'" icon="check-double"   size="5x" class="text-success"></fa-icon>
+                                <fa-icon *ngIf="walkInData[0].WalkInStat == 'UNKNOWN'" icon="phone-volume"   size="5x" class="text-danger-emphasis wave"></fa-icon>
+                                <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
+                                <!-- Walk-In: Message -->
+                                <p class="font-size-12 my-3">
+                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : ''}}
+                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? 'It\'s your turn! Please head to the calling counter' : '' }}
+                                    {{ walkInData[0].WalkInStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
+                                </p>
+                                <!-- Walk-In: Status Title / UniqCallID -->
+                                <h2>{{ this.uniqCallID | uppercase }}</h2>
+                                <h3>{{ walkInData[0].Service }}</h3>
+                                <!-- Walk-In: Notice -->
+                                <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3"> *Please wait in the waiting area, we'll call and serve you in a few minutes.</p>
                             </div>
-                        </div>
-                        <div *ngIf="!isAppt && !isWalkIn">
+                        </section>
+                        <section *ngIf="apptData[0] != null">
+                            <div id="appt">
+                                <!-- Appt: Icon -->
+                                <fa-icon *ngIf="apptData[0].ApptStat == 'NEW'"     icon="calendar-check" size="5x" class="text-primary"></fa-icon>
+                                <fa-icon *ngIf="apptData[0].ApptStat == 'QUEUING'" icon="check-double"   size="5x" class="text-success"></fa-icon>
+                                <fa-icon *ngIf="apptData[0].ApptStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
+                                <!-- Appt: Message -->
+                                <p class="font-size-12 my-3">
+                                    {{ apptData[0].ApptStat == 'NEW'     ? 'Don\'t forget you\'ve an appointment with us!' : ''}}
+                                    {{ apptData[0].ApptStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : '' }}
+                                    {{ apptData[0].ApptStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
+                                </p>
+                                <!-- Appt: Status Title / UniqCallID -->
+                                <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{ this.uniqCallID | uppercase }}</h2>
+                                <h3>
+                                    {{ apptData[0].Service }}<br>
+                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp + '\<br\>' : '' }}
+                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].OutletDesc : '' }}
+                                </h3>
+                                <!-- Appt: Notice -->
+                                <p *ngIf="apptData[0].ApptStat == 'NEW' || apptData[0].ApptStat == 'QUEUING'" class="font-size-12 mt-3">
+                                    {{ apptData[0].ApptStat == 'NEW'     ? '*Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.' : '' }}
+                                    {{ apptData[0].ApptStat == 'QUEUING' ? '*Please wait in the waiting area, we\'ll call and serve you in a few minutes.' : '' }}
+                                </p>
+                                <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
+                                    <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">Cancel</button>
+                                </div>
+                            </div>
+                        </section>
+                        <div *ngIf="apptData[0] == null && walkInData[0] == null">
                             <fa-icon icon="calendar-xmark" size="4x" class="text-danger"></fa-icon>
                             <h5 class="mt-3">You don't have any appointment with us at the moment</h5>
                         </div>

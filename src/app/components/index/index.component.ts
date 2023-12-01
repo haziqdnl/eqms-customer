@@ -88,8 +88,7 @@ export class IndexComponent {
         this.username   = rsp.d.RespData[0].Name;
         this.uniqCallID = rsp.d.RespData[0].UniqCallID;
       }
-      else 
-        this.g.apiRespError(rsp.d);
+      else this.g.apiRespError(rsp.d);
     });
   }
 
@@ -112,18 +111,18 @@ export class IndexComponent {
    */
   private selectedAgencyID: any = "39";
   public  apptData: any = [];
-  public  isAppt: Boolean = false;
   private intervalGetApptInfo: any;
   private getApptInfo() {
     this.intervalGetApptInfo = interval(1000).subscribe( () => {
       this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
         this.apptData = [];
-        this.isAppt = false;
         if (rsp.d.RespCode == "200") {
-          this.g.setCustToken(rsp.d.ExtendedToken)
-          this.apptData = rsp.d.RespData;
-          if (this.apptData !== '' && this.apptData !== undefined)
-            this.isAppt = this.apptData[0].ApptStat !== "COMPLETE" && this.apptData[0].ApptStat !== "NOSHOW" ? true : false;
+          this.g.setCustToken(rsp.d.ExtendedToken);
+          if (rsp.d.RespData != "" && rsp.d.RespData != null) {
+            rsp.d.RespData.forEach( (e: any) => {
+              if (e.AppStat != "COMPLETE" && e.AppStat != "NOSHOW") this.apptData.push(e)
+            });
+          }
         }
         else this.g.apiRespError(rsp.d);
       });
@@ -134,18 +133,18 @@ export class IndexComponent {
    *  Method: Get walk-in data
    */
   public  walkInData: any = [];
-  public  isWalkIn: Boolean = false;
   private intervalGetWalkInInfo: any;
   private getWalkInInfo() {
     this.intervalGetWalkInInfo = interval(1000).subscribe( () => {
       this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
         this.walkInData = [];
-        this.isWalkIn = false;
         if (rsp.d.RespCode == "200") {
-          this.g.setCustToken(rsp.d.ExtendedToken)
-          this.walkInData = rsp.d.RespData;
-          if (this.walkInData !== '' && this.walkInData !== undefined)
-            this.isWalkIn = (this.walkInData[0].WalkInStat !== "COMPLETE" && this.walkInData[0].WalkInStat !== "NOSHOW") ? true : false;
+          this.g.setCustToken(rsp.d.ExtendedToken);
+          if (rsp.d.RespData != "" && rsp.d.RespData != null) {
+            rsp.d.RespData.forEach( (e: any) => {
+              if (e.WalkInStat != "COMPLETE" && e.WalkInStat != "NOSHOW") this.walkInData.push(e)
+            });
+          }
         }
         else this.g.apiRespError(rsp.d);
       });
