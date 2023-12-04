@@ -32,6 +32,10 @@ export class IndexComponent {
   ionViewWillEnter() {
     this.validateToken();
     this.getUrlParam();
+
+    /** */
+    this.g.createNotification("Test", "Test body", 0);
+    this.g.vibrate();
   }
   ionViewWillLeave()  { this.destroy() }
   ngOnDestroy()       { this.destroy() }

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Haptics } from '@capacitor/haptics';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { NavController } from '@ionic/angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from 'src/environments/environment';
@@ -100,4 +102,23 @@ export class GeneralService {
     let day = todayDateTime.getDate().toString().length == 1 ? '0' + todayDateTime.getDate() : todayDateTime.getDate();
     return new Date(year + '-' + month + '-' + day);
   }
+
+  /** */
+  public async createNotification(title: string, body: string, interval: number) {
+    await LocalNotifications.schedule({
+      notifications: [{
+        title : title,
+        body  : body,
+        id    : Date.now(),
+        schedule: { at: new Date(Date.now() + interval) },
+        sound: 'default',
+        smallIcon: '../../../../icons/icon-48.webp',
+        actionTypeId: '',
+        extra: null
+      }]
+    });
+  }
+  public async vibrate() {
+    await Haptics.vibrate({ duration: 3000});
+  };
 }
