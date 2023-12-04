@@ -19,6 +19,7 @@ export class LoginComponent {
   ) {}
 
   ionViewWillEnter() { this.validateToken(); }
+  ionViewWillLeave() { this.formIdPassword.reset(); }
 
   /**
    *  Method: Auto login if token from previous login still valid
@@ -35,7 +36,7 @@ export class LoginComponent {
    */
   public formIdPasswordSubmitted = false;
   public get formIdPasswordControl()  { return this.formIdPassword.controls; }
-  public formIdPassword: FormGroup = this.fb.group({
+  public formIdPassword = this.fb.group({
     id      : ['', [Validators.required, Validators.pattern('^[1-9]\\d*$')]],
     password: ['', [Validators.required]],
   });
