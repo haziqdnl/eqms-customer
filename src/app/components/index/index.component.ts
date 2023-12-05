@@ -35,7 +35,8 @@ export class IndexComponent {
 
     /** */
     this.g.createNotification("Test", "Test body", 0);
-    this.g.vibrate();
+    console.log("Popout notification");
+    //this.g.vibrate();
   }
   ionViewWillLeave()  { this.destroy() }
   ngOnDestroy()       { this.destroy() }

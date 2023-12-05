@@ -112,7 +112,7 @@ export class GeneralService {
         id    : Date.now(),
         schedule: { at: new Date(Date.now() + interval) },
         sound: 'default',
-        smallIcon: '../../../../icons/icon-48.webp',
+        //smallIcon: '../../../../icons/icon-48.webp',
         actionTypeId: '',
         extra: null
       }]
