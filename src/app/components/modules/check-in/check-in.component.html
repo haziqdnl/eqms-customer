@@ -3,7 +3,7 @@
         <ion-title>Check-In</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="loaded">
     <section *ngIf="enableCheckIn; else invalidCheckIn">
         <div *ngIf="g.getIsMobile(); else notMobile">
             <zxing-scanner previewFitMode="cover" (scanSuccess)="onScanSuccess($event)"></zxing-scanner>
@@ -16,7 +16,7 @@
             </div>
         </ng-template>
     </section>
-    <ng-template #invalidCheckIn>
+    <ng-template #invalidCheckIn class="ion-padding">
         <div class="text-center mt-5">
             <fa-icon icon="calendar-xmark" size="5x" class="text-danger"></fa-icon>
             <p class="mt-3">{{ msgErrCheckIn }}</p>

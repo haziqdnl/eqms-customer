@@ -5,5 +5,6 @@ export const environment = {
     environmentName : "production",
     domainUrl       : domainUrl,
     webUrl          : domainUrl + 'eqmscustomer/#/',
-    apiUrl          : domainUrl + 'eqmsjsonwebservice/services'
+    apiUrl          : domainUrl + 'eqmsjsonwebservice/services',
+    appVersion      : `v${require('../../package.json').version}`
 };

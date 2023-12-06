@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiOutletService } from 'src/app/api/api-outlet.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -20,7 +21,24 @@ export class BookApptComponent {
     private g: GeneralService,
   ) {} 
   
-  ionViewWillEnter() { this.validateToken(); }
+  public loaded = false;
+  ionViewWillEnter() {
+    this.g.showLoading(1000);
+    setTimeout( () => { this.loaded = true }, 1000);
+    this.validateToken(); 
+  }
+  ionViewWillLeave()  { this.destroy(); }
+  ngOnDestroy()       { this.destroy(); }
+
+  /**
+   *  Method: Destroy the page content and functions
+   */
+  private destroy() {
+    this.loaded = false
+    if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
+    if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
+    this.getOutletList("");
+  }
 
   /**
    *  Method: Validate customer/token
@@ -43,16 +61,21 @@ export class BookApptComponent {
   /**
    *  Method: Get appt data
    */
-  private selectedAgencyID: any = "39";
   public  isAppt: Boolean = false;
+  private intervalGetApptInfo: any;
   private getApptInfo() {
-    this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
-      this.isAppt = false;
-      if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken);
-        this.isAppt = rsp.d.RespData !== '' && rsp.d.RespData !== undefined;
-      }
-      else this.g.apiRespError(rsp.d);
+    this.intervalGetApptInfo = interval(1000).subscribe( () => {
+      this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
+        this.isAppt = false;
+        if (rsp.d.RespCode == "200") {
+          this.g.setCustToken(rsp.d.ExtendedToken);
+          if (rsp.d.RespData == "" || rsp.d.RespData == undefined)
+            this.isAppt = false;
+          else
+            this.isAppt = (rsp.d.RespData[0].AppStat == "COMPLETE" || rsp.d.RespData[0].AppStat == "NOSHOW") ? false : true;
+        }
+        else this.g.apiRespError(rsp.d);
+      });
     });
   }
 
@@ -60,14 +83,20 @@ export class BookApptComponent {
    *  Method: Get walk-in data
    */
   public  isWalkIn: Boolean = false;
+  private intervalGetWalkInInfo: any;
   private getWalkInInfo() {
-    this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
-      this.isWalkIn = false;
-      if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken);
-        this.isWalkIn = rsp.d.RespData !== '' && rsp.d.RespData !== undefined;
-      }
-      else this.g.apiRespError(rsp.d);
+    this.intervalGetWalkInInfo = interval(1000).subscribe( () => {
+      this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
+        this.isWalkIn = false;
+        if (rsp.d.RespCode == "200") {
+          this.g.setCustToken(rsp.d.ExtendedToken);
+          if (rsp.d.RespData == "" || rsp.d.RespData == undefined)
+            this.isWalkIn = false;
+          else
+            this.isWalkIn = (rsp.d.RespData[0].WalkInStat == "COMPLETE" || rsp.d.RespData[0].WalkInStat == "NOSHOW") ? false : true;
+        }
+        else this.g.apiRespError(rsp.d);
+      });
     });
   }
 
@@ -172,6 +201,7 @@ export class BookApptComponent {
   /**
    *  Method: Create appt
    */
+  private selectedAgencyID: any = "39";
   public createAppt() {
     let request = {
       objRequest: { 

@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
@@ -20,12 +21,23 @@ export class CheckInComponent {
     private ngbModal: NgbModal,
   ) {}
   
-  ionViewWillEnter() { this.validateToken(); }
+  public loaded = false;
+  ionViewWillEnter() {
+    this.g.showLoading(1000);
+    setTimeout( () => { this.loaded = true }, 1000);
+    this.validateToken();
+  }
+  ionViewWillLeave()  { this.destroy(); }
+  ngOnDestroy()       { this.destroy(); }
 
-  ionViewWillLeave() {
+  /**
+   *  Method: Destroy the page content and functions
+   */
+  private destroy() {
+    this.loaded = false
+    if (this.intervalGetApptWalkIn)                             this.intervalGetApptWalkIn.unsubscribe();
     if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();
     if (typeof this.modalErrorMsgRef          !== 'undefined')  this.modalErrorMsgRef.close();
-    window.location.reload();
   }
 
   /**
@@ -42,11 +54,12 @@ export class CheckInComponent {
   /**
    *  Method: Validate customer token
    */
+  private intervalGetApptWalkIn: any;
   private validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
     this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
-        this.getWalkInInfo()
+        this.intervalGetApptWalkIn = interval(1000).subscribe( () => { this.getApptInfo(); });
       else {
         rsp.d.RespCode = '401';
         this.g.apiRespError(rsp.d);
@@ -55,45 +68,49 @@ export class CheckInComponent {
   }
 
   /**
-   *  Method: Get walk-in data
+   *  Method: Get appt data
    */
-  public  isWalkIn: Boolean = false;
-  private getWalkInInfo() {
-    this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
-      this.isWalkIn = false;
+  public  enableCheckIn: Boolean = false;
+  public  msgErrCheckIn: string = "";
+  public  isAppt: Boolean = false;
+  private getApptInfo() {
+    this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
+      this.isAppt = false;
       if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken);
-        if (rsp.d.RespData !== '' && rsp.d.RespData !== undefined) {
-          this.enableCheckIn = false;
-          this.msgErrCheckIn = "You already checked in.";
+        this.g.setCustToken(rsp.d.ExtendedToken)
+        if (rsp.d.RespData != '' && rsp.d.RespData != undefined) {
+          if (rsp.d.RespData[0].AppStat != "COMPLETE" || rsp.d.RespData[0].AppStat != "NOSHOW") {
+            this.isAppt = true;
+            if ((new Date(rsp.d.RespData[0].ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime())
+              this.enableCheckIn = true;
+            else {
+              this.enableCheckIn = false;
+              this.msgErrCheckIn = "You're only allowed to check-in on the booked date and time.";
+            }
+          }
+          else this.getWalkInInfo();
         }
-        else this.getApptInfo();
+        else this.getWalkInInfo();
       }
       else this.g.apiRespError(rsp.d);
     });
   }
 
   /**
-   *  Method: Get appt data
+   *  Method: Get walk-in data
    */
-  public  isAppt: Boolean = false;
-  public  enableCheckIn: Boolean = false;
-  public  msgErrCheckIn: string = "";
-  private getApptInfo() {
-    this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
-      this.isAppt = false;
+  private getWalkInInfo() {
+    this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken)
-        if (rsp.d.RespData !== '' && rsp.d.RespData !== undefined) {
-          this.isAppt = true;
-          if ((new Date(rsp.d.RespData[0].ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime())
-            this.enableCheckIn = true;
-          else {
+        this.enableCheckIn = true;
+        this.msgErrCheckIn = "";
+        this.g.setCustToken(rsp.d.ExtendedToken);
+        if (rsp.d.RespData != "" && rsp.d.RespData != undefined) {
+          if (rsp.d.RespData[0].WalkInStat != "COMPLETE" && rsp.d.RespData[0].WalkInStat != "NOSHOW") {
             this.enableCheckIn = false;
-            this.msgErrCheckIn = "You're only allowed to check-in on the booked date and time.";
+            this.msgErrCheckIn = "You already checked in.";
           }
         }
-        else this.enableCheckIn = true;
       }
       else this.g.apiRespError(rsp.d);
     });

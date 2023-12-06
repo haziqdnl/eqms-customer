@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Haptics } from '@capacitor/haptics';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { NavController } from '@ionic/angular';
+import { LoadingController, NavController } from '@ionic/angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from 'src/environments/environment';
 
@@ -12,8 +12,9 @@ export class GeneralService {
 
   constructor(
     private deviceDetectorService: DeviceDetectorService,
+    private loadingCtrl: LoadingController,
     private snackBar: MatSnackBar,
-    private navController: NavController,
+    private navCtrl: NavController,
   ) { }
 
   /**
@@ -22,12 +23,27 @@ export class GeneralService {
   public getEnvName()       { return environment.environmentName; }
   public getEnvDomainUrl()  { return environment.domainUrl; }
   public getEnvApiUrl()     { return environment.apiUrl; }
+  public getEnvAppVer()     { return environment.appVersion; }
 
   /**
    *  Method: Customer Token
    */
   public setCustToken(t: any)  { localStorage.setItem('eqmsCustomer_jwtToken', t); }
   public getCustToken()    { return localStorage.getItem('eqmsCustomer_jwtToken'); }
+
+  /**
+   *  Method: End Session / Reset Token
+   */
+  public endSession() {
+    this.setCustToken("");
+    this.redirectBack('login');
+  }
+
+  /**
+   *  Method: URL redirect/navigation
+   */
+  public redirectTo   (c: string) { this.navCtrl.navigateForward(c); }
+  public redirectBack (c: string) { this.navCtrl.navigateBack(c); }
 
   /**
    *  Method: Success/Error Handling
@@ -51,17 +67,14 @@ export class GeneralService {
   public apiRespError(rsp: any) { rsp.RespCode != '401' ? this.toastError(rsp.RespMessage) : this.endSession(); }
 
   /**
-   *  Method: URL redirect/navigation
+   *  Method: Ionic loader
    */
-  public redirectTo   (c: string) { this.navController.navigateForward(c); }
-  public redirectBack (c: string) { this.navController.navigateBack(c); }
-
-  /**
-   *  Method: End Session / Reset Token
-   */
-  public endSession() {
-    this.setCustToken("");
-    this.redirectBack('login');
+  public async showLoading(duration: number) {
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading',
+      duration: duration,
+    });
+    loading.present();
   }
 
   /**
@@ -107,14 +120,12 @@ export class GeneralService {
   public async createNotification(title: string, body: string, interval: number) {
     await LocalNotifications.schedule({
       notifications: [{
-        title : title,
-        body  : body,
-        id    : Date.now(),
-        schedule: { at: new Date(Date.now() + interval) },
-        sound: 'default',
-        //smallIcon: '../../../../icons/icon-48.webp',
-        actionTypeId: '',
-        extra: null
+        id          : Date.now(),
+        title       : title,
+        body        : body,
+        largeBody   : "",
+        summaryText : "",
+        schedule    : { at: new Date(Date.now() + interval) },
       }]
     });
   }

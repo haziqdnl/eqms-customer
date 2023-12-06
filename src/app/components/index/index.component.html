@@ -8,7 +8,7 @@
         </ion-buttons>
     </ion-toolbar>
     <div class="header"></div>
-    <ion-grid>
+    <ion-grid *ngIf="loaded">
         <!-- Summary & Widget -->
         <ion-row class="ion-margin-horizontal">
             <ion-col class="ion-text-center">
@@ -44,7 +44,7 @@
                                 <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3"> *Please wait in the waiting area, we'll call and serve you in a few minutes.</p>
                             </div>
                         </section>
-                        <section *ngIf="apptData[0] != null">
+                        <section *ngIf="apptData[0] != null && apptData[0].ApptStat != 'COMPLETE'">
                             <div id="appt">
                                 <!-- Appt: Icon -->
                                 <fa-icon *ngIf="apptData[0].ApptStat == 'NEW'"     icon="calendar-check" size="5x" class="text-primary"></fa-icon>
@@ -60,7 +60,7 @@
                                 <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{ this.uniqCallID | uppercase }}</h2>
                                 <h3>
                                     {{ apptData[0].Service }}<br>
-                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp + '\<br\>' : '' }}
+                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp : '' }}<br *ngIf="apptData[0].ApptStat == 'NEW'">
                                     {{ apptData[0].ApptStat == 'NEW' ? apptData[0].OutletDesc : '' }}
                                 </h3>
                                 <!-- Appt: Notice -->

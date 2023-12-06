@@ -3,7 +3,7 @@
         <ion-title>Book Appointment</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding">
+<ion-content *ngIf="loaded" class="ion-padding">
     <section *ngIf="isWalkIn || isAppt" class="text-center pt-5">
         <fa-icon icon="triangle-exclamation" size="5x" class="text-warning"></fa-icon>
         <p class="mt-3">You already have an active appointment. <br> Therefore, you are not allowed to book another one.</p>

@@ -29,37 +29,30 @@ export class IndexComponent {
     public  http: HttpClient,
   ) {}
   
+  public loaded = false;
   ionViewWillEnter() {
+    this.g.showLoading(1000);
+    setTimeout( () => { this.loaded = true }, 1000);
     this.validateToken();
     this.getUrlParam();
 
     /** */
-    this.g.createNotification("Test", "Test body", 0);
-    console.log("Popout notification");
+    //this.g.createNotification("Test", "Test body", 0);
     //this.g.vibrate();
   }
-  ionViewWillLeave()  { this.destroy() }
-  ngOnDestroy()       { this.destroy() }
-
-  private destroy() {
-    if (this.alertLogout)         this.alertLogout.dismiss();
-    if (this.alertCheckInSuccess) this.alertCheckInSuccess.dismiss();
-    if (this.alertCancelAppt)     this.alertCancelAppt.dismiss();
-    
-    if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
-    if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
-  }
+  ionViewWillLeave()  { this.destroyPage(); }
+  ngOnDestroy()       { this.destroyPage(); }
 
   /**
-   *  Method: get URL param
+   *  Method: Destroy the page content and functions
    */
-  private getUrlParam() {
-    this.routeParam.queryParamMap.subscribe( paramMap => {
-      if (paramMap.get('scan') == '1')
-        setTimeout( () => { this.openAlertCheckInSuccess(); }, 1000);
-      else if (paramMap.get('scan') == '0')
-        this.g.apiRespError(JSON.parse(localStorage['eqmsCustomer_errScan']));
-    });
+  private destroyPage() {
+    this.loaded = false
+    if (this.alertLogout)           this.alertLogout.dismiss();
+    if (this.alertCheckInSuccess)   this.alertCheckInSuccess.dismiss();
+    if (this.alertCancelAppt)       this.alertCancelAppt.dismiss();
+    if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
+    if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
   }
 
   /**
@@ -78,6 +71,18 @@ export class IndexComponent {
         rsp.d.RespCode = "401";
         this.g.apiRespError(rsp.d);
       }
+    });
+  }
+
+  /**
+   *  Method: get URL param
+   */
+  private getUrlParam() {
+    this.routeParam.queryParamMap.subscribe( paramMap => {
+      if (paramMap.get('scan') == '1')
+        setTimeout( () => { this.openAlertCheckInSuccess(); }, 1000);
+      else if (paramMap.get('scan') == '0')
+        this.g.apiRespError(JSON.parse(localStorage['eqmsCustomer_errScan']));
     });
   }
 
