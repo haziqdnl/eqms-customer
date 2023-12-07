@@ -78,12 +78,11 @@ export class IndexComponent {
    *  Method: get URL param
    */
   private getUrlParam() {
-    this.routeParam.queryParamMap.subscribe( paramMap => {
-      if (paramMap.get('scan') == '1')
-        setTimeout( () => { this.openAlertCheckInSuccess(); }, 1000);
-      else if (paramMap.get('scan') == '0')
-        this.g.apiRespError(JSON.parse(localStorage['eqmsCustomer_errScan']));
-    });
+    if (localStorage['eqmsCustomer_scanResult'] != "" && localStorage['eqmsCustomer_scanResult'] != undefined) {
+      let data = JSON.parse(localStorage['eqmsCustomer_scanResult']);
+      if (data.RespCode == "200") setTimeout( () => { this.openAlertCheckInSuccess(); }, 1000);
+      localStorage['eqmsCustomer_scanResult'] = "";
+    }
   }
 
   /**

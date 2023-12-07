@@ -34,6 +34,8 @@
     "@fortawesome/angular-fontawesome": "^0.13.0",
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@ionic-native/camera": "^5.0.0",
+    "@ionic-native/qr-scanner": "^5.0.0",
     "@ionic/angular": "^7.4.0",
     "@ionic/cli": "^7.1.1",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",

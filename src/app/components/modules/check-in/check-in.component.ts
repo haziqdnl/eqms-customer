@@ -133,16 +133,14 @@ export class CheckInComponent {
       };
       this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
         this.errMsgTitle = '';
-        if (rsp.d.RespCode == "200") 
-          this.g.redirectBack('?scan=1');
-        else if (rsp.d.RespCode == "400") {
-          this.errMsgTitle = rsp.d.RespMessage;
-          this.openModalErrorMsg();
-        }
+        localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
+        if      (rsp.d.RespCode == "200") this.g.redirectBack('');
         else if (rsp.d.RespCode == "444") this.openModalWalkInServiceType();
         else {
-          localStorage['eqmsCustomer_errScan'] = JSON.stringify(rsp.d);
-          this.g.redirectBack('?scan=1');
+          if      (rsp.d.RespCode == "400") this.errMsgTitle = 'QR code invalid';
+          else if (rsp.d.RespCode == "401") this.errMsgTitle = 'QR code expired';
+          else                              this.errMsgTitle = 'Scanning failed due to unrecognized error';
+          this.openModalErrorMsg();
         }
       });
     }
@@ -160,13 +158,12 @@ export class CheckInComponent {
       }
     };
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
-      if (rsp.d.RespCode == "200")
-        this.g.redirectBack('?scan=1');
-      else {
-        rsp.d.RespMessage = rsp.d.RespMessage.includes('Bad Request') ? 'Check-in failed! Please try again.' : '';
-        localStorage['eqmsCustomer_errScan'] = JSON.stringify(rsp.d);
-        this.g.redirectBack('?scan=0');
+      if (rsp.d.RespCode != "200") {
+        this.errMsgTitle = 'Check-in failed! Please try again.'
+        this.openModalErrorMsg();
       }
+      localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
+      this.g.redirectBack('');
     });
   }
 
