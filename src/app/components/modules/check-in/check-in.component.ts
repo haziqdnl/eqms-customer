@@ -27,13 +27,7 @@ export class CheckInComponent {
     setTimeout( () => { this.loaded = true }, 1000);
     this.validateToken();
   }
-  ionViewWillLeave()  { this.destroy(); }
-  ngOnDestroy()       { this.destroy(); }
-
-  /**
-   *  Method: Destroy the page content and functions
-   */
-  private destroy() {
+  ionViewWillLeave()  {
     this.loaded = false
     if (this.intervalGetApptWalkIn)                             this.intervalGetApptWalkIn.unsubscribe();
     if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();

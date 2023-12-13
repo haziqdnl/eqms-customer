@@ -1,5 +1,6 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar class="pt-5 pt-lg-0 topbar">
+    <ion-toolbar [class]="'topbar px-3 ' + (g.getIsMobileWeb() ? '' : 'pt-5')">
+        <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
         <ion-title>Check-In</ion-title>
     </ion-toolbar>
 </ion-header>

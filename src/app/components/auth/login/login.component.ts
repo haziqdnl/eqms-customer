@@ -18,7 +18,7 @@ export class LoginComponent {
     public  g: GeneralService
   ) {}
 
-  ionViewWillEnter() { this.validateToken(); }
+  ngOnInit() { this.validateToken(); }
   ionViewWillLeave() { this.formIdPassword.reset(); }
 
   /**

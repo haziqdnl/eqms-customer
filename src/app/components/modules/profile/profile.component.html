@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-toolbar class="pt-5 pt-lg-0 topbar">
+    <ion-toolbar [class]="'topbar ' + (g.getIsMobileWeb() ? '' : 'pt-5')">
         <ion-title>My Profile</ion-title>
     </ion-toolbar>
     <div id="profileTop" class="text-center text-light py-4">
@@ -54,7 +54,7 @@
     <ion-modal [isOpen]="isOpenModalEditProfile" [canDismiss]="!isOpenModalEditProfile">
         <ng-template>
             <ion-header>
-                <ion-toolbar class="pt-5 pt-lg-0" [class]="modeModal == '3' ? 'modalChangePwd' : 'modalEdit'">
+                <ion-toolbar [class]="(g.getIsMobileWeb() ? '' : 'pt-5') + ' ' + (modeModal == '3' ? 'modalChangePwd' : 'modalEdit')">
                     <ion-title>{{ titleModal }}</ion-title>
                 </ion-toolbar>
             </ion-header>

@@ -13,6 +13,7 @@ import { LoginComponent } from './components/auth/login/login.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
 import { CheckInComponent } from './components/modules/check-in/check-in.component';
+import { CheckInRedirectComponent } from './components/modules/check-in-redirect/check-in-redirect/check-in-redirect.component';
 import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
 import { ProfileComponent } from './components/modules/profile/profile.component';
 
@@ -66,8 +67,8 @@ const routes: Routes = [
         title: `${appName} | Book Appointment`
       },
       { 
-        path: 'checkin', 
-        component: CheckInComponent, 
+        path: 'checkinredirect', 
+        component: CheckInRedirectComponent, 
         title: `${appName} | Check-In`
       },
       { 
@@ -77,10 +78,20 @@ const routes: Routes = [
       },
     ]
   },
+  {
+    path: 'checkin',
+    component: CheckInComponent,
+    title: `${appName} | Check-In`
+  },
   /** ========================
    *  Components: Misc Modules
    *  ========================
    */
+  {
+    path: 'error/401',
+    component: UnauthorizedComponent,
+    title: `${appName} | Unauthorized`
+  },
   {
     path: 'error/401',
     component: UnauthorizedComponent,

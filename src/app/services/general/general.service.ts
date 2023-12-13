@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Haptics } from '@capacitor/haptics';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, Platform } from '@ionic/angular';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +15,7 @@ export class GeneralService {
     private loadingCtrl: LoadingController,
     private snackBar: MatSnackBar,
     private navCtrl: NavController,
+    private platform: Platform,
   ) { }
 
   /**
@@ -101,9 +102,11 @@ export class GeneralService {
   }
   
   /**
-   *  Method: To identify user device is mobile
+   *  Method: To get user device information
    */
-  public getIsMobile() { return this.deviceDetectorService.isMobile(); }
+  public getIsMobile()    { return this.deviceDetectorService.isMobile(); }
+  public getIsMobileWeb() { return this.platform.is('mobileweb'); }
+  public getDeviceInfo()  { return this.deviceDetectorService; }
 
   /**
    *  Method: Get current Date (no time)

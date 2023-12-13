@@ -183,8 +183,8 @@ export class ProfileComponent {
 
     if (open) {
       if (mode == "0")  this.titleModal = "Edit Profile";
-      if (mode == "1")  this.titleModal = "Rename Unique Call ID";
-      if (mode == "2")  this.titleModal = "Change Profile Picture";
+      if (mode == "1")  this.titleModal = "Rename Call ID";
+      if (mode == "2")  this.titleModal = "Edit Profile Picture";
       if (mode == "3")  this.titleModal = "Change Password";
     } 
     else {

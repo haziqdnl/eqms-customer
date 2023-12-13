@@ -20,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
+import { IonicModule } from '@ionic/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
@@ -39,7 +40,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
 //  Components: Main Modules
 import { CheckInComponent } from './components/modules/check-in/check-in.component';
-import { IonicModule } from '@ionic/angular';
+import { CheckInRedirectComponent } from './components/modules/check-in-redirect/check-in-redirect/check-in-redirect.component';
 import { BookApptComponent } from './components/modules/book-appt/book-appt.component';
 import { ProfileComponent } from './components/modules/profile/profile.component';
 
@@ -60,6 +61,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     IndexComponent,
     //  Components: Main Modules
     CheckInComponent,
+    CheckInRedirectComponent,
     BookApptComponent,
     ProfileComponent,
   ],

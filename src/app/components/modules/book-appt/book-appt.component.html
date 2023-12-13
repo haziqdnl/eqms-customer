@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar class="pt-5 pt-lg-0 topbar">
+    <ion-toolbar [class]="'topbar ' + (g.getIsMobileWeb() ? '' : 'pt-5')">
         <ion-title>Book Appointment</ion-title>
     </ion-toolbar>
 </ion-header>

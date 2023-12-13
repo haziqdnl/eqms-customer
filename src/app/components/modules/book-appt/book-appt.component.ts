@@ -18,7 +18,7 @@ export class BookApptComponent {
     private apiOutletService: ApiOutletService,
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
-    private g: GeneralService,
+    public  g: GeneralService,
   ) {} 
   
   public loaded = false;

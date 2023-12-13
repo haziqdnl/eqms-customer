@@ -1,5 +1,5 @@
-<ion-content [fullscreen]="true" color="light" class="pt-5 pt-lg-0">
-    <ion-toolbar class="pt-5 pt-lg-0 topbar px-3">
+<ion-content [fullscreen]="true" color="light" [class]="g.getIsMobileWeb() ? '' : 'pt-5'">
+    <ion-toolbar [class]="'topbar px-3 ' + (g.getIsMobileWeb() ? '' : 'pt-5')">
         <ion-img slot="start" id="topbarLogo" class="mx-auto" src="assets/img/arx_logo.jpeg" alt="image"></ion-img>
         <ion-buttons slot="end">
             <a id="topbarLogout" class="ms-auto text-light" href="javascript: void(0);" (click)="openAlertLogout()">

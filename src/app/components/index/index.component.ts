@@ -118,7 +118,6 @@ export class IndexComponent {
   /**
    *  Method: Get appt data
    */
-  private selectedAgencyID: any = "39";
   public  apptData: any = [];
   private intervalGetApptInfo: any;
   private getApptInfo() {
@@ -212,7 +211,7 @@ export class IndexComponent {
               objRequest: { 
                 Mode    : "DELETE",
                 ApptData: {
-                  AgencyID: this.selectedAgencyID, 
+                  AgencyID: this.apptData[0].AgencyID,
                   OutletID: this.apptData[0].OutletID, 
                   ApptID  : this.apptData[0].ApptID,
                 }
