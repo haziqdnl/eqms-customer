@@ -6,16 +6,15 @@
 </ion-header>
 <ion-content *ngIf="loaded">
     <section *ngIf="enableCheckIn; else invalidCheckIn">
-        <div *ngIf="g.getIsMobile(); else notMobile">
-            <zxing-scanner previewFitMode="cover" (scanSuccess)="onScanSuccess($event)"></zxing-scanner>
+        <div *ngIf="isSupported">
+            <!-- <zxing-scanner previewFitMode="cover" (scanSuccess)="onScanSuccess($event)"></zxing-scanner> -->
+            <div #square class="square"></div>
         </div>
-        <ng-template #notMobile>
-            <div class="text-center mt-5">
-                <fa-icon icon="rectangle-xmark" size="5x" class="text-danger"></fa-icon>
-                <h2 class="fw-bolder">Desktop Scanning Is Not Supported!</h2>
-                <p class="px-2">Please scan with your smartphone or use the outlet manual check-in with your login ID and password.</p>
-            </div>
-        </ng-template>
+        <div *ngIf="!isSupported" class="text-center mt-5">
+            <fa-icon icon="rectangle-xmark" size="5x" class="text-danger"></fa-icon>
+            <h2 class="fw-bolder">Scanner Is Not Supported On This Platform!</h2>
+            <p class="px-2">Please use an Android or IOS device, or use the outlet manual check-in with your login ID and password.</p>
+        </div>
     </section>
     <ng-template #invalidCheckIn class="ion-padding">
         <div class="text-center mt-5">

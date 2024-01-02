@@ -12,6 +12,20 @@
 
 .topbar { --background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)) !important; }
 
+ion-content { --background: transparent; }
+
+.square {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 16px;
+    width: 200px;
+    height: 200px;
+    border: 6px solid white;
+    box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+}
+
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}
 
