@@ -30,10 +30,12 @@
         <p class="text-secondary font-size-12 mt-3">Please select your prefered service:</p>
         <div class="text-center mb-5">
             <div class="btn-group">
-                <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
+                <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="selectedWalkInServiceType = '0'" />
                 <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
-                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
+                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="selectedWalkInServiceType = '1'" />
                 <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
+                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePayment" autocomplete="off" (click)="selectedWalkInServiceType = '2'" />
+                <label class="btn btn-light" for="serviceTypePayment">Payment</label>
             </div>
         </div>
         <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No');">Cancel</button>

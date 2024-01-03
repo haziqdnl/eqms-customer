@@ -28,8 +28,8 @@ export class CheckInComponent {
     //  Loader
     this.g.showLoading(1000);
     setTimeout( () => { this.loaded = true }, 1000);
-    this.isScannerSupportandPermission();
     this.validateToken();
+    this.isScannerSupportandPermission();
   }
   ionViewWillLeave()  {
     this.loaded = false
@@ -49,83 +49,6 @@ export class CheckInComponent {
   private modalErrorMsgRef: any;
   @ViewChild('modalErrorMsg') private modalErrorMsg: any;
   public openModalErrorMsg() { this.modalErrorMsgRef = this.ngbModal.open(this.modalErrorMsg, { centered: true, keyboard: false, backdrop: 'static' }); }
-
-  /** ========================================================================================== */
-
-  /**
-   *  Method: Check device is supported and has granted permission to use the scanner
-   */
-  public isSupported = false;
-  public isPermissionGranted = false;
-  public isScannerSupportandPermission() {
-    //  Check if device is supported
-    BarcodeScanner.isSupported().then((result) => {
-      this.isSupported = result.supported;
-      if (this.isSupported) {
-        //  Check permission access to camera
-        BarcodeScanner.checkPermissions().then((result) => { this.isPermissionGranted = result.camera === 'granted'; });
-        setTimeout( () => { this.startScan(); }, 250);
-      }
-    }).catch((err: any) => {});
-  }
-  /**
-   *  Method: Will prompt automatically if current device has not grant permission to access camera
-   */
-  public async requestPermissions(): Promise<void> { await BarcodeScanner.requestPermissions(); }
-  /**
-   *  Method: Close and stop scanner
-   */
-  private async stopScan(): Promise<void> { await BarcodeScanner.stopScan(); console.log(BarcodeScanner); }
-  /**
-   *  Method: Open and start scanner
-   */
-  public formats: BarcodeFormat[] = []
-  public readonly lensFacing: LensFacing = LensFacing.Back;
-  @ViewChild('square') public squareElement: ElementRef<HTMLDivElement> | undefined;
-  private async startScan(): Promise<void> {
-    const squareElementBoundingClientRect = this.squareElement?.nativeElement.getBoundingClientRect();
-    const scaledRect = squareElementBoundingClientRect ? {
-      left  : squareElementBoundingClientRect.left   * window.devicePixelRatio,
-      right : squareElementBoundingClientRect.right  * window.devicePixelRatio,
-      top   : squareElementBoundingClientRect.top    * window.devicePixelRatio,
-      bottom: squareElementBoundingClientRect.bottom * window.devicePixelRatio,
-      width : squareElementBoundingClientRect.width  * window.devicePixelRatio,
-      height: squareElementBoundingClientRect.height * window.devicePixelRatio,
-    } : undefined;
-    const detectionCornerPoints = scaledRect ? [
-      [scaledRect.left                   , scaledRect.top],
-      [scaledRect.left + scaledRect.width, scaledRect.top],
-      [scaledRect.left + scaledRect.width, scaledRect.top + scaledRect.height,],
-      [scaledRect.left                   , scaledRect.top + scaledRect.height],
-    ] : undefined;
-
-    //  Get the result of the scan
-    const listener = await BarcodeScanner.addListener('barcodeScanned', async (event) => {
-      this.ngZone.run(() => {
-          const cornerPoints = event.barcode.cornerPoints;
-          if (detectionCornerPoints && cornerPoints) {
-            if (
-              detectionCornerPoints[0][0] > cornerPoints[0][0] ||
-              detectionCornerPoints[0][1] > cornerPoints[0][1] ||
-              detectionCornerPoints[1][0] < cornerPoints[1][0] ||
-              detectionCornerPoints[1][1] > cornerPoints[1][1] ||
-              detectionCornerPoints[2][0] < cornerPoints[2][0] ||
-              detectionCornerPoints[2][1] < cornerPoints[2][1] ||
-              detectionCornerPoints[3][0] > cornerPoints[3][0] ||
-              detectionCornerPoints[3][1] < cornerPoints[3][1]
-            ) {
-              alert(event.barcode);
-              return; 
-            }
-          }
-          listener.remove();
-        });
-      },
-    );
-    await BarcodeScanner.startScan({formats: this.formats, lensFacing: this.lensFacing});
-  }
-
-  /** ========================================================================================== */
 
   /**
    *  Method: Validate customer token
@@ -192,13 +115,56 @@ export class CheckInComponent {
     });
   }
 
+  /** ========================================================================================== */
+  /**
+   *  Method: Check device is supported and has granted permission to use the scanner
+   */
+  public isSupported = false;
+  public isPermissionGranted = false;
+  public isScannerSupportandPermission() {
+    //  Check if device is supported
+    BarcodeScanner.isSupported().then((result) => {
+      this.isSupported = result.supported;
+      if (this.isSupported) {
+        //  Check permission access to camera
+        BarcodeScanner.checkPermissions().then((result) => { this.isPermissionGranted = result.camera === 'granted'; });
+        setTimeout( () => { this.startScan(); }, 250);
+      }
+    }).catch((err: any) => { this.g.toastSuccess("Your device is unsupported or the scanner is having an issue.") });
+  }
+  /**
+   *  Method: Will prompt automatically if current device has not grant permission to access camera
+   */
+  public async requestPermissions(): Promise<void> { await BarcodeScanner.requestPermissions(); }
+  /**
+   *  Method: Open and start scanner
+   */
+  public formats: BarcodeFormat[] = []
+  public readonly lensFacing: LensFacing = LensFacing.Back;
+  private async startScan(): Promise<void> {
+    //  Get the result of the scan
+    const listener = await BarcodeScanner.addListener('barcodeScanned', async result => {
+      this.onScanSuccess(result.barcode.rawValue.toString());
+    });
+    //  Start the scanner
+    await BarcodeScanner.startScan({formats: this.formats, lensFacing: this.lensFacing});
+  }
+  /**
+   *  Method: Close and stop scanner
+   */
+  private async stopScan(): Promise<void> {
+    await BarcodeScanner.removeAllListeners();
+    await BarcodeScanner.stopScan();
+  }
+  /** ========================================================================================== */
+
   /**
    *  Method: QR Scanner
    *  - get value from QR
    */
   public  errMsgTitle: any = '';
   private qrValue: string = "";
-  public  async onScanSuccess(resultString: string) {
+  public  onScanSuccess(resultString: string) {
     if (resultString !== undefined && !this.qrValue) {
       this.qrValue = resultString;
       let request = {
@@ -226,6 +192,7 @@ export class CheckInComponent {
   /**
    *  Method: Set Walk-In service type
    */
+  public selectedWalkInServiceType: string = '';
   public walkIn() {
     let request = {
       objRequest: { 
@@ -242,10 +209,4 @@ export class CheckInComponent {
       this.g.redirectBack('');
     });
   }
-
-  /**
-   *  Method: Set Walk-In service type
-   */
-  public selectedWalkInServiceType: any = '';
-  public setApptServiceType(sType: any) { this.selectedWalkInServiceType = sType; }
 }
