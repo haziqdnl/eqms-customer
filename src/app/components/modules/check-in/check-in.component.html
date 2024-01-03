@@ -1,14 +1,13 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar [class]="'topbar px-3 ' + (g.getIsMobileWeb() ? '' : 'pt-5')">
+    <ion-toolbar [class]="'topbar px-3 ' + (g.isMobileWeb() ? '' : 'pt-5')">
         <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
         <ion-title>Check-In</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="loaded">
     <section *ngIf="enableCheckIn; else invalidCheckIn">
-        <div *ngIf="isSupported">
-            <!-- <zxing-scanner previewFitMode="cover" (scanSuccess)="onScanSuccess($event)"></zxing-scanner> -->
-            <div #square class="square"></div>
+        <div *ngIf="isSupported" #square class="square">
+            {{ startScan() }}
         </div>
         <div *ngIf="!isSupported" class="text-center mt-5">
             <fa-icon icon="rectangle-xmark" size="5x" class="text-danger"></fa-icon>
@@ -23,29 +22,32 @@
         </div>
     </ng-template>
 </ion-content>
-<!-- Modal: Walk In -->
-<ng-template #modalWalkInServiceType let-modal>
-    <div class="modal-body text-center p-4">
-        <h4 class="text-center fw-bold">Walk-In</h4>
-        <p class="text-secondary font-size-12 mt-3">Please select your prefered service:</p>
-        <div class="text-center mb-5">
-            <div class="btn-group">
-                <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="selectedWalkInServiceType = '0'" />
-                <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
-                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="selectedWalkInServiceType = '1'" />
-                <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
-                <input type="radio" class="btn-check" name="serviceType" id="serviceTypePayment" autocomplete="off" (click)="selectedWalkInServiceType = '2'" />
-                <label class="btn btn-light" for="serviceTypePayment">Payment</label>
-            </div>
-        </div>
-        <button type="button" class="btn btn-secondary me-3" (click)="modal.close('No');">Cancel</button>
-        <button type="button" class="btn btn-success" (click)="modal.close('Yes')" [disabled]="selectedWalkInServiceType == ''" (click)="walkIn()">Confirm</button>
-    </div>
-</ng-template>
-<!-- Modal: Error message -->
-<ng-template #modalErrorMsg let-modal>
-    <div class="modal-body text-center p-4">
-        <h1 class="text-danger fw-bolder">{{ errMsgTitle }}</h1>
-        <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
-    </div>
-</ng-template>
+<!-- Modals -->
+<ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="0.5" [breakpoints]="[0.5, 1]">
+    <ng-template>
+        <ion-header>
+            <ion-toolbar [class]="(g.isMobileWeb() ? '' : 'pt-5') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
+                <ion-title>{{ modalTitle }}</ion-title>
+                <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">Close</ion-buttons>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding text-center">
+            <section *ngIf="modalMode == 'walkInServiceType'">
+                <p class="text-secondary font-size-12 mt-3">Please select your prefered service:</p>
+                <div class="fw-bold mb-5">
+                    <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3">Redemption</ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '1'" [color]="selectedWalkInServiceType == '1' ? 'primary' : 'medium'" class="px-4 py-3">Pawn</ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '2'" [color]="selectedWalkInServiceType == '2' ? 'primary' : 'medium'" class="px-4 py-3">Payment</ion-chip>
+                </div>
+                <div class="btn-group w-100">
+                    <button type="button" class="btn btn-secondary" (click)="openModal(false, '')">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="openModal(false, ''); walkIn()" [disabled]="selectedWalkInServiceType == ''">Confirm</button>
+                </div>
+            </section>
+            <section *ngIf="modalMode == 'errorMsg'">
+                <fa-icon icon="circle-exclamation" size="5x" class="text-danger"></fa-icon>
+                <h2 class="fw-bolder my-3">{{ errMsgTitle }}</h2>
+            </section>
+        </ion-content>
+    </ng-template>
+</ion-modal>

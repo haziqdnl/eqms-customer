@@ -6,7 +6,7 @@
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
                 <h5 class="mt-2 fw-bold">Create Account</h5>
                 <!-- Forms -->
-                <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.getIsMobile() ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
+                <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.isMobile() ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
                     <!-- Step 1: Fullname & NRIC no. verification -->
                     <mat-step [stepControl]="formRegisterBasicInfo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="id-card"></fa-icon></ng-template>

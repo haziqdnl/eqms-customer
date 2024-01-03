@@ -49,20 +49,15 @@ export class GeneralService {
   /**
    *  Method: Success/Error Handling
    */
-  public toastSuccess(msg: any) {
+  public toastSuccess(msg: string)  { this.toastTemplate(msg, 5000, 'right', 'success') }
+  public toastError(msg: string)    { this.toastTemplate(msg, 5000, 'right', 'error') }
+  public toastInfo(msg: string)     { this.toastTemplate(msg, 5000, 'right', 'info') }
+  public toastTemplate(msg: string, duration: number, pos: any, panelClass: string) {
     this.snackBar.open(msg, 'OK', {
-      duration          : 5000,
-      horizontalPosition: 'right',
-      verticalPosition  : 'top',
-      panelClass        : 'success',
-    });
-  }
-  public toastError(msg: any) {
-    this.snackBar.open(msg, 'Close', {
-      duration          : 5000,
-      horizontalPosition: 'right',
-      verticalPosition  : 'top',
-      panelClass        : 'error',
+      duration          : duration,
+      horizontalPosition: pos,
+      verticalPosition  : this.isMobileWeb() ? 'top' : 'bottom',
+      panelClass        : panelClass,
     });
   }
   public apiRespError(rsp: any) { rsp.RespCode != '401' ? this.toastError(rsp.RespMessage) : this.endSession(); }
@@ -104,8 +99,8 @@ export class GeneralService {
   /**
    *  Method: To get user device information
    */
-  public getIsMobile()    { return this.deviceDetectorService.isMobile(); }
-  public getIsMobileWeb() { return this.platform.is('mobileweb'); }
+  public isMobile()       { return this.platform.is('android') || this.platform.is('ios');; }
+  public isMobileWeb()    { return this.platform.is('mobileweb'); }
   public getDeviceInfo()  { return this.deviceDetectorService; }
 
   /**

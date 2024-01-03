@@ -113,7 +113,8 @@ form {
     }
 
     &.error     { --mdc-snackbar-container-color: #bc1d32; }
-    &.success   { --mdc-snackbar-container-color: #1a9d48; }    
+    &.success   { --mdc-snackbar-container-color: #1a9d48; }
+    &.info      { --mdc-snackbar-container-color: var(--primary-color); }
 }
 
 ion-title { text-align: center; }

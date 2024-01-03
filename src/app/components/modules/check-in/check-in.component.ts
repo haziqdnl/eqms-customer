@@ -1,6 +1,5 @@
-import { Component, ElementRef, NgZone, ViewChild } from '@angular/core';
-import { BarcodeFormat, BarcodeScanner, LensFacing, StartScanOptions } from '@capacitor-mlkit/barcode-scanning';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
+import { BarcodeFormat, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -18,9 +17,7 @@ export class CheckInComponent {
     private apiApptService: ApiApptService,
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
-    public  g: GeneralService,
-    private ngbModal: NgbModal,
-    private readonly ngZone: NgZone,
+    public  g: GeneralService
   ) {}
   
   public loaded = false;
@@ -32,23 +29,32 @@ export class CheckInComponent {
     this.isScannerSupportandPermission();
   }
   ionViewWillLeave()  {
-    this.loaded = false
-    if (this.intervalGetApptWalkIn)                             this.intervalGetApptWalkIn.unsubscribe();
-    if (typeof this.modalWalkInServiceTypeRef !== 'undefined')  this.modalWalkInServiceTypeRef.close();
-    if (typeof this.modalErrorMsgRef          !== 'undefined')  this.modalErrorMsgRef.close();
-    if (this.isSupported)                                       this.stopScan();
+    this.loaded = false;
+    this.modalIsOpen = false;
+    if (this.intervalGetApptWalkIn)             this.intervalGetApptWalkIn.unsubscribe();
+    if (this.isSupported && this.enableCheckIn) this.stopScan();
   }
 
   /**
    *  Method: Modal
    */
-  private modalWalkInServiceTypeRef: any;
-  @ViewChild('modalWalkInServiceType') private modalWalkInServiceType: any;
-  public openModalWalkInServiceType() { this.modalWalkInServiceTypeRef = this.ngbModal.open(this.modalWalkInServiceType, { centered: true, keyboard: false, backdrop: 'static' }); }
-  /**/
-  private modalErrorMsgRef: any;
-  @ViewChild('modalErrorMsg') private modalErrorMsg: any;
-  public openModalErrorMsg() { this.modalErrorMsgRef = this.ngbModal.open(this.modalErrorMsg, { centered: true, keyboard: false, backdrop: 'static' }); }
+  public modalMode: any = "";
+  public modalTitle: any = "";
+  public modalIsOpen: boolean = false;
+  public openModal(open: boolean, mode: string) {
+    this.modalIsOpen = open;
+    if (open && mode) {
+      this.modalMode = mode;
+      if      (mode == "walkInServiceType") this.modalTitle = "Walk-In";
+      else if (mode == "errorMsg")          this.modalTitle = "Error";
+      else                                  this.modalTitle = "Undefined";
+      this.stopScan();
+    }
+    else {
+      this.modalTitle = "";
+      this.startScan();
+    }
+  }
 
   /**
    *  Method: Validate customer token
@@ -115,7 +121,6 @@ export class CheckInComponent {
     });
   }
 
-  /** ========================================================================================== */
   /**
    *  Method: Check device is supported and has granted permission to use the scanner
    */
@@ -128,9 +133,8 @@ export class CheckInComponent {
       if (this.isSupported) {
         //  Check permission access to camera
         BarcodeScanner.checkPermissions().then((result) => { this.isPermissionGranted = result.camera === 'granted'; });
-        setTimeout( () => { this.startScan(); }, 250);
       }
-    }).catch((err: any) => { this.g.toastSuccess("Your device is unsupported or the scanner is having an issue.") });
+    }).catch((err: any) => {});
   }
   /**
    *  Method: Will prompt automatically if current device has not grant permission to access camera
@@ -141,7 +145,8 @@ export class CheckInComponent {
    */
   public formats: BarcodeFormat[] = []
   public readonly lensFacing: LensFacing = LensFacing.Back;
-  private async startScan(): Promise<void> {
+  public async startScan(): Promise<void> {
+    this.g.toastInfo("Scanner turned on");
     //  Get the result of the scan
     const listener = await BarcodeScanner.addListener('barcodeScanned', async result => {
       this.onScanSuccess(result.barcode.rawValue.toString());
@@ -153,10 +158,10 @@ export class CheckInComponent {
    *  Method: Close and stop scanner
    */
   private async stopScan(): Promise<void> {
+    this.g.toastInfo("Scanner turned off");
     await BarcodeScanner.removeAllListeners();
     await BarcodeScanner.stopScan();
   }
-  /** ========================================================================================== */
 
   /**
    *  Method: QR Scanner
@@ -177,12 +182,12 @@ export class CheckInComponent {
         this.errMsgTitle = '';
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
         if      (rsp.d.RespCode == "200") this.g.redirectBack('');
-        else if (rsp.d.RespCode == "444") this.openModalWalkInServiceType();
+        else if (rsp.d.RespCode == "444") this.openModal(true, "walkInServiceType");
         else {
           if      (rsp.d.RespCode == "400") this.errMsgTitle = 'QR code invalid';
           else if (rsp.d.RespCode == "401") this.errMsgTitle = 'QR code expired';
           else                              this.errMsgTitle = 'Scanning failed due to unrecognized error';
-          this.openModalErrorMsg();
+          this.openModal(true, "errorMsg");
         }
       });
     }
@@ -203,7 +208,7 @@ export class CheckInComponent {
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode != "200") {
         this.errMsgTitle = 'Check-in failed! Please try again.'
-        this.openModalErrorMsg();
+        this.openModal(true, "errorMsg");
       }
       localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
       this.g.redirectBack('');

@@ -1,15 +1,3 @@
-::ng-deep {
-    zxing-scanner {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-    }
-    video { height: 100% !important; }
-}
-
 .topbar { --background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)) !important; }
 
 ion-content { --background: transparent; }
@@ -24,6 +12,17 @@ ion-content { --background: transparent; }
     height: 200px;
     border: 6px solid white;
     box-shadow: 0 0 0 4000px rgba(0, 0, 0, 0.3);
+}
+
+ion-modal {
+    ion-toolbar  {
+        &.walkInServiceType {  --background: #1a9d48 !important; }
+        &.errorMsg          {  --background: #bc1d32 !important; }
+    }
+
+    ion-buttons {
+        &:hover { transform: scale(0.95); }
+    }
 }
 
 /* Laptops/desktops, 1200px and up */
