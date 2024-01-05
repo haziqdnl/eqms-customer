@@ -8,6 +8,7 @@ import { ApiNewsfeedService } from 'src/app/api/api-newsfeed.service';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
+import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
@@ -18,13 +19,13 @@ import { GeneralService } from 'src/app/services/general/general.service';
 export class IndexComponent {
 
   constructor(
-    private routeParam: ActivatedRoute,
     private alertController: AlertController,
     private apiApptService: ApiApptService,
     private apiNewsfeedService: ApiNewsfeedService,
     private apiProfileService: ApiProfileService,
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
+    private checkInService: CheckInService,
     public  g: GeneralService,
     public  http: HttpClient,
   ) {}
@@ -48,11 +49,12 @@ export class IndexComponent {
    */
   private destroyPage() {
     this.loaded = false
-    if (this.alertLogout)           this.alertLogout.dismiss();
-    if (this.alertCheckInSuccess)   this.alertCheckInSuccess.dismiss();
-    if (this.alertCancelAppt)       this.alertCancelAppt.dismiss();
-    if (this.intervalGetApptInfo)   this.intervalGetApptInfo.unsubscribe();
-    if (this.intervalGetWalkInInfo) this.intervalGetWalkInInfo.unsubscribe();
+    if (this.alertLogout)               this.alertLogout.dismiss();
+    if (this.alertCheckInSuccess)       this.alertCheckInSuccess.dismiss();
+    if (this.alertCancelAppt)           this.alertCancelAppt.dismiss();
+    if (this.intervalGetApptInfo)       this.intervalGetApptInfo.unsubscribe();
+    if (this.intervalGetWalkInInfo)     this.intervalGetWalkInInfo.unsubscribe();
+    if (this.intervalIsCheckInEnabled)  this.intervalIsCheckInEnabled.unsubscribe();
   }
 
   /**
@@ -66,6 +68,7 @@ export class IndexComponent {
         this.getNewsFeed();
         this.getApptInfo();
         this.getWalkInInfo();
+        this.isCheckInEnabled();
       }
       else {
         rsp.d.RespCode = "401";
@@ -156,6 +159,22 @@ export class IndexComponent {
         }
         else this.g.apiRespError(rsp.d);
       });
+    });
+  }
+
+  /**
+   *  Method: Check the check-in scanner enablement status
+   */
+  public checkInData: any = {
+    enableScanner     : false,
+    isAppt            : false,
+    isSupported       : false,
+    msgDisabledScanner: "",
+  };
+  private intervalIsCheckInEnabled: any;
+  private isCheckInEnabled() {
+    this.intervalIsCheckInEnabled = interval(1000).subscribe( async () => { 
+      this.checkInData = await this.checkInService.isCheckInEnabled(); 
     });
   }
 

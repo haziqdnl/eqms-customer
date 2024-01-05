@@ -5,22 +5,9 @@
     </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="loaded">
-    <section *ngIf="enableCheckIn; else invalidCheckIn">
-        <div *ngIf="isSupported" #square class="square">
-            {{ startScan() }}
-        </div>
-        <div *ngIf="!isSupported" class="text-center mt-5">
-            <fa-icon icon="rectangle-xmark" size="5x" class="text-danger"></fa-icon>
-            <h2 class="fw-bolder">Scanner Is Not Supported On This Platform!</h2>
-            <p class="px-2">Please use an Android or IOS device, or use the outlet manual check-in with your login ID and password.</p>
-        </div>
+    <section>
+        <div #square class="square"></div>
     </section>
-    <ng-template #invalidCheckIn class="ion-padding">
-        <div class="text-center mt-5">
-            <fa-icon icon="calendar-xmark" size="5x" class="text-danger"></fa-icon>
-            <p class="mt-3">{{ msgErrCheckIn }}</p>
-        </div>
-    </ng-template>
 </ion-content>
 <!-- Modals -->
 <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="0.5" [breakpoints]="[0.5, 1]">

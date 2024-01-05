@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { BarcodeFormat, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
 import { interval } from 'rxjs';
-import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
-import { ApiWalkinService } from 'src/app/api/api-walkin.service';
+import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
@@ -14,10 +13,9 @@ import { GeneralService } from 'src/app/services/general/general.service';
 export class CheckInComponent {
 
   constructor(
-    private apiApptService: ApiApptService,
     private apiUtilityService: ApiUtilityService,
-    private apiWalkInService: ApiWalkinService,
-    public  g: GeneralService
+    private checkInService: CheckInService,
+    public  g: GeneralService,
   ) {}
   
   public loaded = false;
@@ -26,13 +24,11 @@ export class CheckInComponent {
     this.g.showLoading(1000);
     setTimeout( () => { this.loaded = true }, 1000);
     this.validateToken();
-    this.isScannerSupportandPermission();
   }
   ionViewWillLeave()  {
     this.loaded = false;
     this.modalIsOpen = false;
-    if (this.intervalGetApptWalkIn)             this.intervalGetApptWalkIn.unsubscribe();
-    if (this.isSupported && this.enableCheckIn) this.stopScan();
+    if (this.scannerData.enableScanner) this.stopScan();
   }
 
   /**
@@ -59,12 +55,11 @@ export class CheckInComponent {
   /**
    *  Method: Validate customer token
    */
-  private intervalGetApptWalkIn: any;
   private validateToken() {
     let request = { objRequest: { Token: this.g.getCustToken() } };
-    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
+    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( async rsp => {
       if (rsp.d.RespCode == "200")
-        this.intervalGetApptWalkIn = interval(1000).subscribe( () => { this.getApptInfo(); });
+        await this.isScannerEnabled();
       else {
         rsp.d.RespCode = '401';
         this.g.apiRespError(rsp.d);
@@ -73,73 +68,28 @@ export class CheckInComponent {
   }
 
   /**
-   *  Method: Get appt data
+   *  Method: Check the scanner enablement status
    */
-  public  enableCheckIn: Boolean = false;
-  public  msgErrCheckIn: string = "";
-  public  isAppt: Boolean = false;
-  private getApptInfo() {
-    this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
-      this.isAppt = false;
-      if (rsp.d.RespCode == "200") {
-        this.g.setCustToken(rsp.d.ExtendedToken)
-        if (rsp.d.RespData != '' && rsp.d.RespData != undefined) {
-          if (rsp.d.RespData[0].AppStat != "COMPLETE" || rsp.d.RespData[0].AppStat != "NOSHOW") {
-            this.isAppt = true;
-            if ((new Date(rsp.d.RespData[0].ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime())
-              this.enableCheckIn = true;
-            else {
-              this.enableCheckIn = false;
-              this.msgErrCheckIn = "You're only allowed to check-in on the booked date and time.";
-            }
-          }
-          else this.getWalkInInfo();
-        }
-        else this.getWalkInInfo();
-      }
-      else this.g.apiRespError(rsp.d);
-    });
+  private scannerData: any = {
+    enableScanner     : false,
+    isAppt            : false,
+    isSupported       : false,
+    msgDisabledScanner: "",
+  };
+  private async isScannerEnabled() {
+    this.scannerData = await this.checkInService.isCheckInEnabled();
+    if (this.scannerData.isSupported && this.scannerData.enableScanner) {
+      BarcodeScanner.checkPermissions().then((result) => { result.camera === 'granted' ? 'Granted to use the scanner' : 'Not granted to use the scanner' });
+      setTimeout( () => { this.startScan(); }, 250)
+    }
+    else this.g.redirectTo('');
   }
 
   /**
-   *  Method: Get walk-in data
-   */
-  private getWalkInInfo() {
-    this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
-      if (rsp.d.RespCode == "200") {
-        this.enableCheckIn = true;
-        this.msgErrCheckIn = "";
-        this.g.setCustToken(rsp.d.ExtendedToken);
-        if (rsp.d.RespData != "" && rsp.d.RespData != undefined) {
-          if (rsp.d.RespData[0].WalkInStat != "COMPLETE" && rsp.d.RespData[0].WalkInStat != "NOSHOW") {
-            this.enableCheckIn = false;
-            this.msgErrCheckIn = "You already checked in.";
-          }
-        }
-      }
-      else this.g.apiRespError(rsp.d);
-    });
-  }
-
-  /**
-   *  Method: Check device is supported and has granted permission to use the scanner
-   */
-  public isSupported = false;
-  public isPermissionGranted = false;
-  public isScannerSupportandPermission() {
-    //  Check if device is supported
-    BarcodeScanner.isSupported().then((result) => {
-      this.isSupported = result.supported;
-      if (this.isSupported) {
-        //  Check permission access to camera
-        BarcodeScanner.checkPermissions().then((result) => { this.isPermissionGranted = result.camera === 'granted'; });
-      }
-    }).catch((err: any) => {});
-  }
-  /**
-   *  Method: Will prompt automatically if current device has not grant permission to access camera
+   *  Method: Request permission to use the scanner
    */
   public async requestPermissions(): Promise<void> { await BarcodeScanner.requestPermissions(); }
+
   /**
    *  Method: Open and start scanner
    */
@@ -147,17 +97,13 @@ export class CheckInComponent {
   public readonly lensFacing: LensFacing = LensFacing.Back;
   public async startScan(): Promise<void> {
     this.g.toastInfo("Scanner turned on");
-    //  Get the result of the scan
-    const listener = await BarcodeScanner.addListener('barcodeScanned', async result => {
-      this.onScanSuccess(result.barcode.rawValue.toString());
-    });
-    //  Start the scanner
+    await BarcodeScanner.addListener('barcodeScanned', async result => { this.onScanSuccess(result.barcode.rawValue.toString()); });
     await BarcodeScanner.startScan({formats: this.formats, lensFacing: this.lensFacing});
   }
   /**
    *  Method: Close and stop scanner
    */
-  private async stopScan(): Promise<void> {
+  public async stopScan(): Promise<void> {
     this.g.toastInfo("Scanner turned off");
     await BarcodeScanner.removeAllListeners();
     await BarcodeScanner.stopScan();
@@ -174,14 +120,14 @@ export class CheckInComponent {
       this.qrValue = resultString;
       let request = {
         objRequest  : { 
-          Service   : this.isAppt ? '1' : null,
+          Service   : this.scannerData.isAppt ? '1' : null,
           QRCodeData: resultString 
         }
       };
       this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
         this.errMsgTitle = '';
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-        if      (rsp.d.RespCode == "200") this.g.redirectBack('');
+        if      (rsp.d.RespCode == "200") this.g.redirectTo('');
         else if (rsp.d.RespCode == "444") this.openModal(true, "walkInServiceType");
         else {
           if      (rsp.d.RespCode == "400") this.errMsgTitle = 'QR code invalid';
@@ -211,7 +157,7 @@ export class CheckInComponent {
         this.openModal(true, "errorMsg");
       }
       localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-      this.g.redirectBack('');
+      this.g.redirectTo('');
     });
   }
 }

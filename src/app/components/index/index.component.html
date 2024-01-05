@@ -65,8 +65,8 @@
                                 </h3>
                                 <!-- Appt: Notice -->
                                 <p *ngIf="apptData[0].ApptStat == 'NEW' || apptData[0].ApptStat == 'QUEUING'" class="font-size-12 mt-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? '*Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.' : '' }}
-                                    {{ apptData[0].ApptStat == 'QUEUING' ? '*Please wait in the waiting area, we\'ll call and serve you in a few minutes.' : '' }}
+                                    {{ apptData[0].ApptStat == 'NEW'     ? 'Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.' : '' }}
+                                    {{ apptData[0].ApptStat == 'QUEUING' ? 'Please wait in the waiting area, we\'ll call and serve you in a few minutes.' : '' }}
                                 </p>
                                 <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
                                     <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">Cancel</button>
@@ -76,6 +76,9 @@
                         <div *ngIf="apptData[0] == null && walkInData[0] == null">
                             <fa-icon icon="calendar-xmark" size="4x" class="text-danger"></fa-icon>
                             <h5 class="mt-3">You don't have any appointment with us at the moment</h5>
+                        </div>
+                        <div *ngIf="!checkInData.enableScanner">
+                            <p class="font-size-10 mt-2"><b>Note:</b> {{ checkInData.msgDisabledScanner }}</p>
                         </div>
                     </ion-card-content>
                 </ion-card>
