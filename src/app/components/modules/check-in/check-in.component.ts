@@ -153,11 +153,13 @@ export class CheckInComponent {
     };
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
       if (rsp.d.RespCode != "200") {
-        this.errMsgTitle = 'Check-in failed! Please try again.'
+        this.errMsgTitle = 'Check-in failed! ' + rsp.d.RespMessage + '. Please try again.';
         this.openModal(true, "errorMsg");
       }
-      localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-      this.g.redirectTo('');
+      else {
+        localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
+        this.g.redirectTo('');
+      }
     });
   }
 }
