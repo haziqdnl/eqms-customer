@@ -31,9 +31,9 @@
             <!-- Select Date -->
             <mat-step *ngIf="enableSelectApptDate()">
                 <ng-template matStepLabel>Available date: <b class="ms-2">{{ selectedDate_Disp }}</b></ng-template>
-                <div id="panelDate" class="text-center mt-3">
+                <div id="panelDate" class="text-center mt-3 fw-bold">
                     <section *ngIf="this.apptDateList.length > 0">
-                        <button *ngFor="let item of apptDateList" type="button" class="btn btn-success m-1" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)">{{ item.ApptDate_Disp }}</button>
+                        <ion-chip *ngFor="let item of apptDateList" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)" [color]="item.ApptDate_Data == selectedDate_Data ? 'dark' : 'success'" class="py-4 m-2">{{ item.ApptDate_Disp }}</ion-chip>
                     </section>
                     <p *ngIf="this.apptDateList.length == 0" class="text-secondary fst-italic">Sorry, there are no available dates. Please choose another outlet.</p>
                 </div>
@@ -41,21 +41,17 @@
             <!-- Select Time -->
             <mat-step *ngIf="enableSelectApptTime()">
                 <ng-template matStepLabel>Available time slot: <b class="ms-2">{{ selectedTime_Disp }}</b></ng-template>
-                <div id="panelTime" class="text-center">
-                    <button *ngFor="let item of apptTimeList" class="col-auto" type="button" class="btn btn-warning m-1"
-                    (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)">{{ item.SlotTime_Disp }}</button>
+                <div id="panelTime" class="text-center mt-3 fw-bold">
+                    <ion-chip *ngFor="let item of apptTimeList" (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)" [color]="item.SlotTime_Data == selectedTime_Data ? 'dark' : 'warning'" class="px-3 py-4">{{ item.SlotTime_Disp }}</ion-chip>
                 </div>
             </mat-step>
             <!-- Select Service Type -->
             <mat-step *ngIf="enableSelectServiceType()">
                 <ng-template matStepLabel>Prefered service: <b class="ms-2">{{ selectedServiceType_Disp }}</b></ng-template>
-                <div class="text-center mt-3">
-                    <div class="btn-group">
-                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypeRedemption" autocomplete="off" (click)="setApptServiceType('0')" />
-                        <label class="btn btn-light" for="serviceTypeRedemption">Redemption</label>
-                        <input type="radio" class="btn-check" name="serviceType" id="serviceTypePawn" autocomplete="off" (click)="setApptServiceType('1')" />
-                        <label class="btn btn-light" for="serviceTypePawn">Pawn</label>
-                    </div>
+                <div class="fw-bold mt-3 text-center">
+                    <ion-chip (click)="setApptServiceType('0')" [color]="selectedServiceType_Data == '0' ? 'dark' : 'tertiary'" class="px-4 py-3">Redemption</ion-chip>
+                    <ion-chip (click)="setApptServiceType('1')" [color]="selectedServiceType_Data == '1' ? 'dark' : 'tertiary'" class="px-4 py-3">Pawn</ion-chip>
+                    <ion-chip (click)="setApptServiceType('2')" [color]="selectedServiceType_Data == '2' ? 'dark' : 'tertiary'" class="px-4 py-3">Payment</ion-chip>
                 </div>
             </mat-step>
             <!-- Confirmation -->

@@ -1,15 +1,12 @@
 #panelDate {
-    .btn-success {
+    ion-chip {
         font-size: 12px;
         width: 120px !important;
     }
 }
 
 #panelTime {
-    .btn-warning {
-        font-size: 12px;
-        width: 90px !important;
-    }
+    ion-chip { font-size: 12px; }
 }
 
 /* Laptops/desktops, 1200px and up */
@@ -21,7 +18,7 @@
 /* Landscape tablets, 992px and down */
 @media only screen and (max-width: 992px) {
     #panelDate {
-        .btn-success {
+        ion-chip {
             font-size: 11px;
             width: 110px !important;
         }

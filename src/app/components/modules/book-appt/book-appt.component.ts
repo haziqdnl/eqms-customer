@@ -190,7 +190,12 @@ export class BookApptComponent {
   public selectedServiceType_Disp: any = "";
   public setApptServiceType(sType: any) {
     this.selectedServiceType_Data = sType;
-    this.selectedServiceType_Disp = sType != "" ? sType == '0' ? 'Redemption' : 'Pawn' : "";
+    if (sType != "") {
+      if      (sType == '0') this.selectedServiceType_Disp = 'Redemption';
+      else if (sType == '1') this.selectedServiceType_Disp = 'Pawn';
+      else                   this.selectedServiceType_Disp = 'Payment';
+    }
+    else this.selectedServiceType_Disp = ""
   }
 
   public enableSelectApptDate()     { return this.selectedOutletID ? true : false; }
