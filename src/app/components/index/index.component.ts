@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AlertController, IonContent } from '@ionic/angular';
 import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
@@ -26,10 +26,12 @@ export class IndexComponent {
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
     private checkInService: CheckInService,
+    private sanitizer: DomSanitizer,
     public  g: GeneralService,
     public  http: HttpClient,
   ) {}
   
+  public urlCurentGoldMarketPrice = this.sanitizer.bypassSecurityTrustResourceUrl("https://arxonline.com.my/rms.tawaruq/EIS/rate.php");
   public loaded = false;
   ionViewWillEnter() {
     this.g.showLoading(1000);

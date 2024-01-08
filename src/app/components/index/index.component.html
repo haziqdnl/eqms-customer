@@ -8,9 +8,9 @@
         </ion-buttons>
     </ion-toolbar>
     <div class="header"></div>
-    <ion-grid *ngIf="loaded">
+    <ion-grid *ngIf="loaded" class="ion-padding-horizontal ">
         <!-- Summary & Widget -->
-        <ion-row class="ion-margin-horizontal">
+        <ion-row>
             <ion-col class="ion-text-center">
                 <ion-label>
                     <ion-note color="light" class="font-size-20 fw-bold">
@@ -21,7 +21,7 @@
             </ion-col>
         </ion-row>
         <!-- Appointment/Booking/Walk-in Card -->
-        <ion-row class="ion-margin-horizontal ion-justify-content-center mt-3">
+        <ion-row class="ion-justify-content-center mt-3">
             <ion-col size="auto">
                 <ion-card class="ion-text-center shadow-sm rounded-4">
                     <ion-card-content>
@@ -84,29 +84,30 @@
                 </ion-card>
             </ion-col>
         </ion-row>
-        <ion-list class="mt-lg-3 ion-no-border">
-            <!-- Latest News -->
-            <ion-list-header>
-                <ion-label>Latest News</ion-label>
-            </ion-list-header>
-            <ion-item class="news" lines="none">
-                <ion-row class="ion-margin-horizontal ion-justify-content-center">
-                    <ion-col *ngFor="let item of newsFeedData">
-                        <div [innerHTML]="item.HTMLContent" class="py-3 h-100"></div>
-                    </ion-col>
-                </ion-row>
-            </ion-item>
-            <!-- About Us -->
-            <ion-list-header>
-                <ion-label>About Us</ion-label>
-            </ion-list-header>
-            <ion-item class="about py-4 px-4" lines="none">
-                <p class="text-justify">
-                    The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient 
-                    customer service, reduce waiting time and enhance customer experience.
-                </p>
-            </ion-item>
-        </ion-list>
+        <!-- Current Market Price & Rate -->
+        <section id="market" class="section">
+            <ion-label class="title">Current Market Price & Rate</ion-label>
+            <div class="mt-4 rounded-3 bg-white py-3 w-100">
+                <iframe [src]="urlCurentGoldMarketPrice" class="w-100" style="height: 270px;"></iframe>
+            </div>
+        </section>
+        <!-- Latest News -->
+        <section id="news" class="section">
+            <ion-label class="title">Latest News</ion-label>
+            <ion-row class="mt-4 ion-justify-content-center">
+                <ion-col size="12" size-sm="3" *ngFor="let item of newsFeedData">
+                    <div [innerHTML]="item.HTMLContent" class="py-2 h-100 w-100"></div>
+                </ion-col>
+            </ion-row>
+        </section>
+        <!-- About Us -->
+        <section id="aboutus" class="section">
+            <ion-label class="title">About Us</ion-label>
+            <p class="mt-4 px-3 text-center">
+                The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient 
+                customer service, reduce waiting time and enhance customer experience.
+            </p>
+        </section>
     </ion-grid>
     <!-- Modal: Check-In Success -->
     <ng-template #modalCheckInSuccess let-modal>
@@ -116,26 +117,11 @@
             <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
         </div>
     </ng-template>
-    <!--
-    <ion-card>
-        <ion-card-header>
-            <ion-card-title>About</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-            Capacitor plugin for scanning barcodes and QR codes.
-        </ion-card-content>
-        <ion-row class="ion-no-padding">
-            <ion-col>
-                <ion-button fill="clear" class="ion-float-right">GitHub</ion-button>
-            </ion-col>
-        </ion-row>
-    </ion-card>
-    -->
 </ion-content>
-    <!--
+<!--
     <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="pe-3">
         <ion-fab-button (click)="scrollToTop()" color="secondary" matTooltip="Scroll to top">
             <fa-icon icon="plane-up" class="text-light"></fa-icon>
         </ion-fab-button>
     </ion-fab>
-    -->
+-->
