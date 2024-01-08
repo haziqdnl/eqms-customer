@@ -9,7 +9,7 @@
                     <h5 class="mt-3 text-center fw-bold">Customer Login</h5>
                 </section>
                 <!-- Form: Login & Select Location -->
-                <form [formGroup]="formIdPassword" class="w-100">
+                <form [formGroup]="formIdPassword" class="w-100" (ngSubmit)="submit()">
                     <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-4">
                         <mat-label><fa-icon icon="user" class="me-2"></fa-icon>ID</mat-label>
                         <span matPrefix><i class="ms-3"></i>+60</span>
@@ -26,8 +26,8 @@
                             <span *ngIf="formIdPasswordControl['password'].errors?.['required']"><strong>required</strong></span>
                         </mat-error>
                     </mat-form-field>
+                    <button class="btn btn-success mt-2 mb-4 w-100" type="submit">Login</button>
                 </form>
-                <button class="btn btn-success mt-2 mb-4 w-100" type="button" (click)="submit()">Login</button>
                 <div class="font-size-12">
                     <!-- <a href="javascript:void(0)">Forgot password ?</a><br> -->
                     Don't have an account ? <a href="javascript:void(0)" (click)="g.redirectTo('register')">Register here</a>
