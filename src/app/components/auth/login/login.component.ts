@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -15,7 +16,8 @@ export class LoginComponent {
     private apiAuthService: ApiAuthService,
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
-    public  g: GeneralService
+    public  g: GeneralService,
+    public translate: TranslateService
   ) {}
 
   ngOnInit() { this.validateToken(); }
@@ -24,10 +26,10 @@ export class LoginComponent {
   /**
    *  Method: Auto login if token from previous login still valid
    */
+  public defaultLang = "en"
   private validateToken() {
     if (this.g.getCustToken()) {
-      let request = { objRequest: { Token: this.g.getCustToken() } };
-      this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
+      this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken() } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
     }
   }
 
@@ -58,7 +60,7 @@ export class LoginComponent {
         this.g.redirectTo('');
       }
       else {
-        this.g.toastError("Invalid ID/Password !");
+        this.g.toastError(this.translate.instant('LOGIN.INVALID_LOGIN'));
         this.g.setCustToken("");
       }
     });

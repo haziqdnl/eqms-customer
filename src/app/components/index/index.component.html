@@ -8,13 +8,13 @@
         </ion-buttons>
     </ion-toolbar>
     <div class="header"></div>
-    <ion-grid *ngIf="loaded" class="ion-padding-horizontal ">
+    <ion-grid *ngIf="loaded" class="ion-padding-horizontal">
         <!-- Summary & Widget -->
         <ion-row>
             <ion-col class="ion-text-center">
                 <ion-label>
                     <ion-note color="light" class="font-size-20 fw-bold">
-                        Welcome to ARX eQMS,<br>
+                        {{ 'HOME.GREETING' | translate }},<br>
                         {{ username | titlecase }}<fa-icon icon="face-smile-beam" class="face-smile-beam ms-1 text-warning"></fa-icon>
                     </ion-note>
                 </ion-label>

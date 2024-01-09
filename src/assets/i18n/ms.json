@@ -1,0 +1,29 @@
+{
+    "_comment"  : "** Kata kunci umum dalam aplikasi **",
+    ""          : "====================================",
+    "LANGUAGE"  : "Bahasa",
+    "PASSWORD"  : "Kata Laluan",
+
+    "ERROR": {
+        "_comment"  : "** Kata kunci ralat **",
+        ""          : "======================",
+        "INVALID"   : "Tidak sah",
+        "REQUIRED"  : "Diperlukan"
+    },
+
+    "LOGIN": {
+        "_comment"          : "** Kata kunci dalam skrin LOGIN **",
+        ""                  : "==================================",
+        "TITLE"             : "Log Masuk Pelanggan",
+        "BTN_LOGIN"         : "Log Masuk",
+        "REGISTER_HERE"     : "Daftar disini",
+        "REGISTER_HERE_DESC": "Belum ada akaun ?",
+        "INVALID_LOGIN"     : "ID / Kata laluan tidak sah!"
+    },
+
+    "HOME": {
+        "_comment"  : "** Kata kunci dalam skrin HOME **",
+        ""          : "==============================",
+        "GREETING"  : "Selamat datang ke ARX eQMS"
+    }
+}

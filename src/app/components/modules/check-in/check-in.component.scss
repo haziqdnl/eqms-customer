@@ -21,7 +21,10 @@ ion-modal {
     }
 
     ion-buttons {
-        &:hover { transform: scale(0.95); }
+        &:hover { 
+            transform: scale(0.95);
+            cursor: pointer;
+        }
     }
 }
 

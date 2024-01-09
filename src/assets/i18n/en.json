@@ -1,0 +1,29 @@
+{
+    "_comment"  : "** Common keywords in the app **",
+    ""          : "==============================",
+    "LANGUAGE"  : "Language",
+    "PASSWORD"  : "Password",
+
+    "ERROR": {
+        "_comment"  : "** Error keywords **",
+        ""          : "====================",
+        "INVALID"   : "Invalid",
+        "REQUIRED"  : "Required"
+    },
+
+    "LOGIN": {
+        "_comment"          : "** Keywords in LOGIN screen **",
+        ""                  : "==============================",
+        "TITLE"             : "Customer Login",
+        "BTN_LOGIN"         : "Login",
+        "REGISTER_HERE"     : "Register here",
+        "REGISTER_HERE_DESC": "Don't have an account yet ?",
+        "INVALID_LOGIN"     : "Invalid ID / Password !"
+    },
+
+    "HOME": {
+        "_comment"  : "** Keywords in HOME screen **",
+        ""          : "==============================",
+        "GREETING"  : "Welcome to ARX eQMS"
+    }
+}

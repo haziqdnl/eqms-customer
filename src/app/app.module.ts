@@ -3,7 +3,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 //  Packages
 import { DatePipe, HashLocationStrategy, LocationStrategy, TitleCasePipe } from '@angular/common';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,6 +22,8 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { IonicModule } from '@ionic/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 //  Services
@@ -86,6 +88,10 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     NgbModule,
     ReactiveFormsModule,
     ToastrModule.forRoot(),
+    TranslateModule.forRoot({
+      defaultLanguage: 'en',
+      loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
+    }),
     ZXingScannerModule,
   ],
   providers: [
@@ -99,4 +105,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
 export class AppModule {
   constructor(faIcon: FaIconLibrary) { faIcon.addIconPacks(fas); }
 }
+
+export function HttpLoaderFactory(http: HttpClient) { return new TranslateHttpLoader(http); }
+
 export function tokenGetter() { return localStorage.getItem('jtwToken'); }

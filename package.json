@@ -1,6 +1,6 @@
 {
   "name": "eqms-customer",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -40,6 +40,8 @@
     "@ionic/angular": "^7.4.0",
     "@ionic/cli": "^7.1.1",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
+    "@ngx-translate/core": "^15.0.0",
+    "@ngx-translate/http-loader": "^8.0.0",
     "@popperjs/core": "^2.11.6",
     "@types/node": "^20.10.3",
     "@zxing/browser": "^0.1.4",

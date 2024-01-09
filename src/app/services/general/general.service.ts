@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Haptics } from '@capacitor/haptics';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { LoadingController, NavController, Platform } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { environment } from 'src/environments/environment';
 
@@ -16,6 +17,7 @@ export class GeneralService {
     private snackBar: MatSnackBar,
     private navCtrl: NavController,
     private platform: Platform,
+    private translate: TranslateService
   ) { }
 
   /**
@@ -112,6 +114,13 @@ export class GeneralService {
     let month = (todayDateTime.getMonth() + 1).toString().length == 1 ? '0' + (todayDateTime.getMonth() + 1) : todayDateTime.getMonth() + 1;
     let day = todayDateTime.getDate().toString().length == 1 ? '0' + todayDateTime.getDate() : todayDateTime.getDate();
     return new Date(year + '-' + month + '-' + day);
+  }
+
+  /**
+   *  Method: Set and translate language
+   */
+  public setLanguage(lang: any) {
+    this.translate.use(lang);
   }
 
   /** */
