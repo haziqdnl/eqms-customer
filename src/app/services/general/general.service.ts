@@ -117,10 +117,26 @@ export class GeneralService {
   }
 
   /**
-   *  Method: Set and translate language
+   *  Method: Set preferred default language
    */
   public setLanguage(lang: any) {
     this.translate.use(lang);
+    this.translate.setDefaultLang(lang);
+    localStorage.setItem('eqmsCustomer_defLanguage', lang);
+  }
+  /**
+   *  Method: Get preferred default language
+   */
+  public getTokenDefaultLanguage() { 
+    if (localStorage.getItem('eqmsCustomer_defLanguage') != null) return localStorage.getItem('eqmsCustomer_defLanguage')!;
+    else                                                          return "en";
+  }
+  /**
+   *  Method: Set default translate language when visiting the app
+   */
+  public setDefaultLanguage() {
+    if (this.getTokenDefaultLanguage() != null)   this.translate.setDefaultLang(this.getTokenDefaultLanguage());
+    else                                          this.translate.setDefaultLang('en');
   }
 
   /** */

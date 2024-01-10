@@ -10,6 +10,12 @@
                 </section>
                 <!-- Form: Login & Select Location -->
                 <form [formGroup]="formIdPassword" class="w-100" (ngSubmit)="submit()">
+                    <!-- <ion-item lines="none" class="border border-secondary-subtle rounded-2 mt-4" style="--background: none !important">
+                        <fa-icon icon="user" slot="start"></fa-icon>
+                        <ion-input labelPlacement="floating" clearInput="true" (keypress)="g.numberOnly($event)" 
+                            [errorText]="formIdPasswordControl['id'].errors?.['required'] ? translate.instant('ERROR.REQUIRED') : ''"
+                        ></ion-input>
+                    </ion-item> -->
                     <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-4">
                         <mat-label><fa-icon icon="user" class="me-2"></fa-icon>ID</mat-label>
                         <span matPrefix><i class="ms-3"></i>+60</span>

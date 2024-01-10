@@ -26,7 +26,7 @@ export class LoginComponent {
   /**
    *  Method: Auto login if token from previous login still valid
    */
-  public defaultLang = "en"
+  public defaultLang = this.g.getTokenDefaultLanguage();
   private validateToken() {
     if (this.g.getCustToken()) {
       this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken() } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
