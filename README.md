@@ -1,27 +1,73 @@
 # EqmsCustomer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.6.
+## Table of Contents
+- [Commands](#Commands)
 
-## Development server
+## Commands
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Create Angular project
+> ng new project_name
 
-## Code scaffolding
+- Add and update plugin/library (alternative of npm install)
+> ng add plugin_name
+> ng update plugin_name
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Run dev server
+> ng serve
 
-## Build
+- Clean project cache
+> ng cache clean
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Build project (default: production env) or wth specific env
+> ng build
+> ng build --configuration development
+> ng build --configuration staging
+> ng build --configuration production
 
-## Running unit tests
+- Build project and packages with versioning
+- ['https://medium.com/@tolvaly.zs/how-to-version-number-angular-6-applications-4436c03a3bd3']
+> npm run build
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- Add Ionic Capacitor config
+> npx cap init
 
-## Running end-to-end tests
+- Sync Build to Ionic Capacitor
+> npx cap sync
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- Open Ionic Capacitor Emulator
+> npx cap open android
+> npx cap open ios
 
-## Further help
+- Recommended Ionic Capacitor build before opening emulator
+> ng cache clean; ng build --configuration development; npx cap sync; npx cap open android;
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+- Recommended Ionic Capacitor build before publishing to repository
+> ng cache clean; ng build; npm run build; npx cap sync;
+
+- Generate component|module|service|interface|class|enum|pipe|guard|directive file
+> ng generate component f_name
+> ng g c f_name
+--
+> ng generate module f_name
+> ng g m f_name
+--
+> ng generate service f_name
+> ng g s f_name
+--
+> ng generate interface f_name
+> ng g i f_name
+--
+> ng generate class f_name
+> ng g c f_name
+--
+> ng generate enum f_name
+> ng g e f_name
+--
+> ng generate pipe f_name
+> ng g p f_name
+--
+> ng generate guard f_name
+> ng g g f_name
+--
+> ng generate directive f_name
+> ng g d f_name

@@ -153,6 +153,6 @@ export class GeneralService {
     });
   }
   public async vibrate(time: number) {
-    await Haptics.vibrate({ duration: time});
+    time === 0 ? await Haptics.vibrate() : await Haptics.vibrate({ duration: time});
   };
 }
