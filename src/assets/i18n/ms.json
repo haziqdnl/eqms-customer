@@ -3,6 +3,9 @@
     ""          : "====================================",
     "LANGUAGE"  : "Bahasa",
     "PASSWORD"  : "Kata Laluan",
+    "BACK"      : "Kembali",
+    "NEXT"      : "Seterusnya",
+    "SUBMIT"    : "Hantar",
 
     "ERROR": {
         "_comment"  : "** Kata kunci ralat **",
@@ -18,12 +21,54 @@
         "BTN_LOGIN"         : "Log Masuk",
         "REGISTER_HERE"     : "Daftar disini",
         "REGISTER_HERE_DESC": "Belum ada akaun ?",
-        "INVALID_LOGIN"     : "ID / Kata laluan tidak sah!"
+        "INVALID_LOGIN"     : "ID / Kata Laluan Tidak Sah!"
     },
 
     "HOME": {
         "_comment"  : "** Kata kunci dalam skrin HOME **",
         ""          : "==============================",
         "GREETING"  : "Selamat datang ke ARX eQMS"
+    },
+
+    "REGISTER": {
+        "_comment"            : "** Kata kunci dalam skrin REGISTER **",
+        ""                    : "==============================",
+        "TITLE"               : "Daftar Akaun Baru",
+        "PASSWORD"            : "Kata Laluan",
+        "PASSWORD_INVALID"    : "Kata Laluan Tidak Sah!",
+        "PASSWORD_NOTMATCH"   : "Kata Laluan Tidak Sama!",
+        "PASSWORD_ENTER"      : "Masukkan Kata Laluan",
+        "PASSWORD_RETYPE"     : "Masukkan Kata Laluan Semula",
+        "PASSWORD_CRITERIA1"  : "Mengandungi sekurang-kurangnya satu huruf!",
+        "CONFIRMPASS"         : "Sahkan Kata Laluan",
+        "FULLNAME"            : "Nama Penuh",
+        "FULLNAME_INVALID"    : "Name Penuh Tidak Sah!",
+        "FULLNAME_PLACEHOLD"  : "Masukkan Nama Penuh",
+        "GENDER"              : "Jantina",
+        "GENDER_PLACEHOLD"    : "--Pilih Jantina--",
+        "NRIC"                : "No. Kad Pengenalan",
+        "NRIC_INVALID"        : "No. Kad Pengenalan Tidak Sah!",
+        "NRIC_PLACEHOLD"      : "Masukkan No. NRIC",
+        "NRIC_VERIFY_MSG"     : "No. kad pengenalan ini pernah didaftarkan sebelum ini!",
+        "EMAIL"               : "Alamat E-mel",
+        "EMAIL_INVALID"       : "Alamat E-mel Tidak Sah!",
+        "EMAIL_PLACEHOLD"     : "Masukkan Alamat E-mel",
+        "EMAIL_VERIFY_MSG0"   : "Alamat e-mel ini pernah didaftarkan sebelum ini!",
+        "OTP_VERIFY_MSG1"     : "Sila pastikan semua butiran adalah betul.",
+        "OTP_VERIFY_MSG2"     : "Kami akan menghantar pengesahan OTP ke alamat e-mel yang diberikan.",
+        "MOBILENO"            : "No. Telefon Bimbit",
+        "MOBILENO_INVALID"    : "No. Telefon Bimbit Tidak Sah!",
+        "MOBILENO_PLACEHOLD"  : "Masukkan No. Telefon Bimbit",
+        "MOBILENO_VERIFY_MSG" : "Nombor telefon binbit ini pernah didaftarkan sebelum ini!",
+        "UCID"                : "ID Panggilan Unik (UCID)",
+        "UCID_INVALID"        : "UCID Tidak Sah!",
+        "UCID_PLACEHOLD"      : "Masukkan ID Panggilan Unik",
+        "UCID_CUSTOM"         : "Tetapan Sendiri",
+        "UCID_CUSTOM_MSG"     : "Masukkan sebarang nama panggilan yang boleh digunakan untuk mewakili anda, Kami akan memanggil anda berdasarkan ID Panggilan Unik yang anda tetapkan apabila sampai giliran anda.",
+        "UCID_DEFAULT"        : "Janaan Automatik",
+        "UCID_DEFAULT_MSG"    : "ID Panggilan Unik akan dijana berdasarkan maklumat yang diberikan.<br>Anda boleh menukarkannya kemudian dalam bahagian profil setelah pendaftaran selesai.",
+        "UCID_VERIFY_MSG"     : "ID panggilan unik sudah digunakan!",
+        "SEND_OTP_MSG"        : "Pengesahan OTP tengah dihantarkan...",
+        "MSG_WITHOUT_DASH"    : "**Tanpa symbol '-'"
     }
 }

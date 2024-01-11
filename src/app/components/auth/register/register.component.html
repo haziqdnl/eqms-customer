@@ -4,7 +4,7 @@
             <div id="formRegister" class="bg-light shadow-lg rounded-3 px-lg-4 py-3 my-3 text-center">
                 <!-- Logo & Title -->
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
-                <h5 class="mt-2 fw-bold">Create Account</h5>
+                <h5 class="mt-2 fw-bold">{{ 'REGISTER.TITLE' | translate }}</h5>
                 <!-- Forms -->
                 <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.isMobile() ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
                     <!-- Step 1: Fullname & NRIC no. verification -->
@@ -13,40 +13,40 @@
                         <form [formGroup]="formRegisterBasicInfo" class="w-100">
                             <!-- Fullname -->
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>Fullname</mat-label>
-                                <input matInput #fullname formControlName="fullname" type="text" placeholder="Ahmad Ali" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
+                                <mat-label>{{ 'REGISTER.FULLNAME' | translate }}</mat-label>
+                                <input matInput #fullname formControlName="fullname" type="text" placeholder="{{ 'REGISTER.FULLNAME_PLACEHOLD' | translate }}" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
                                 <mat-error *ngIf="(formRegisterBasicInfoCtrl['fullname'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['fullname'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
                                     <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['pattern'] || formRegisterBasicInfoCtrl['fullname'].errors?.['minlength'] || formRegisterBasicInfoCtrl['fullname'].errors?.['maxlength']">
-                                        <strong>invalid fullname</strong>
+                                        <strong>{{ 'REGISTER.FULLNAME_INVALID' | translate }}</strong>
                                     </span>
                                 </mat-error>
                                 <mat-hint align="end">{{ fullname.value.length }} / 60</mat-hint>
                             </mat-form-field>
                             <!-- Gender -->
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>Gender</mat-label>
-                                <mat-select #gender formControlName="gender" placeholder="--select gender--" (selectionChange)="changeGender($event)" required>
+                                <mat-label>{{ 'REGISTER.GENDER' | translate }}</mat-label>
+                                <mat-select #gender formControlName="gender" placeholder="{{ 'REGISTER.GENDER_PLACEHOLD' | translate }}" (selectionChange)="changeGender($event)" required>
                                     <mat-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</mat-option>
                                 </mat-select>
                                 <mat-error *ngIf="(formRegisterBasicInfoCtrl['gender'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['gender'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['gender'].errors?.['required']"><strong>required</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['gender'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
                                 </mat-error>
                             </mat-form-field>
                             <!-- NRIC no. -->
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>NRIC Number</mat-label>
-                                <input matInput #identificationNo formControlName="identificationNo" type="text" placeholder="010203045060" maxlength="12" (keypress)="g.numberOnly($event)" required />
+                                <mat-label>{{ 'REGISTER.NRIC' | translate }}</mat-label>
+                                <input matInput #identificationNo formControlName="identificationNo" type="text" placeholder="{{ 'REGISTER.NRIC_PLACEHOLD' | translate }}" maxlength="12" (keypress)="g.numberOnly($event)" required />
                                 <mat-error *ngIf="(formRegisterBasicInfoCtrl['identificationNo'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['identificationNo'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['minlength'] || formRegisterBasicInfoCtrl['identificationNo'].errors?.['maxlength']"><strong>invalid NRIC</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['minlength'] || formRegisterBasicInfoCtrl['identificationNo'].errors?.['maxlength']"><strong>{{ 'REGISTER.NRIC_INVALID' | translate }}</strong></span>
                                 </mat-error>
-                                <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
+                                <mat-hint align="start" class="text-secondary font-size-10">{{ 'REGISTER.MSG_WITHOUT_DASH' | translate }}</mat-hint>
                             </mat-form-field>
                         </form>
                         <div class="mt-3 btn-group w-100">
-                            <button type="button" class="btn btn-secondary w-50" (click)="back()">Back</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterBasicInfo()" [disabled]="!formRegisterBasicInfo.valid">Next</button>
+                            <button type="button" class="btn btn-secondary w-50" (click)="back()">{{ 'BACK' | translate }}</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterBasicInfo()" [disabled]="!formRegisterBasicInfo.valid">{{ 'NEXT' | translate }}</button>
                         </div>
                         <button #btnNextBasicInfo matStepperNext type="button" class="d-none"></button>
                     </mat-step>
@@ -55,17 +55,17 @@
                         <ng-template matStepLabel><fa-icon icon="envelope"></fa-icon></ng-template>
                         <form [formGroup]="formRegisterEmail" class="w-100">
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>Email Address</mat-label>
-                                <input matInput #email formControlName="email" type="text" placeholder="example@mail.com" maxlength="255" required />
+                                <mat-label>{{ 'REGISTER.EMAIL' | translate }}</mat-label>
+                                <input matInput #email formControlName="email" type="text" placeholder="{{ 'REGISTER.EMAIL_PLACEHOLD' | translate }}" maxlength="255" required />
                                 <mat-error *ngIf="(formRegisterEmailCtrl['email'].touched || formRegisterEmailSubmitted) && formRegisterEmailCtrl['email'].invalid">
-                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['pattern'] || formRegisterEmailCtrl['email'].errors?.['maxlength']"><strong>invalid email</strong></span>
+                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['pattern'] || formRegisterEmailCtrl['email'].errors?.['maxlength']"><strong>{{ 'REGISTER.EMAIL_INVALID' | translate }}</strong></span>
                                 </mat-error>
                             </mat-form-field>
                         </form>
                         <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterEmail()" [disabled]="!formRegisterEmail.valid">Next</button>
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterEmail()" [disabled]="!formRegisterEmail.valid">{{ 'NEXT' | translate }}</button>
                         </div>
                         <button #btnNextEmail matStepperNext type="button" class="d-none"></button>
                     </mat-step>
@@ -74,19 +74,19 @@
                         <ng-template matStepLabel><fa-icon icon="phone"></fa-icon></ng-template>
                         <form [formGroup]="formRegisterMobileNo" class="w-100">
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>Mobile Number</mat-label>
+                                <mat-label>{{ 'REGISTER.MOBILENO' | translate }}</mat-label>
                                 <span matPrefix><i class="ms-3"></i>+60</span>
-                                <input matInput #mobileNo formControlName="mobileNo" type="text" placeholder="191234567" maxlength="10" (keypress)="g.numberOnly($event)" required />
+                                <input matInput #mobileNo formControlName="mobileNo" type="text" placeholder="{{ 'REGISTER.MOBILENO_PLACEHOLD' | translate }}" maxlength="10" (keypress)="g.numberOnly($event)" required />
                                 <mat-error *ngIf="(formRegisterMobileNoCtrl['mobileNo'].touched || formRegisterMobileNoSubmitted) && formRegisterMobileNoCtrl['mobileNo'].invalid">
-                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['pattern'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['minlength'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['maxlength']"><strong>invalid number</strong></span>
+                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['pattern'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['minlength'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['maxlength']"><strong>{{ 'REGISTER.MOBILENO_INVALID' | translate }}</strong></span>
                                 </mat-error>
-                                <mat-hint align="start" class="text-secondary font-size-10">**without '-'</mat-hint>
+                                <mat-hint align="start" class="text-secondary font-size-10">{{ 'REGISTER.MSG_WITHOUT_DASH' | translate }}</mat-hint>
                             </mat-form-field>
                         </form>
                         <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterMobileNo()" [disabled]="!formRegisterMobileNo.valid">Next</button>
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterMobileNo()" [disabled]="!formRegisterMobileNo.valid">{{ 'NEXT' | translate }}</button>
                         </div>
                         <button #btnNextMobileNo matStepperNext type="button" class="d-none"></button>
                     </mat-step>
@@ -95,35 +95,36 @@
                         <ng-template matStepLabel><fa-icon icon="signature"></fa-icon></ng-template>
                         <div class="text-lg-center text-start">
                             <mat-radio-group aria-label="Select an option" (change)="onChangeOptionUniqCallId($event)">
-                                <mat-radio-button value="1" checked>Create custom</mat-radio-button>
-                                <mat-radio-button value="0" class="ms-lg-4">Use default</mat-radio-button>
+                                <mat-radio-button value="1" checked>{{ 'REGISTER.UCID_CUSTOM' | translate }}</mat-radio-button>
+                                <mat-radio-button value="0" class="ms-lg-4">{{ 'REGISTER.UCID_DEFAULT' | translate }}</mat-radio-button>
                             </mat-radio-group>
                         </div>
                         <div [class]="(isCustom ? 'pt-3 text-start' : 'py-4 text-center')">
-                            <ion-note *ngIf="isCustom" class="font-size-12">Enter any term that comes to mind, much like a username. We'll call you when you're next in queue.</ion-note>
+                            <ion-note *ngIf="isCustom" class="font-size-12">
+                                {{ 'REGISTER.UCID_CUSTOM_MSG' | translate }}
+                            </ion-note>
                             <ion-note *ngIf="!isCustom" class="font-size-16">
-                                A random Unique Call ID will be generated based on the information provided.<br>
-                                You can change it later in the profile section once the registration completed.
+                                {{ 'REGISTER.UCID_DEFAULT_MSG' | translate }}
                             </ion-note>
                         </div>
                         <form *ngIf="isCustom" [formGroup]="formRegisterUniqCallId" class="w-100">
                             <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>Unique Call ID</mat-label>
-                                <input matInput #uniqCallID formControlName="uniqCallID" type="text" placeholder="ARRAHNU2023" minlength="5" maxlength="20" oninput="this.value = this.value.toUpperCase()" required />
+                                <mat-label>{{ 'REGISTER.UCID' | translate }}</mat-label>
+                                <input matInput #uniqCallID formControlName="uniqCallID" type="text" placeholder="{{ 'REGISTER.UCID_PLACEHOLD' | translate }}" minlength="5" maxlength="20" oninput="this.value = this.value.toUpperCase()" required />
                                 <mat-error *ngIf="(formRegisterUniqCallIdCtrl['uniqCallID'].touched || formRegisterUniqCallIdSubmitted) && formRegisterUniqCallIdCtrl['uniqCallID'].invalid">
-                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['pattern'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['minlength'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['maxlength']"><strong>invalid call ID</strong></span>
+                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['pattern'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['minlength'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['maxlength']"><strong>{{ 'REGISTER.UCID_INVALID' | translate }}</strong></span>
                                 </mat-error>
                                 <mat-hint align="end">{{ uniqCallID.value.length }} / 20</mat-hint>
                             </mat-form-field>
                             <div class="my-2">
                                 <mat-password-strength #uniqCallIDStrength [password]="uniqCallID.value" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [min]="5" [max]="20"></mat-password-strength>
-                                <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="contains at least one letter" class="font-size-10"></mat-password-strength-info>
+                                <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="{{ 'REGISTER.PASSWORD_CRITERIA1' | translate }}" class="font-size-10"></mat-password-strength-info>
                             </div>
                         </form>
                         <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="isCustom ? (formRegisterUniqCallId.valid ? false : true) : false">Next</button>
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="isCustom ? (formRegisterUniqCallId.valid ? false : true) : false">{{ 'NEXT' | translate }}</button>
                         </div>
                         <button #btnNextUniqCallId matStepperNext type="button" class="d-none"></button>
                     </mat-step>
@@ -132,22 +133,22 @@
                         <ng-template matStepLabel><fa-icon icon="lock"></fa-icon></ng-template>
                         <form [formGroup]="formRegisterPassword" class="w-100">
                             <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                                <mat-label>Password</mat-label>
+                                <mat-label>{{ 'REGISTER.PASSWORD' | translate }}</mat-label>
                                 <mat-pass-toggle-visibility #togglePwdVisbility matSuffix></mat-pass-toggle-visibility>
-                                <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="Your password" minlength="8" maxlength="30" required />
+                                <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="{{ 'REGISTER.PASSWORD_ENTER' | translate }}" minlength="8" maxlength="30" required />
                                 <mat-error *ngIf="(formRegisterPasswordCtrl['password'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['password'].invalid">
-                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['pattern']"><strong>invalid password</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['pattern']"><strong>{{ 'REGISTER.PASSWORD_INVALID' | translate }}</strong></span>
                                 </mat-error>
                                 <mat-hint align="end">{{ password.value.length }} / 30</mat-hint>
                             </mat-form-field>
                             <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                                <mat-label>Confirm Password</mat-label>
+                                <mat-label>{{ 'REGISTER.CONFIRMPASS' | translate }}</mat-label>
                                 <mat-pass-toggle-visibility #toggleCfrmPwdVisbility matSuffix></mat-pass-toggle-visibility>
-                                <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="Re-type password" maxlength="30" required />
+                                <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="{{ 'REGISTER.PASSWORD_RETYPE' | translate }}" maxlength="30" required />
                                 <mat-error *ngIf="(formRegisterPasswordCtrl['confirmPassword'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['confirmPassword'].invalid">
-                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['required']"><strong>required</strong></span>
-                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['passwordMismatch']"><strong>passwords not match</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
+                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['passwordMismatch']"><strong>{{ 'REGISTER.PASSWORD_NOTMATCH' | translate }}</strong></span>
                                 </mat-error>
                                 <mat-hint align="end">{{ confirmPassword.value.length }} / 30</mat-hint>
                             </mat-form-field>
@@ -157,8 +158,8 @@
                             <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
                         </div>
                         <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">Back</button>
-                            <button type="button" class="btn btn-success w-50" (click)="submitFormRegisterPassword()" [disabled]="!formRegisterPassword.valid">Submit</button>
+                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                            <button type="button" class="btn btn-success w-50" (click)="submitFormRegisterPassword()" [disabled]="!formRegisterPassword.valid">{{ 'SUBMIT' | translate }}</button>
                         </div>
                         <button #btnNextPassword matStepperNext type="button" class="d-none"></button>
                     </mat-step>

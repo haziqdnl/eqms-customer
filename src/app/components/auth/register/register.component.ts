@@ -6,6 +6,7 @@ import { AlertController } from '@ionic/angular';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector    : 'app-register',
@@ -22,6 +23,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     public  g: GeneralService,
     public  titleCasePipe: TitleCasePipe,
+    public translate: TranslateService
   ) { }
 
   ionViewWillEnter() { this.getUrlParam(); }
@@ -49,7 +51,7 @@ export class RegisterComponent {
       let request = { objRequest: { Mode: "NRIC", SearchValue: this.formRegisterBasicInfo.value.identificationNo } };
       this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
         if (rsp.d.RespCode == "200")
-          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this NRIC number") : this.btnNextBasicInfo.nativeElement.click();
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('REGISTER.NRIC_VERIFY_MSG')) : this.btnNextBasicInfo.nativeElement.click();
         else this.g.toastError(rsp.d.RespMessage)
       });
     }
@@ -73,7 +75,7 @@ export class RegisterComponent {
       let request = { objRequest: { Mode: "EMAIL", SearchValue: this.formRegisterEmail.value.email } };
       this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
         if (rsp.d.RespCode == "200")
-          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this email") : this.btnNextEmail.nativeElement.click();
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('REGISTER.EMAIL_VERIFY_MSG0')) : this.btnNextEmail.nativeElement.click();
         else this.g.toastError(rsp.d.RespMessage)
       });
     }
@@ -92,7 +94,7 @@ export class RegisterComponent {
       let request = { objRequest: { Mode: "MOBILENO", SearchValue: '+60' + this.formRegisterMobileNo.value.mobileNo } };
       this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
         if (rsp.d.RespCode == "200")
-          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("An account already registered with this mobile number") : this.btnNextMobileNo.nativeElement.click();
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('REGISTER.MOBILENO_VERIFY_MSG')) : this.btnNextMobileNo.nativeElement.click();
         else this.g.toastError(rsp.d.RespMessage)
       });
     }
@@ -111,7 +113,7 @@ export class RegisterComponent {
       let request = { objRequest: { Mode: "UNIQCALLID", SearchValue: this.formRegisterUniqCallId.value.uniqCallID } };
       this.apiProfileService.apiCheckExists(request).subscribe(rsp => {
         if (rsp.d.RespCode == "200")
-          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError("The unique call ID is not available") : this.btnNextUniqCallId.nativeElement.click();
+          rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('REGISTER.UCID_VERIFY_MSG')) : this.btnNextUniqCallId.nativeElement.click();
         else this.g.toastError(rsp.d.RespMessage)
       });
     }
@@ -136,8 +138,8 @@ export class RegisterComponent {
     this.formRegisterPasswordSubmitted = true;
     if (this.formRegisterPassword.valid) {
       const alert = await this.alertCtrl.create({
-        header    : 'Please ensure all details are correct.',
-        message   : 'We\'ll send an OTP verification to the provided email address.',
+        header    : this.translate.instant('REGISTER.OTP_VERIFY_MSG1'),
+        message   : this.translate.instant('REGISTER.OTP_VERIFY_MSG2'),
         buttons   : [
           {
             text: 'Cancel', role: 'cancel', cssClass: 'text-primary',
@@ -146,7 +148,7 @@ export class RegisterComponent {
           {
             text: 'Proceed', role: 'confirm', cssClass: 'text-primary',
             handler: () => {
-              this.g.toastSuccess("Sending OTP verification...");
+              this.g.toastSuccess(this.translate.instant('REGISTER.SEND_OTP_MSG'));
               let request = { objRequest: { Email: this.formRegisterEmail.value.email } };
               this.apiUtilityService.SendOTPEmail(request).subscribe(rsp => {
                 if (rsp.d.RespCode == "200") {
