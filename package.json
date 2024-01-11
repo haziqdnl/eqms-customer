@@ -1,6 +1,6 @@
 {
   "name": "eqms-customer",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -39,6 +39,8 @@
     "@ionic-native/qr-scanner": "^5.0.0",
     "@ionic/angular": "^7.4.0",
     "@ionic/cli": "^7.1.1",
+    "@maskito/angular": "^1.9.0",
+    "@maskito/core": "^1.9.0",
     "@ng-bootstrap/ng-bootstrap": "^15.1.1",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",

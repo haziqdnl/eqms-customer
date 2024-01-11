@@ -98,6 +98,13 @@ form {
         width: 100%; 
         font-size: 14px;
     }
+
+    .input-err {
+        font-size: 12px;
+        font-weight: 600;
+        color: red;
+        margin-left: 10px;
+    }
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 99999 !important; }

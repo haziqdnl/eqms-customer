@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -36,21 +37,37 @@ export class LoginComponent {
   /**
    *  Method: Form builder and controller
    */
-  public formIdPasswordSubmitted = false;
-  public get formIdPasswordControl()  { return this.formIdPassword.controls; }
+  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
+  readonly idMask: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
   public formIdPassword = this.fb.group({
-    id      : ['', [Validators.required, Validators.pattern('^[1-9]\\d*$')]],
+    id      : ['', [Validators.required, Validators.pattern('[+][6][0][1][0-9]\\d*$')],],
     password: ['', [Validators.required]],
   });
+  public get errFormIdPassword_id() {
+    var msg = "";
+    if (this.formIdPassword.controls['id'].touched && this.formIdPassword.controls['id'].invalid) {
+      if (this.formIdPassword.controls['id'].hasError('required'))  msg = this.translate.instant('ERROR.REQUIRED');
+      if (this.formIdPassword.controls['id'].hasError('pattern'))   msg = this.translate.instant('ERROR.INVALID');
+    }
+    return msg.toLowerCase();
+  }
+  public get errFormIdPassword_password() {
+    var msg = "";
+    if (this.formIdPassword.controls['password'].touched && this.formIdPassword.controls['password'].invalid) {
+      if (this.formIdPassword.controls['id'].hasError('required'))  msg = this.translate.instant('ERROR.REQUIRED');
+    }
+    return msg.toLowerCase();
+  }
 
   /**
    *  Method: Submit login form
    */
   public isIdPasswordValid: boolean = false;
   public submit() {
+    this.g.vibrate(0);
     let request = {
       objRequest: {
-        LoginID : '+60' + this.formIdPassword.value.id,
+        LoginID : this.formIdPassword.value.id,
         Password: this.formIdPassword.value.password
       }
     };

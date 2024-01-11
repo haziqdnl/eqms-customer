@@ -21,10 +21,10 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { IonicModule } from '@ionic/angular';
+import { MaskitoModule } from '@maskito/angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ToastrModule } from 'ngx-toastr';
 //  Services
 import { LoaderInterceptor } from './services/loader/loader.interceptor';
@@ -76,6 +76,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     HttpClientModule,
     IonicModule.forRoot({ mode: 'ios', innerHTMLTemplatesEnabled: true }),
     JwtModule.forRoot({ config: { tokenGetter: tokenGetter, }, }),
+    MaskitoModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
@@ -92,7 +93,6 @@ import { ProfileComponent } from './components/modules/profile/profile.component
       defaultLanguage: 'en',
       loader: { provide: TranslateLoader, useFactory: HttpLoaderFactory, deps: [HttpClient] }
     }),
-    ZXingScannerModule,
   ],
   providers: [
     DatePipe,
