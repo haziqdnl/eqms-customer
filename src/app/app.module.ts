@@ -37,6 +37,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 //  Components: Layout Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
@@ -58,6 +59,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     RegisterStatusComponent,
     VerificationComponent,
     LoginComponent,
+    ForgotPasswordComponent,
     //  Components: Layout Modules
     LayoutComponent,
     IndexComponent,

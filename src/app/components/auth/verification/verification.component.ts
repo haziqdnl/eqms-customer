@@ -38,9 +38,7 @@ export class VerificationComponent {
    */
   public urlParamType: any;
   private getUrlParam() {
-    this.routeParam.queryParamMap.subscribe( paramMap => {
-      this.urlParamType   = paramMap.get('t');
-    });
+    this.routeParam.queryParamMap.subscribe( paramMap => { this.urlParamType = paramMap.get('t'); });
   }
 
   /**
@@ -50,10 +48,7 @@ export class VerificationComponent {
     const alert = await this.alertCtrl.create({
       header  : 'Confirm resend OTP?',
       buttons : [
-        {
-          text: 'Cancel', role: 'cancel', cssClass: 'text-primary',
-          handler: () => {},
-        },
+        { text: 'Cancel', role: 'cancel', cssClass: 'text-primary', handler: () => {} },
         {
           text: 'Yes', role: 'confirm', cssClass: 'text-primary',
           handler: () => {

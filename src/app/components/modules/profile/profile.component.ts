@@ -28,8 +28,7 @@ export class ProfileComponent {
    *  Method: Validate customer/token
    */
   private validateToken() {
-    let request = { objRequest: { Token: this.g.getCustToken() } };
-    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
+    this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200")
         this.getStateList(rsp.d.RespData[0].pid);
       else {
@@ -57,8 +56,7 @@ export class ProfileComponent {
    */
   public  profileData: any = {};
   private getProfileInfo(pid: any) {
-    let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
-    this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiProfileService.apiGetProfileInfo({ objRequest: { GetAllFlag: false, ProfileID: pid } }, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.ExtendedToken);
         this.profileData = rsp.d.RespData[0];
@@ -126,7 +124,6 @@ export class ProfileComponent {
    */
   public formChangePwdSubmitted = false;
   public get formChangePwdControl() { return this.formChangePwd.controls; }
-  
   public formChangePwd: FormGroup = this.fb.group({
     password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
     confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(30), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],

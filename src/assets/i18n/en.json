@@ -1,33 +1,31 @@
 {
     "_comment"  : "** Common keywords in the app **",
     ""          : "==============================",
-    "LANGUAGE"  : "Language",
-    "PASSWORD"  : "Password",
     "BACK"      : "Back",
+    "EMAIL"     : "Email",
+    "LANGUAGE"  : "Language",
+    "MOBILENO"  : "Mobile Number",
     "NEXT"      : "Next",
+    "PASSWORD"  : "Password",
     "SUBMIT"    : "Submit",
+    "VEFIRY"    : "Verify",
 
     "ERROR": {
-        "_comment"  : "** Error keywords **",
-        ""          : "====================",
-        "INVALID"   : "Invalid",
-        "REQUIRED"  : "Required"
-    },
-
-    "LOGIN": {
-        "_comment"          : "** Keywords in LOGIN screen **",
-        ""                  : "==============================",
-        "TITLE"             : "Customer Login",
-        "BTN_LOGIN"         : "Login",
-        "REGISTER_HERE"     : "Register here",
-        "REGISTER_HERE_DESC": "Don't have an account yet ?",
-        "INVALID_LOGIN"     : "Invalid ID / Password !"
-    },
-
-    "HOME": {
-        "_comment"  : "** Keywords in HOME screen **",
-        ""          : "==============================",
-        "GREETING"  : "Welcome to ARX eQMS"
+        "_comment"              : "** Error keywords **",
+        ""                      : "====================",
+        "INVALID"               : "Invalid",
+        "INVALID_OTP"           : "OTP not valid",
+        "PASSWORD"              : {
+            "CRITERIA"          : {
+                "DIGIT"         : "contains at least one digit character",
+                "LOWERCASE"     : "contains at least one lower character",
+                "UPPERCASE"     : "contains at least one upper character",
+                "SPECIALCHAR"   : "contains at least one special character",
+                "MINCHAR"       : "contains at least 8 characters",
+                "NOTMATCH"      : "Password not match"
+            }
+        },
+        "REQUIRED"              : "Required"
     },
 
     "REGISTER": {
@@ -70,5 +68,36 @@
         "UCID_VERIFY_MSG"     : "The unique call ID is already in used!",
         "SEND_OTP_MSG"        : "Sending OTP verification...",
         "MSG_WITHOUT_DASH"    : "**Without '-' character"
+    },
+
+    "FORGOT_PASSWORD": {
+        "_comment"              : "** Keywords in FORGOT PASSWORD screen **",
+        ""                      : "==============================",
+        "TITLE"                 : {
+            "FORGOT"            : "Forgot Password",
+            "OTP"               : "OTP Verification",
+            "RESET"             : "Reset Password"
+        },
+        "DESCRIPTION"           : {
+            "FORGOT"            : "Enter your ID to get the password reset link",
+            "OTP"               : "Please enter the 6 digit OTP sent to",
+            "RESET"             : "Please enter your new password"
+        }
+    },
+
+    "LOGIN": {
+        "_comment"          : "** Keywords in LOGIN screen **",
+        ""                  : "==============================",
+        "TITLE"             : "Customer Login",
+        "BTN_LOGIN"         : "Login",
+        "SIGN_UP"           : "Register account",
+        "FORGOT_PASSWORD"   : "Forgot password",
+        "INVALID_LOGIN"     : "Invalid ID / Password !"
+    },
+
+    "HOME": {
+        "_comment"  : "** Keywords in HOME screen **",
+        ""          : "==============================",
+        "GREETING"  : "Welcome to ARX eQMS"
     }
 }

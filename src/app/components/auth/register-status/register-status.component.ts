@@ -42,5 +42,5 @@ export class RegisterStatusComponent {
   /**
    *  Method: Back Button
    */
-  public back() { this.urlParamType == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
+  public back() { this.urlParamType == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
 }

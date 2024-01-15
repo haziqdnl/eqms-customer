@@ -44,8 +44,7 @@ export class BookApptComponent {
    *  Method: Validate customer/token
    */
   private validateToken() {
-    let request = { objRequest: { Token: this.g.getCustToken() } };
-    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
+    this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
           this.getApptInfo();
           this.getWalkInInfo();
@@ -65,7 +64,7 @@ export class BookApptComponent {
   private intervalGetApptInfo: any;
   private getApptInfo() {
     this.intervalGetApptInfo = interval(1000).subscribe( () => {
-      this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
+      this.apiApptService.apiGetAppt(this.g.getCustToken).subscribe( rsp => {
         this.isAppt = false;
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
@@ -86,7 +85,7 @@ export class BookApptComponent {
   private intervalGetWalkInInfo: any;
   private getWalkInInfo() {
     this.intervalGetWalkInInfo = interval(1000).subscribe( () => {
-      this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
+      this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken).subscribe( rsp => {
         this.isWalkIn = false;
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
@@ -117,8 +116,7 @@ export class BookApptComponent {
   public apptTimeList: Array<any> = [];
   public getApptTime(dData:any, dDisp:any) {
     this.setApptDate(dData, dDisp)
-    let request = { objRequest: {  OutletID: this.selectedOutletID, ApptDate: dData } }
-    this.apiApptService.apiGetApptTime(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiApptService.apiGetApptTime({ objRequest: { OutletID: this.selectedOutletID, ApptDate: dData } }, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.setApptTime("", "");
         this.apptTimeList = rsp.d.RespData;
@@ -146,8 +144,7 @@ export class BookApptComponent {
   public getApptDates(oData: any) {
     let arr = oData.split('|');
     this.setOutlet(arr[0], arr[1]); 
-    let request = { objRequest: {  OutletID: arr[0], DaysInAdvanced: "7" } };
-    this.apiApptService.apiGetApptDates(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiApptService.apiGetApptDates({ objRequest: { OutletID: arr[0], DaysInAdvanced: "7" } }, this.g.getCustToken).subscribe( rsp => {
       rsp.d.RespCode == "200" ? this.apptDateList = rsp.d.RespData : this.g.apiRespError(rsp.d);
     });
   }
@@ -220,7 +217,7 @@ export class BookApptComponent {
         }
       }
     };
-    this.apiApptService.apiCRUD(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe( rsp => {
       rsp.d.RespCode == "200" ? this.g.redirectBack('') : this.g.apiRespError(rsp.d);
     });
   }

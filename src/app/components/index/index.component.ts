@@ -38,10 +38,6 @@ export class IndexComponent {
     setTimeout( () => { this.loaded = true }, 1000);
     this.validateToken();
     this.getUrlParam();
-
-    /** */
-    //this.g.createNotification("Test", "Test body", 0);
-    //this.g.vibrate();
   }
   ionViewWillLeave()  { this.destroyPage(); }
   ngOnDestroy()       { this.destroyPage(); }
@@ -63,8 +59,7 @@ export class IndexComponent {
    *  Method: Validate customer/token
    */
   private validateToken() {
-    let request = { objRequest: { Token: this.g.getCustToken() } };
-    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( rsp => {
+    this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.getProfileInfo(rsp.d.RespData[0].pid);
         this.getNewsFeed();
@@ -96,8 +91,7 @@ export class IndexComponent {
   public  username = "";
   public  uniqCallID = "";
   private getProfileInfo(pid: any) {
-    let request = { objRequest: { GetAllFlag: "false", ProfileID: pid } };
-    this.apiProfileService.apiGetProfileInfo(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiProfileService.apiGetProfileInfo({ objRequest: { GetAllFlag: false, ProfileID: pid } }, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.username   = rsp.d.RespData[0].Name;
         this.uniqCallID = rsp.d.RespData[0].UniqCallID;
@@ -111,7 +105,7 @@ export class IndexComponent {
    */
   public  newsFeedData: any = [];
   private getNewsFeed() {
-    this.apiNewsfeedService.apiGetCustNewsfeedInfo(this.g.getCustToken()).subscribe( rsp => {
+    this.apiNewsfeedService.apiGetCustNewsfeedInfo(this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.ExtendedToken)
         this.newsFeedData = rsp.d.RespData;
@@ -127,7 +121,7 @@ export class IndexComponent {
   private intervalGetApptInfo: any;
   private getApptInfo() {
     this.intervalGetApptInfo = interval(1000).subscribe( () => {
-      this.apiApptService.apiGetAppt(this.g.getCustToken()).subscribe( rsp => {
+      this.apiApptService.apiGetAppt(this.g.getCustToken).subscribe( rsp => {
         this.apptData = [];
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
@@ -149,7 +143,7 @@ export class IndexComponent {
   private intervalGetWalkInInfo: any;
   private getWalkInInfo() {
     this.intervalGetWalkInInfo = interval(1000).subscribe( () => {
-      this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()).subscribe( rsp => {
+      this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken).subscribe( rsp => {
         this.walkInData = [];
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
@@ -238,7 +232,7 @@ export class IndexComponent {
                 }
               }
             };
-            this.apiApptService.apiCRUD(request, this.g.getCustToken()).subscribe( rsp => {
+            this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe( rsp => {
               rsp.d.RespCode == "200" ? this.getApptInfo() : this.g.apiRespError(rsp.d);
             });
           },

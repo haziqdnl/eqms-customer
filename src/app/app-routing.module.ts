@@ -9,6 +9,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 //  Components: Main Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
@@ -24,11 +25,6 @@ const routes: Routes = [
    *  ========================
    */
   { 
-    path: 'login', 
-    component: LoginComponent, 
-    title: `${appName} | Login`
-  },
-  { 
     path: 'register', 
     component: RegisterComponent, 
     title: `${appName} | Register`
@@ -42,6 +38,16 @@ const routes: Routes = [
     path: 'register/status', 
     component: RegisterStatusComponent, 
     title: `${appName} | Register`
+  },
+  { 
+    path: 'login', 
+    component: LoginComponent, 
+    title: `${appName} | Login`
+  },
+  { 
+    path: 'forgot-password', 
+    component: ForgotPasswordComponent, 
+    title: `${appName} | Forgot Password`
   },
   /** ========================
    *  Components: Main Modules

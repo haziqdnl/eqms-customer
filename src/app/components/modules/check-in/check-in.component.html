@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar [class]="'topbar px-3 ' + (g.isMobileWeb() ? '' : 'pt-5')">
+    <ion-toolbar [class]="'topbar px-3 ' + (g.isMobileWeb ? '' : 'pt-5')">
         <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
         <ion-title>Check-In</ion-title>
     </ion-toolbar>
@@ -13,7 +13,7 @@
 <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="0.5" [breakpoints]="[0.5, 1]">
     <ng-template>
         <ion-header>
-            <ion-toolbar [class]="(g.isMobileWeb() ? '' : 'pt-5') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
+            <ion-toolbar [class]="(g.isMobileWeb ? '' : 'pt-5') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
                 <ion-title>{{ modalTitle }}</ion-title>
                 <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">Close</ion-buttons>
             </ion-toolbar>

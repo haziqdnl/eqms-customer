@@ -1,11 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Haptics } from '@capacitor/haptics';
-import { LocalNotifications } from '@capacitor/local-notifications';
 import { LoadingController, NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { catchError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -13,6 +13,7 @@ export class GeneralService {
 
   constructor(
     private deviceDetectorService: DeviceDetectorService,
+    private http: HttpClient,
     private loadingCtrl: LoadingController,
     private snackBar: MatSnackBar,
     private navCtrl: NavController,
@@ -23,16 +24,30 @@ export class GeneralService {
   /**
    *  Method: Get environment details
    */
-  public getEnvName()       { return environment.environmentName; }
-  public getEnvDomainUrl()  { return environment.domainUrl; }
-  public getEnvApiUrl()     { return environment.apiUrl; }
-  public getEnvAppVer()     { return environment.appVersion; }
+  public get getEnvName()       { return environment.environmentName; }
+  public get getEnvDomainUrl()  { return environment.domainUrl;       }
+  public get getEnvApiUrl()     { return environment.apiUrl;          }
+  public get getEnvAppVer()     { return environment.appVersion;      }
+
+  /**
+   *  Method: HTTP request to back-end services handler
+   */
+  private getHttpHeader(token?: string): any {
+    if (token)  return { 'headers': { 'content-type': 'application/json', 'SessionToken': token } };
+    else        return { 'headers': { 'content-type': 'application/json' }                        };
+  }
+  public httpGet(service: string, method: string, token?: string) {
+    return this.http.get(`${this.getEnvApiUrl}/${service}/${method}?lang=${this.getDefaultLanguage}`, this.getHttpHeader(token)).pipe( catchError( err => { throw err; } ) );
+  }
+  public httpPost(service: string, method: string, body: any, token?: string) {
+    return this.http.post(`${this.getEnvApiUrl}/${service}/${method}?lang=${this.getDefaultLanguage}`, body, this.getHttpHeader(token)).pipe( catchError( err => { throw err; } ) );
+  }
 
   /**
    *  Method: Customer Token
    */
-  public setCustToken(t: any)  { localStorage.setItem('eqmsCustomer_jwtToken', t); }
-  public getCustToken()    { return localStorage.getItem('eqmsCustomer_jwtToken'); }
+  public setCustToken(t: any)  { localStorage.setItem('eqmsCustomer_jwtToken', t);      }
+  public get getCustToken()    { return localStorage.getItem('eqmsCustomer_jwtToken');  }
 
   /**
    *  Method: End Session / Reset Token
@@ -45,8 +60,8 @@ export class GeneralService {
   /**
    *  Method: URL redirect/navigation
    */
-  public redirectTo   (c: string) { this.navCtrl.navigateForward(c); }
-  public redirectBack (c: string) { this.navCtrl.navigateBack(c); }
+  public redirectTo   (c: string) { this.navCtrl.navigateForward(c);  }
+  public redirectBack (c: string) { this.navCtrl.navigateBack(c);     }
 
   /**
    *  Method: Success/Error Handling
@@ -58,7 +73,7 @@ export class GeneralService {
     this.snackBar.open(msg, 'OK', {
       duration          : duration,
       horizontalPosition: pos,
-      verticalPosition  : this.isMobileWeb() ? 'top' : 'bottom',
+      verticalPosition  : this.isMobileWeb ? 'top' : 'bottom',
       panelClass        : panelClass,
     });
   }
@@ -101,9 +116,9 @@ export class GeneralService {
   /**
    *  Method: To get user device information
    */
-  public isMobile()       { return this.platform.is('android') || this.platform.is('ios');; }
-  public isMobileWeb()    { return this.platform.is('mobileweb'); }
-  public getDeviceInfo()  { return this.deviceDetectorService; }
+  public get isMobile()       { return this.platform.is('android') || this.platform.is('ios');  }
+  public get isMobileWeb()    { return this.platform.is('mobileweb');                           }
+  public get getDeviceInfo()  { return this.deviceDetectorService;                              }
 
   /**
    *  Method: Get current Date (no time)
@@ -127,7 +142,7 @@ export class GeneralService {
   /**
    *  Method: Get preferred default language
    */
-  public getTokenDefaultLanguage() { 
+  public get getDefaultLanguage() { 
     if (localStorage.getItem('eqmsCustomer_defLanguage') != null) return localStorage.getItem('eqmsCustomer_defLanguage')!;
     else                                                          return "en";
   }
@@ -135,24 +150,7 @@ export class GeneralService {
    *  Method: Set default translate language when visiting the app
    */
   public setDefaultLanguage() {
-    if (this.getTokenDefaultLanguage() != null)   this.translate.setDefaultLang(this.getTokenDefaultLanguage());
-    else                                          this.translate.setDefaultLang('en');
+    if (this.getDefaultLanguage != null)  this.translate.setDefaultLang(this.getDefaultLanguage);
+    else                                  this.translate.setDefaultLang('en');
   }
-
-  /** */
-  public async createNotification(title: string, body: string, interval: number) {
-    await LocalNotifications.schedule({
-      notifications: [{
-        id          : Date.now(),
-        title       : title,
-        body        : body,
-        largeBody   : "",
-        summaryText : "",
-        schedule    : { at: new Date(Date.now() + interval) },
-      }]
-    });
-  }
-  public async vibrate(time: number) {
-    time === 0 ? await Haptics.vibrate() : await Haptics.vibrate({ duration: time});
-  };
 }

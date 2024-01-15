@@ -54,7 +54,7 @@ export class CheckInService {
    *  Method: Check if already book for an appointment
    */
   private async isApptBooked() {
-    var rsp = await lastValueFrom(this.apiApptService.apiGetAppt(this.g.getCustToken()));
+    var rsp = await lastValueFrom(this.apiApptService.apiGetAppt(this.g.getCustToken));
     if (rsp.d.RespCode == "200") {
       this.g.setCustToken(rsp.d.ExtendedToken);
       if (rsp.d.RespData != '' && rsp.d.RespData != undefined) {
@@ -81,7 +81,7 @@ export class CheckInService {
    *  Method: Check if already scanned for walk-in
    */
   private async isWalkedIn() {
-    var rsp = await lastValueFrom(this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken()));
+    var rsp = await lastValueFrom(this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken));
     this.checkInData.enableScanner = true;
     this.checkInData.msgDisabledScanner = "The check-in scanner is enabled for walk-in.";
     if (rsp.d.RespCode == "200") {

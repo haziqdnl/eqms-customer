@@ -21,16 +21,16 @@ export class LoginComponent {
     public translate: TranslateService
   ) {}
 
-  ngOnInit() { this.validateToken(); }
-  ionViewWillLeave() { this.formIdPassword.reset(); }
+  ngOnInit()          { this.validateToken(); }
+  ionViewWillLeave()  { this.formIdPassword.reset(); }
 
   /**
    *  Method: Auto login if token from previous login still valid
    */
-  public defaultLang = this.g.getTokenDefaultLanguage();
+  public defaultLang = this.g.getDefaultLanguage;
   private validateToken() {
-    if (this.g.getCustToken()) {
-      this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken() } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
+    if (this.g.getCustToken) {
+      this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
     }
   }
 
@@ -40,7 +40,7 @@ export class LoginComponent {
   readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly idMask: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
   public formIdPassword = this.fb.group({
-    id      : ['', [Validators.required, Validators.pattern('[+][6][0][1][0-9]\\d*$')],],
+    id      : ['', [Validators.required, Validators.pattern('[+][6][0][1][0-9]\\d*$')]],
     password: ['', [Validators.required]],
   });
   public get errFormIdPassword_id() {
@@ -62,9 +62,7 @@ export class LoginComponent {
   /**
    *  Method: Submit login form
    */
-  public isIdPasswordValid: boolean = false;
   public submit() {
-    this.g.vibrate(0);
     let request = {
       objRequest: {
         LoginID : this.formIdPassword.value.id,

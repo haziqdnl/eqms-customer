@@ -1,4 +1,3 @@
-import { TitleCasePipe } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -22,8 +21,7 @@ export class RegisterComponent {
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
     public  g: GeneralService,
-    public  titleCasePipe: TitleCasePipe,
-    public translate: TranslateService
+    public  translate: TranslateService
   ) { }
 
   ionViewWillEnter() { this.getUrlParam(); }
@@ -178,5 +176,5 @@ export class RegisterComponent {
   /**
    *  Method: Back button
    */
-  public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl() + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
+  public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
 }

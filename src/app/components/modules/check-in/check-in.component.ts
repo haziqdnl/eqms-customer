@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BarcodeFormat, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
-import { interval } from 'rxjs';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -56,8 +55,7 @@ export class CheckInComponent {
    *  Method: Validate customer token
    */
   private validateToken() {
-    let request = { objRequest: { Token: this.g.getCustToken() } };
-    this.apiUtilityService.apiDecodeJWTToken(request).subscribe( async rsp => {
+    this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( async rsp => {
       if (rsp.d.RespCode == "200")
         await this.isScannerEnabled();
       else {
@@ -124,7 +122,7 @@ export class CheckInComponent {
           QRCodeData: resultString 
         }
       };
-      this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
+      this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
         this.errMsgTitle = '';
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
         if      (rsp.d.RespCode == "200") this.g.redirectTo('');
@@ -151,7 +149,7 @@ export class CheckInComponent {
         QRCodeData: this.qrValue
       }
     };
-    this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken()).subscribe( rsp => {
+    this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode != "200") {
         this.errMsgTitle = 'Check-in failed! ' + rsp.d.RespMessage + '. Please try again.';
         this.openModal(true, "errorMsg");

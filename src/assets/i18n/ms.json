@@ -1,33 +1,31 @@
 {
     "_comment"  : "** Kata kunci umum dalam aplikasi **",
     ""          : "====================================",
-    "LANGUAGE"  : "Bahasa",
-    "PASSWORD"  : "Kata Laluan",
     "BACK"      : "Kembali",
+    "EMAIL"     : "Emel",
+    "LANGUAGE"  : "Bahasa",
+    "MOBILENO"  : "No. Telefon Bimbit",
     "NEXT"      : "Seterusnya",
+    "PASSWORD"  : "Kata Laluan",
     "SUBMIT"    : "Hantar",
+    "VEFIRY"    : "Sahkan",
 
     "ERROR": {
-        "_comment"  : "** Kata kunci ralat **",
-        ""          : "======================",
-        "INVALID"   : "Tidak sah",
-        "REQUIRED"  : "Diperlukan"
-    },
-
-    "LOGIN": {
-        "_comment"          : "** Kata kunci dalam skrin LOGIN **",
-        ""                  : "==================================",
-        "TITLE"             : "Log Masuk Pelanggan",
-        "BTN_LOGIN"         : "Log Masuk",
-        "REGISTER_HERE"     : "Daftar disini",
-        "REGISTER_HERE_DESC": "Belum ada akaun ?",
-        "INVALID_LOGIN"     : "ID / Kata Laluan Tidak Sah!"
-    },
-
-    "HOME": {
-        "_comment"  : "** Kata kunci dalam skrin HOME **",
-        ""          : "==============================",
-        "GREETING"  : "Selamat datang ke ARX eQMS"
+        "_comment"      : "** Kata kunci ralat **",
+        ""              : "======================",
+        "INVALID"       : "Tidak sah",
+        "INVALID_OTP"   : "OTP Tidak Sah",
+        "PASSWORD"              : {
+            "CRITERIA"          : {
+                "DIGIT"         : "mengandungi sekurangnya satu aksara digit",
+                "LOWERCASE"     : "mengandungi sekurangnya satu aksara kecil",
+                "UPPERCASE"     : "mengandungi sekurangnya satu aksara besar",
+                "SPECIALCHAR"   : "mengandungi sekurangnya satu aksara istimewa",
+                "MINCHAR"       : "mengandungi sekurangnya 8 aksara",
+                "NOTMATCH"      : "Kata laluan tidak sepadan"
+            }
+        },
+        "REQUIRED"      : "Diperlukan"
     },
 
     "REGISTER": {
@@ -68,7 +66,38 @@
         "UCID_DEFAULT"        : "Janaan Automatik",
         "UCID_DEFAULT_MSG"    : "ID Panggilan Unik akan dijana berdasarkan maklumat yang diberikan.<br>Anda boleh menukarkannya kemudian dalam bahagian profil setelah pendaftaran selesai.",
         "UCID_VERIFY_MSG"     : "ID panggilan unik sudah digunakan!",
-        "SEND_OTP_MSG"        : "Pengesahan OTP tengah dihantarkan...",
+        "SEND_OTP_MSG"        : "Pengesahan OTP sedang dihantar...",
         "MSG_WITHOUT_DASH"    : "**Tanpa symbol '-'"
+    },
+
+    "FORGOT_PASSWORD": {
+        "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
+        ""                      : "==============================",
+        "TITLE"                 : {
+            "FORGOT"            : "Lupa Kata Laluan",
+            "OTP"               : "Pengesahan OTP",
+            "RESET"             : "Tetapan Semula Kata Laluan"
+        },
+        "DESCRIPTION"           : {
+            "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
+            "OTP"               : "Sila masukkan 6 digit OTP yang dihantar ke",
+            "RESET"             : "Sila masukkan kata laluan baharu anda"
+        }
+    },
+
+    "LOGIN": {
+        "_comment"          : "** Kata kunci dalam skrin LOGIN **",
+        ""                  : "==================================",
+        "TITLE"             : "Log Masuk Pelanggan",
+        "BTN_LOGIN"         : "Log Masuk",
+        "SIGN_UP"           : "Daftar akaun",
+        "FORGOT_PASSWORD"   : "Lupa kata laluan",
+        "INVALID_LOGIN"     : "ID / Kata Laluan Tidak Sah!"
+    },
+
+    "HOME": {
+        "_comment"  : "** Kata kunci dalam skrin HOME **",
+        ""          : "==============================",
+        "GREETING"  : "Selamat datang ke ARX eQMS"
     }
 }
