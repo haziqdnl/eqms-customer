@@ -33,15 +33,15 @@
                                 <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Walk-In: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : ''}}
-                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? 'It\'s your turn! Please head to the calling counter' : '' }}
-                                    {{ walkInData[0].WalkInStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
+                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? "{{ 'SCRN_HOME.CHECKIN_SUCCESS_MSG' | translate }}" : ''}}
+                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? "{{ 'SCRN_HOME.CALLING_MSG' | translate }}": '' }}
+                                    {{ walkInData[0].WalkInStat == 'SERVING' ? "{{ 'SCRN_HOME.SERVING_MSG' | translate }}" : '' }}
                                 </p>
                                 <!-- Walk-In: Status Title / UniqCallID -->
                                 <h2>{{ this.uniqCallID | uppercase }}</h2>
                                 <h3>{{ walkInData[0].Service }}</h3>
                                 <!-- Walk-In: Notice -->
-                                <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3"> *Please wait in the waiting area, we'll call and serve you in a few minutes.</p>
+                                <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3">{{ 'SCRN_HOME.QUEUING_MSG' | translate }}</p>
                             </div>
                         </section>
                         <section *ngIf="apptData[0] != null && apptData[0].ApptStat != 'COMPLETE'">
@@ -52,9 +52,9 @@
                                 <fa-icon *ngIf="apptData[0].ApptStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Appt: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? 'Don\'t forget you\'ve an appointment with us!' : ''}}
-                                    {{ apptData[0].ApptStat == 'QUEUING' ? 'You\'ve successfully checked-in!' : '' }}
-                                    {{ apptData[0].ApptStat == 'SERVING' ? 'You\'re currently being served!' : '' }}
+                                    {{ apptData[0].ApptStat == 'NEW'     ? "{{ 'SCRN_HOME.APPT_NEW_MSG' | translate }}" : ''}}
+                                    {{ apptData[0].ApptStat == 'QUEUING' ? "{{ 'SCRN_HOME.APPT_QUEUE_MSG' | translate }}"  : '' }}
+                                    {{ apptData[0].ApptStat == 'SERVING' ? "{{ 'SCRN_HOME.APPT_SERVE_MSG' | translate }}"  : '' }}
                                 </p>
                                 <!-- Appt: Status Title / UniqCallID -->
                                 <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{ this.uniqCallID | uppercase }}</h2>
@@ -65,8 +65,8 @@
                                 </h3>
                                 <!-- Appt: Notice -->
                                 <p *ngIf="apptData[0].ApptStat == 'NEW' || apptData[0].ApptStat == 'QUEUING'" class="font-size-12 mt-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? 'Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.' : '' }}
-                                    {{ apptData[0].ApptStat == 'QUEUING' ? 'Please wait in the waiting area, we\'ll call and serve you in a few minutes.' : '' }}
+                                    {{ apptData[0].ApptStat == 'NEW'     ? "{{ 'SCRN_HOME.APPT_NEW_NOTICE' | translate }}" : '' }}
+                                    {{ apptData[0].ApptStat == 'QUEUING' ? "{{ 'SCRN_HOME.APPT_QUEUE_NOTICE' | translate }}" : '' }}
                                 </p>
                                 <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
                                     <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">Cancel</button>
@@ -75,10 +75,10 @@
                         </section>
                         <div *ngIf="apptData[0] == null && walkInData[0] == null">
                             <fa-icon icon="calendar-xmark" size="4x" class="text-danger"></fa-icon>
-                            <h5 class="mt-3">You don't have any appointment with us at the moment</h5>
+                            <h5 class="mt-3">{{ 'SCRN_HOME.APPT_NO_APPT' | translate }}</h5>
                         </div>
                         <div *ngIf="!checkInData.enableScanner">
-                            <p class="font-size-10 mt-2"><b>Note:</b> {{ checkInData.msgDisabledScanner }}</p>
+                            <p class="font-size-10 mt-2"><b>{{ 'SCRN_HOME.APPT_NOTE' | translate }}</b> {{ checkInData.msgDisabledScanner }}</p>
                         </div>
                     </ion-card-content>
                 </ion-card>
@@ -86,14 +86,14 @@
         </ion-row>
         <!-- Current Market Price & Rate -->
         <section id="market" class="section">
-            <ion-label class="title">Gold Market Price</ion-label>
+            <ion-label class="title">{{ 'SCRN_HOME.GOLD_MARKET_PRICE' | translate }}</ion-label>
             <div class="mt-4 rounded-3 bg-white py-3 w-100">
                 <iframe [src]="urlCurentGoldMarketPrice" class="w-100" style="height: 270px;"></iframe>
             </div>
         </section>
         <!-- Latest News -->
         <section id="news" class="section">
-            <ion-label class="title">Latest News</ion-label>
+            <ion-label class="title">{{ 'SCRN_HOME.LATEST_NEWS' | translate }}</ion-label>
             <ion-row class="mt-4 ion-justify-content-center">
                 <ion-col size="12" size-sm="3" *ngFor="let item of newsFeedData">
                     <div [innerHTML]="item.HTMLContent" class="py-2 h-100 w-100"></div>
@@ -102,18 +102,17 @@
         </section>
         <!-- About Us -->
         <section id="aboutus" class="section">
-            <ion-label class="title">About Us</ion-label>
+            <ion-label class="title">{{ 'SCRN_HOME.ABOUT_US' | translate }}</ion-label>
             <p class="mt-4 px-3 text-center">
-                The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient 
-                customer service, reduce waiting time and enhance customer experience.
+                {{ 'SCRN_HOME.ABOUT_US_CONTENT' | translate }}
             </p>
         </section>
     </ion-grid>
     <!-- Modal: Check-In Success -->
     <ng-template #modalCheckInSuccess let-modal>
         <div class="modal-body text-center p-4">
-            <h1 class="text-success fw-bolder">Check-In Successful</h1>
-            <h6>Please wait at the waiting area. We'll call and serve you in a few minutes.</h6>
+            <h1 class="text-success fw-bolder">{{ 'SCRN_HOME.POPUP_CHECKIN_SUCCESS' | translate }}</h1>
+            <h6>{{ 'SCRN_HOME.POPUP_CHECKIN_MSG' | translate }}</h6>
             <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
         </div>
     </ng-template>

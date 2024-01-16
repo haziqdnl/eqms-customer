@@ -86,6 +86,19 @@
         }
     },
 
+    "SCRN_REGISTER_STATUS": {
+        "_comment"               : "** Keywords in REGISTER STATUS screen **",
+        ""                       : "==============================",
+        "REG_STATUS_SUCCESS"     : "Account Created",
+        "REG_STATUS_EXISTS"      : "Account Already Exist",
+        "REG_STATUS_UNVERIFIED"  : "Account Not Yet Verified",
+        "REG_ACC_EXISTS_MSG"     : "Sorry, an account with the registered email address or telephone number already exist.",
+        "REG_ACC_SUCCESS_MSG"    : "Thank you for registering with us. Please proceed to the login screen to start using our features.",
+        "REG_ACC_UNVERIFY_MSG"   : "It seems that you haven't verify your account using the verification link sent to your email address.",
+        "REG_BACK_TO_LOGIN"      : "Back to Login",
+        "REG_BACK"               : "Back"
+    },
+
     "SCRN_FORGOT_PASSWORD"      : {
         "_comment"              : "** Keywords in FORGOT PASSWORD screen **",
         ""                      : "==============================",
@@ -112,6 +125,24 @@
     "SCRN_HOME"                 : {
         "_comment"              : "** Keywords in HOME screen **",
         ""                      : "==============================",
-        "GREETING"              : "Welcome to ARX eQMS"
+        "GREETING"              : "Welcome to ARX eQMS",
+        
+        "CHECKIN_SUCCESS_MSG"   : "You've successfully checked-in!",
+        "CALLING_MSG"           : "It's your turn! Please head to the calling counter",
+        "SERVING_MSG"           : "You're currently being served!",
+        "QUEUING_MSG"           : "*Please wait in the waiting area, we'll call and serve you in a few minutes.",
+        "APPT_NEW_MSG"          : "'Don't forget you've an appointment with us!'",
+        "APPT_QUEUE_MSG"        : "You've successfully checked-in!",
+        "APPT_SERVE_MSG"        : "You're currently being served!",
+        "APPT_NEW_NOTICE"       : "Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.",
+        "APPT_QUEUE_NOTICE"     : "Please wait in the waiting area, we'll call and serve you in a few minutes.",
+        "APPT_NO_APPT"          : "You don't have any appointment with us at the moment",
+        "APPT_NOTE"             : "Note:",
+        "GOLD_MARKET_PRICE"     : "Gold Market Price",
+        "LATEST_NEWS"           : "Latest News",
+        "ABOUT_US"              : "About Us",
+        "ABOUT_US_CONTENT"      : "The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient customer service, reduce waiting time and enhance customer experience.",
+        "POPUP_CHECKIN_SUCCESS" : "Check-In Successful",
+        "POPUP_CHECKIN_MSG"     : "Please wait at the waiting area. We'll call and serve you in a few minutes."
     }
 }
