@@ -22,10 +22,10 @@
                 "UPPERCASE"     : "contains at least one upper character",
                 "SPECIALCHAR"   : "contains at least one special character",
                 "MINCHAR"       : "contains at least 8 characters",
-                "NOTMATCH"                  : "Password not match"
-                        }
+                "NOTMATCH"      : "Password not match"
+            }
         },
-        "REQUIRED"                          : "Required",
+        "REQUIRED"              : "Required",
         "CHECKIN_SUCCESS_MSG"   : "You've successfully checked-in!",
         "CALLING_MSG"           : "It's your turn! Please head to the calling counter",
         "SERVING_MSG"           : "You're currently being served!",

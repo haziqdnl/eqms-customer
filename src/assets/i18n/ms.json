@@ -11,10 +11,10 @@
     "VEFIRY"    : "Sahkan",
 
     "ERROR": {
-        "_comment"      : "** Kata kunci ralat **",
-        ""              : "======================",
-        "INVALID"       : "Tidak sah",
-        "INVALID_OTP"   : "OTP Tidak Sah",
+        "_comment"              : "** Kata kunci ralat **",
+        ""                      : "======================",
+        "INVALID"               : "Tidak sah",
+        "INVALID_OTP"           : "OTP Tidak Sah",
         "PASSWORD"              : {
             "CRITERIA"          : {
                 "DIGIT"         : "mengandungi sekurangnya satu aksara digit",
@@ -25,7 +25,24 @@
                 "NOTMATCH"      : "Kata laluan tidak sepadan"
             }
         },
-        "REQUIRED"      : "Diperlukan"
+        "REQUIRED"              : "Diperlukan",
+        "CHECKIN_SUCCESS_MSG"   : "You've successfully checked-in!",
+        "CALLING_MSG"           : "It's your turn! Please head to the calling counter",
+        "SERVING_MSG"           : "You're currently being served!",
+        "QUEUING_MSG"           : "*Please wait in the waiting area, we'll call and serve you in a few minutes.",
+        "APPT_NEW_MSG"          : "'Don't forget you've an appointment with us!'",
+        "APPT_QUEUE_MSG"        : "You've successfully checked-in!",
+        "APPT_SERVE_MSG"        : "You're currently being served!",
+        "APPT_NEW_NOTICE"       : "Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.",
+        "APPT_QUEUE_NOTICE"     : "Please wait in the waiting area, we'll call and serve you in a few minutes.",
+        "APPT_NO_APPT"          : "You don't have any appointment with us at the moment",
+        "APPT_NOTE"             : "Note:",
+        "GOLD_MARKET_PRICE"     : "Gold Market Price",
+        "LATEST_NEWS"           : "Latest News",
+        "ABOUT_US"              : "About Us",
+        "ABOUT_US_CONTENT"      : "The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient customer service, reduce waiting time and enhance customer experience.",
+        "POPUP_CHECKIN_SUCCESS" : "Check-In Successful",
+        "POPUP_CHECKIN_MSG"     : "Please wait at the waiting area. We'll call and serve you in a few minutes."
     },
 
     "REGISTER": {
