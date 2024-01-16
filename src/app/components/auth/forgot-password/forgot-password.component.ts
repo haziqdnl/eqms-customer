@@ -19,7 +19,7 @@ export class ForgotPasswordComponent {
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
     public  g: GeneralService,
-    public translate: TranslateService
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {}
@@ -48,8 +48,8 @@ export class ForgotPasswordComponent {
   public get errFormMobileNo() {
     var msg = "";
     if (this.formMobileNo.controls['mobileNo'].touched && this.formMobileNo.controls['mobileNo'].invalid) {
-      if (this.formMobileNo.controls['mobileNo'].hasError('required'))  msg = this.translate.instant('ERROR.REQUIRED');
-      if (this.formMobileNo.controls['mobileNo'].hasError('pattern'))   msg = this.translate.instant('ERROR.INVALID');
+      if (this.formMobileNo.controls['mobileNo'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
+      if (this.formMobileNo.controls['mobileNo'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
     }
     return msg.toLowerCase();
   }
@@ -57,14 +57,14 @@ export class ForgotPasswordComponent {
   public get errFormEmail() {
     var msg = "";
     if (this.formEmail.controls['email'].touched && this.formEmail.controls['email'].invalid) {
-      if (this.formEmail.controls['email'].hasError('required'))  msg = this.translate.instant('ERROR.REQUIRED');
-      if (this.formEmail.controls['email'].hasError('pattern'))   msg = this.translate.instant('ERROR.INVALID');
+      if (this.formEmail.controls['email'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
+      if (this.formEmail.controls['email'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
     }
     return msg.toLowerCase();
   }
   private otp: string = "";
   public  submitForgotPassword(mode: number) {
-    this.g.toastSuccess(this.translate.instant('REGISTER.SEND_OTP_MSG'));
+    this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
     this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
       if (rsp.d.RespCode == "200") {
         this.otp = rsp.d.RespData[0].OTP;
@@ -82,13 +82,13 @@ export class ForgotPasswordComponent {
    */
   public async resendOTP() {
     const alert = await this.alertCtrl.create({
-      header  : 'Confirm resend OTP?',
+      header  : this.translate.instant('OTP_VERIFICATION.CONFIRM_RESEND'),
       buttons : [
-        { text: 'Cancel', role: 'cancel', cssClass: 'text-primary', handler: () => {} },
+        { text: this.translate.instant('CANCEL'), role: 'cancel', cssClass: 'text-danger', handler: () => {} },
         {
-          text: 'Yes', role: 'confirm', cssClass: 'text-primary',
+          text: this.translate.instant('YES'), role: 'confirm', cssClass: 'text-primary',
           handler: () => {
-            this.g.toastSuccess(this.translate.instant('REGISTER.SEND_OTP_MSG'));
+            this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
             this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
               if (rsp.d.RespCode == "200") {
                 this.otp = rsp.d.RespData[0].OTP;
@@ -119,9 +119,8 @@ export class ForgotPasswordComponent {
   public submitFormOTPVerification() {
     if (this.formOTPVerification.valid) {
       let otpCombine = `${this.formOTPVerification.value.otp1}${this.formOTPVerification.value.otp2}${this.formOTPVerification.value.otp3}${this.formOTPVerification.value.otp4}${this.formOTPVerification.value.otp5}${this.formOTPVerification.value.otp6}`
-      //  reveal Password Reset form
-      if (this.otp == otpCombine) this.setFormMode(false, false, true);
-      else                        this.g.toastError(this.translate.instant('ERROR.INVALID_OTP'));
+      if (otpCombine == this.otp) this.setFormMode(false, false, true);
+      else                        this.g.toastError(this.translate.instant('OTP_VERIFICATION.INVALID_OTP'));
     }
   }
 
@@ -180,16 +179,16 @@ export class ForgotPasswordComponent {
   public get errFormResetPwd_password() {
     var msg = "";
     if (this.formResetPwd.controls['password'].touched && this.formResetPwd.controls['password'].invalid) {
-      if (this.formResetPwd.controls['password'].hasError('required'))  msg = this.translate.instant('ERROR.REQUIRED');
-      if (this.formResetPwd.controls['password'].hasError('pattern'))   msg = this.translate.instant('ERROR.INVALID');
+      if (this.formResetPwd.controls['password'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
+      if (this.formResetPwd.controls['password'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
     }
     return msg.toLowerCase();
   }
   public get errFormResetPwd_confirmPassword() {
     var msg = "";
     if (this.formResetPwd.controls['confirmPassword'].touched && this.formResetPwd.controls['confirmPassword'].invalid) {
-      if (this.formResetPwd.controls['confirmPassword'].hasError('required'))          msg = this.translate.instant('ERROR.REQUIRED');
-      if (this.formResetPwd.controls['confirmPassword'].hasError('passwordMismatch'))  msg = this.translate.instant('ERROR.PASSWORD.CRITERIA.NOTMATCH');
+      if (this.formResetPwd.controls['confirmPassword'].hasError('required'))          msg = this.translate.instant('_ERROR.REQUIRED');
+      if (this.formResetPwd.controls['confirmPassword'].hasError('passwordMismatch'))  msg = this.translate.instant('_ERROR.PASSWORD.CRITERIA.NOTMATCH');
     }
     return msg.toLowerCase();
   }

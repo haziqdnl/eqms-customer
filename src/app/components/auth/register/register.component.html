@@ -4,163 +4,132 @@
             <div id="formRegister" class="bg-light shadow-lg rounded-3 px-lg-4 py-3 my-3 text-center">
                 <!-- Logo & Title -->
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
-                <h5 class="mt-2 fw-bold">{{ 'REGISTER.TITLE' | translate }}</h5>
+                <h5 class="mt-2 fw-bold">{{ 'SCRN_REGISTER.TITLE' | translate }}</h5>
                 <!-- Forms -->
                 <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.isMobile ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
                     <!-- Step 1: Fullname & NRIC no. verification -->
-                    <mat-step [stepControl]="formRegisterBasicInfo" editable="true">
+                    <mat-step [stepControl]="formBasicInfo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="id-card"></fa-icon></ng-template>
-                        <form [formGroup]="formRegisterBasicInfo" class="w-100">
+                        <form [formGroup]="formBasicInfo" class="w-100 text-start" (ngSubmit)="this.checkExist('NRIC', this.formBasicInfo.value.identificationNo?.replaceAll('-', ''))">
                             <!-- Fullname -->
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.FULLNAME' | translate }}</mat-label>
-                                <input matInput #fullname formControlName="fullname" type="text" placeholder="{{ 'REGISTER.FULLNAME_PLACEHOLD' | translate }}" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
-                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['fullname'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['fullname'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterBasicInfoCtrl['fullname'].errors?.['pattern'] || formRegisterBasicInfoCtrl['fullname'].errors?.['minlength'] || formRegisterBasicInfoCtrl['fullname'].errors?.['maxlength']">
-                                        <strong>{{ 'REGISTER.FULLNAME_INVALID' | translate }}</strong>
-                                    </span>
-                                </mat-error>
-                                <mat-hint align="end">{{ fullname.value.length }} / 60</mat-hint>
-                            </mat-form-field>
+                            <div>
+                                <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.FULLNAME' | translate" labelPlacement="floating" autocapitalize="none" minlength="3" maxlength="80" 
+                                    class="px-2 border-bottom {{ errFormBasicInfo_fullname ? 'border-danger' : 'border-dark'}}" oninput="this.value = this.value.toUpperCase()" />
+                                <ion-text class="input-err">{{ errFormBasicInfo_fullname }}</ion-text>
+                            </div>
                             <!-- Gender -->
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.GENDER' | translate }}</mat-label>
-                                <mat-select #gender formControlName="gender" placeholder="{{ 'REGISTER.GENDER_PLACEHOLD' | translate }}" (selectionChange)="changeGender($event)" required>
-                                    <mat-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['gender'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['gender'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['gender'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                </mat-error>
-                            </mat-form-field>
+                            <div>
+                                <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.GENDER' | translate" labelPlacement="floating" interface="action-sheet"
+                                    class="px-2 border-bottom {{ errFormBasicInfo_gender ? 'border-danger' : 'border-dark'}}" (ionChange)="changeGender(gender.value)">
+                                    <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</ion-select-option>
+                                </ion-select>
+                                <ion-text class="input-err">{{ errFormBasicInfo_gender }}</ion-text>
+                            </div>
                             <!-- NRIC no. -->
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.NRIC' | translate }}</mat-label>
-                                <input matInput #identificationNo formControlName="identificationNo" type="text" placeholder="{{ 'REGISTER.NRIC_PLACEHOLD' | translate }}" maxlength="12" (keypress)="g.numberOnly($event)" required />
-                                <mat-error *ngIf="(formRegisterBasicInfoCtrl['identificationNo'].touched || formRegisterBasicInfoSubmitted) && formRegisterBasicInfoCtrl['identificationNo'].invalid">
-                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterBasicInfoCtrl['identificationNo'].errors?.['minlength'] || formRegisterBasicInfoCtrl['identificationNo'].errors?.['maxlength']"><strong>{{ 'REGISTER.NRIC_INVALID' | translate }}</strong></span>
-                                </mat-error>
-                                <mat-hint align="start" class="text-secondary font-size-10">{{ 'REGISTER.MSG_WITHOUT_DASH' | translate }}</mat-hint>
-                            </mat-form-field>
+                            <div>
+                                <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.NRIC' | translate" labelPlacement="floating" autocapitalize="none" maxlength="14" 
+                                    class="px-2 border-bottom {{ errFormBasicInfo_identificationNo ? 'border-danger' : 'border-dark'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
+                                <ion-text class="input-err">{{ errFormBasicInfo_identificationNo }}</ion-text>
+                            </div>
+                            <div class="mt-3 btn-group w-100">
+                                <button type="button" class="btn btn-secondary w-50" (click)="back()">{{ 'BACK' | translate }}</button>
+                                <button type="submit" class="btn btn-primary w-50" [disabled]="!formBasicInfo.valid">{{ 'NEXT' | translate }}</button>
+                            </div>
                         </form>
-                        <div class="mt-3 btn-group w-100">
-                            <button type="button" class="btn btn-secondary w-50" (click)="back()">{{ 'BACK' | translate }}</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterBasicInfo()" [disabled]="!formRegisterBasicInfo.valid">{{ 'NEXT' | translate }}</button>
-                        </div>
                         <button #btnNextBasicInfo matStepperNext type="button" class="d-none"></button>
                     </mat-step>
                     <!-- Step 2: Email verification -->
-                    <mat-step [stepControl]="formRegisterEmail" editable="true">
+                    <mat-step [stepControl]="formEmail" editable="true">
                         <ng-template matStepLabel><fa-icon icon="envelope"></fa-icon></ng-template>
-                        <form [formGroup]="formRegisterEmail" class="w-100">
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.EMAIL' | translate }}</mat-label>
-                                <input matInput #email formControlName="email" type="text" placeholder="{{ 'REGISTER.EMAIL_PLACEHOLD' | translate }}" maxlength="255" required />
-                                <mat-error *ngIf="(formRegisterEmailCtrl['email'].touched || formRegisterEmailSubmitted) && formRegisterEmailCtrl['email'].invalid">
-                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterEmailCtrl['email'].errors?.['pattern'] || formRegisterEmailCtrl['email'].errors?.['maxlength']"><strong>{{ 'REGISTER.EMAIL_INVALID' | translate }}</strong></span>
-                                </mat-error>
-                            </mat-form-field>
+                        <form [formGroup]="formEmail" class="w-100 text-start" (ngSubmit)="this.checkExist('EMAIL', this.formEmail.value.email)">
+                            <div>
+                                <ion-input type="email" #email formControlName="email" [label]="'EMAIL' | translate" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.EMAIL' | translate" labelPlacement="floating" autocapitalize="none" maxlength="80" 
+                                    class="px-2 border-bottom {{ errFormEmail ? 'border-danger' : 'border-dark'}}" />
+                                <ion-text class="input-err">{{ errFormEmail }}</ion-text>
+                            </div>
+                            <div class="mt-3 btn-group w-100">
+                                <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                                <button type="submit" class="btn btn-primary w-50" [disabled]="!formEmail.valid">{{ 'NEXT' | translate }}</button>
+                            </div>
                         </form>
-                        <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterEmail()" [disabled]="!formRegisterEmail.valid">{{ 'NEXT' | translate }}</button>
-                        </div>
                         <button #btnNextEmail matStepperNext type="button" class="d-none"></button>
                     </mat-step>
                     <!-- Step 3: Mobile no. verification -->
-                    <mat-step [stepControl]="formRegisterMobileNo" editable="true">
+                    <mat-step [stepControl]="formMobileNo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="phone"></fa-icon></ng-template>
-                        <form [formGroup]="formRegisterMobileNo" class="w-100">
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.MOBILENO' | translate }}</mat-label>
-                                <span matPrefix><i class="ms-3"></i>+60</span>
-                                <input matInput #mobileNo formControlName="mobileNo" type="text" placeholder="{{ 'REGISTER.MOBILENO_PLACEHOLD' | translate }}" maxlength="10" (keypress)="g.numberOnly($event)" required />
-                                <mat-error *ngIf="(formRegisterMobileNoCtrl['mobileNo'].touched || formRegisterMobileNoSubmitted) && formRegisterMobileNoCtrl['mobileNo'].invalid">
-                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterMobileNoCtrl['mobileNo'].errors?.['pattern'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['minlength'] || formRegisterMobileNoCtrl['mobileNo'].errors?.['maxlength']"><strong>{{ 'REGISTER.MOBILENO_INVALID' | translate }}</strong></span>
-                                </mat-error>
-                                <mat-hint align="start" class="text-secondary font-size-10">{{ 'REGISTER.MSG_WITHOUT_DASH' | translate }}</mat-hint>
-                            </mat-form-field>
+                        <form [formGroup]="formMobileNo" class="w-100 text-start" (ngSubmit)="this.checkExist('MOBILENO', this.formMobileNo.value.mobileNo)">
+                            <div>
+                                <ion-input type="text" #mobileNo formControlName="mobileNo" [label]="'MOBILENO' | translate" placeholder="+60" labelPlacement="floating" autocapitalize="none" maxlength="14"
+                                    class="px-2 border-bottom {{ errFormMobileNo ? 'border-danger' : 'border-dark'}}" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
+                                <ion-text class="input-err">{{ errFormMobileNo }}</ion-text>
+                            </div>
+                            <div class="mt-3 btn-group w-100">
+                                <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                                <button type="submit" class="btn btn-primary w-50" [disabled]="!formMobileNo.valid">{{ 'NEXT' | translate }}</button>
+                            </div>
                         </form>
-                        <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterMobileNo()" [disabled]="!formRegisterMobileNo.valid">{{ 'NEXT' | translate }}</button>
-                        </div>
                         <button #btnNextMobileNo matStepperNext type="button" class="d-none"></button>
                     </mat-step>
                     <!-- Step 4: Unique Call ID verification -->
-                    <mat-step [stepControl]="formRegisterUniqCallId" editable="true">
+                    <mat-step [stepControl]="formUniqCallId" editable="true">
                         <ng-template matStepLabel><fa-icon icon="signature"></fa-icon></ng-template>
                         <div class="text-lg-center text-start">
                             <mat-radio-group aria-label="Select an option" (change)="onChangeOptionUniqCallId($event)">
-                                <mat-radio-button value="1" checked>{{ 'REGISTER.UCID_CUSTOM' | translate }}</mat-radio-button>
-                                <mat-radio-button value="0" class="ms-lg-4">{{ 'REGISTER.UCID_DEFAULT' | translate }}</mat-radio-button>
+                                <mat-radio-button value="1" checked>{{ 'SCRN_REGISTER.UCID.TITLE_CUSTOM' | translate }}</mat-radio-button>
+                                <mat-radio-button value="0" class="ms-lg-4">{{ 'SCRN_REGISTER.UCID.TITLE_DEFAULT' | translate }}</mat-radio-button>
                             </mat-radio-group>
                         </div>
                         <div [class]="(isCustom ? 'pt-3 text-start' : 'py-4 text-center')">
-                            <ion-note *ngIf="isCustom" class="font-size-12">
-                                {{ 'REGISTER.UCID_CUSTOM_MSG' | translate }}
-                            </ion-note>
-                            <ion-note *ngIf="!isCustom" class="font-size-16">
-                                {{ 'REGISTER.UCID_DEFAULT_MSG' | translate }}
-                            </ion-note>
+                            <ion-note *ngIf="isCustom" class="font-size-12">{{ 'SCRN_REGISTER.UCID.DESCR_CUSTOM' | translate }}</ion-note>
+                            <ion-note *ngIf="!isCustom" class="font-size-16">{{ 'SCRN_REGISTER.UCID.DESCR_DEFAULT' | translate }}</ion-note>
                         </div>
-                        <form *ngIf="isCustom" [formGroup]="formRegisterUniqCallId" class="w-100">
-                            <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.UCID' | translate }}</mat-label>
-                                <input matInput #uniqCallID formControlName="uniqCallID" type="text" placeholder="{{ 'REGISTER.UCID_PLACEHOLD' | translate }}" minlength="5" maxlength="20" oninput="this.value = this.value.toUpperCase()" required />
-                                <mat-error *ngIf="(formRegisterUniqCallIdCtrl['uniqCallID'].touched || formRegisterUniqCallIdSubmitted) && formRegisterUniqCallIdCtrl['uniqCallID'].invalid">
-                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['pattern'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['minlength'] || formRegisterUniqCallIdCtrl['uniqCallID'].errors?.['maxlength']"><strong>{{ 'REGISTER.UCID_INVALID' | translate }}</strong></span>
-                                </mat-error>
-                                <mat-hint align="end">{{ uniqCallID.value.length }} / 20</mat-hint>
-                            </mat-form-field>
+                        <form *ngIf="isCustom" [formGroup]="formUniqCallId" class="w-100 text-start">
+                            <div>
+                                <ion-input type="text" #uniqCallID formControlName="uniqCallID" [label]="'UCID' | translate" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.UCID' | translate" labelPlacement="floating" autocapitalize="none" minlength="5" maxlength="30"
+                                    class="px-2 border-bottom {{ errFormUniqCallId ? 'border-danger' : 'border-dark'}}" oninput="this.value = this.value.toUpperCase()" />
+                                <ion-text class="input-err">{{ errFormUniqCallId }}</ion-text>
+                            </div>
                             <div class="my-2">
-                                <mat-password-strength #uniqCallIDStrength [password]="uniqCallID.value" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [min]="5" [max]="20"></mat-password-strength>
-                                <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" upperCaseCriteriaMsg="{{ 'REGISTER.PASSWORD_CRITERIA1' | translate }}" class="font-size-10"></mat-password-strength-info>
+                                <mat-password-strength #uniqCallIDStrength [password]="formUniqCallId.value.uniqCallID ? formUniqCallId.value.uniqCallID : ''" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [enableUpperCaseLetterRule]="false" [min]="5" [max]="30"></mat-password-strength>
+                                <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" class="font-size-10"
+                                    [digitsCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.DIGIT' | translate"
+                                    [minCharsCriteriaMsg]="'_ERROR.UCID.CRITERIA.MINCHAR' | translate"></mat-password-strength-info>
                             </div>
                         </form>
                         <div class="mt-3 btn-group w-100">
                             <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
-                            <button type="button" class="btn btn-primary w-50" (click)="submitFormRegisterUniqCallId()" [disabled]="isCustom ? (formRegisterUniqCallId.valid ? false : true) : false">{{ 'NEXT' | translate }}</button>
+                            <button type="button" class="btn btn-primary w-50" (click)="this.checkExist('UNIQCALLID', this.formUniqCallId.value.uniqCallID)" [disabled]="isCustom ? (formUniqCallId.valid ? false : true) : false">{{ 'NEXT' | translate }}</button>
                         </div>
                         <button #btnNextUniqCallId matStepperNext type="button" class="d-none"></button>
                     </mat-step>
                     <!-- Step 5: Password confirmation -->
-                    <mat-step [stepControl]="formRegisterPassword" editable="true">
+                    <mat-step [stepControl]="formPassword" editable="true">
                         <ng-template matStepLabel><fa-icon icon="lock"></fa-icon></ng-template>
-                        <form [formGroup]="formRegisterPassword" class="w-100">
-                            <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.PASSWORD' | translate }}</mat-label>
-                                <mat-pass-toggle-visibility #togglePwdVisbility matSuffix></mat-pass-toggle-visibility>
-                                <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="{{ 'REGISTER.PASSWORD_ENTER' | translate }}" minlength="8" maxlength="30" required />
-                                <mat-error *ngIf="(formRegisterPasswordCtrl['password'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['password'].invalid">
-                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterPasswordCtrl['password'].errors?.['pattern']"><strong>{{ 'REGISTER.PASSWORD_INVALID' | translate }}</strong></span>
-                                </mat-error>
-                                <mat-hint align="end">{{ password.value.length }} / 30</mat-hint>
-                            </mat-form-field>
-                            <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                                <mat-label>{{ 'REGISTER.CONFIRMPASS' | translate }}</mat-label>
-                                <mat-pass-toggle-visibility #toggleCfrmPwdVisbility matSuffix></mat-pass-toggle-visibility>
-                                <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="{{ 'REGISTER.PASSWORD_RETYPE' | translate }}" maxlength="30" required />
-                                <mat-error *ngIf="(formRegisterPasswordCtrl['confirmPassword'].touched || formRegisterPasswordSubmitted) && formRegisterPasswordCtrl['confirmPassword'].invalid">
-                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['required']"><strong>{{ 'ERROR.REQUIRED' | translate }}</strong></span>
-                                    <span *ngIf="formRegisterPasswordCtrl['confirmPassword'].errors?.['passwordMismatch']"><strong>{{ 'REGISTER.PASSWORD_NOTMATCH' | translate }}</strong></span>
-                                </mat-error>
-                                <mat-hint align="end">{{ confirmPassword.value.length }} / 30</mat-hint>
-                            </mat-form-field>
+                        <form [formGroup]="formPassword" class="w-100 text-start" (ngSubmit)="submitFormPassword()">
+                            <div>
+                                <ion-input type="password" #password formControlName="password" label="{{ 'PASSWORD' | translate }}" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.PASSWORD' | translate" labelPlacement="floating" autocapitalize="none" minlength="8" maxlength="40" 
+                                    class="px-2 border-bottom {{ errFormPassword_password ? 'border-danger' : 'border-dark'}}" />
+                                <ion-text class="input-err">{{ errFormPassword_password }}</ion-text>
+                            </div>
+                            <div>
+                                <ion-input type="password" #confirmPassword formControlName="confirmPassword" label="{{ 'PASSWORD_RETYPE' | translate }}" [placeholder]="'SCRN_REGISTER.PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="floating" autocapitalize="none" minlength="8" maxlength="40" 
+                                    class="px-2 border-bottom {{ errFormPassword_confirmPassword ? 'border-danger' : 'border-dark'}}" />
+                                <ion-text class="input-err">{{ errFormPassword_confirmPassword }}</ion-text>
+                            </div>
+                            <div class="mt-4">
+                                <mat-password-strength #pwdStrength [password]="formPassword.value.password ? formPassword.value.password : ''" [enableSpecialCharRule]="true"></mat-password-strength>
+                                <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"
+                                    [lowerCaseCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.LOWERCASE' | translate"
+                                    [upperCaseCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.UPPERCASE' | translate"
+                                    [digitsCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.DIGIT' | translate"
+                                    [specialCharsCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.SPECIALCHAR' | translate"
+                                    [minCharsCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.MINCHAR' | translate"></mat-password-strength-info>
+                            </div>
+                            <div class="mt-3 btn-group w-100">
+                                <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
+                                <button type="submit" class="btn btn-success w-50" [disabled]="!formPassword.valid">{{ 'SUBMIT' | translate }}</button>
+                            </div>
                         </form>
-                        <div class="my-2">
-                            <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="true"></mat-password-strength>
-                            <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
-                        </div>
-                        <div class="mt-3 btn-group w-100">
-                            <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{ 'BACK' | translate }}</button>
-                            <button type="button" class="btn btn-success w-50" (click)="submitFormRegisterPassword()" [disabled]="!formRegisterPassword.valid">{{ 'SUBMIT' | translate }}</button>
-                        </div>
                         <button #btnNextPassword matStepperNext type="button" class="d-none"></button>
                     </mat-step>
                 </mat-stepper>

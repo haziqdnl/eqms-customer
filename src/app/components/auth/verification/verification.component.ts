@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -20,6 +21,7 @@ export class VerificationComponent {
     private apiUtilityService: ApiUtilityService,
     public  g: GeneralService,
     private fb: FormBuilder,
+    private translate: TranslateService
   ) {}
 
   public registerData: any = {};
@@ -31,33 +33,32 @@ export class VerificationComponent {
       this.getUrlParam();
     }
   }
-  ionViewWillLeave() {}
 
   /**
    *  Method: get URL param
    */
-  public urlParamType: any;
-  private getUrlParam() {
-    this.routeParam.queryParamMap.subscribe( paramMap => { this.urlParamType = paramMap.get('t'); });
-  }
+  public  urlParamType: any;
+  private getUrlParam() { this.routeParam.queryParamMap.subscribe( paramMap => { this.urlParamType = paramMap.get('t'); }); }
 
   /**
    *  Method: Resend OTP
    */
   public async resendOTP() {
     const alert = await this.alertCtrl.create({
-      header  : 'Confirm resend OTP?',
+      header  : this.translate.instant('OTP_VERIFICATION.CONFIRM_RESEND'),
       buttons : [
-        { text: 'Cancel', role: 'cancel', cssClass: 'text-primary', handler: () => {} },
+        { text: this.translate.instant('CANCEL'), role: 'cancel', cssClass: 'text-danger', handler: () => {} },
         {
-          text: 'Yes', role: 'confirm', cssClass: 'text-primary',
+          text: this.translate.instant('YES'), role: 'confirm', cssClass: 'text-primary',
           handler: () => {
-            let request = { objRequest: { Email: this.registerData.Email } };
-            this.apiUtilityService.SendOTPEmail(request).subscribe(rsp => {
+            this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
+            this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.registerData.Email } }).subscribe(rsp => {
               if (rsp.d.RespCode == "200") {
                 this.registerData.OTP = rsp.d.RespData[0].OTP;
-                localStorage['eqmsCustomer_registerData'] = JSON.stringify(this.registerData);
                 this.g.toastSuccess(rsp.d.RespData[0].Status);
+                localStorage['eqmsCustomer_registerData'] = JSON.stringify(this.registerData);
+                this.formOTPVerification.reset();
+                setTimeout(() => { this.otp1.nativeElement.focus(); }, 500);
               }
               else this.g.toastError(rsp.d.RespMessage);
             });
@@ -112,7 +113,7 @@ export class VerificationComponent {
           else this.g.toastError(rsp.d.RespMessage);
         });
       }
-      else this.g.toastError("Invalid OTP code!")
+      else this.g.toastError(this.translate.instant('OTP_VERIFICATION.INVALID_OTP'));
     }
   }
 

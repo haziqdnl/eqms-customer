@@ -99,12 +99,13 @@ form {
         font-size: 14px;
     }
 
-    .input-err {
+    .input-err, .input-hint {
         font-size: 12px;
         font-weight: 600;
         margin-left: 10px;
-        color: red;
     }
+    .input-err  { color: red; }
+    .input-hint { color: #999999; }
 }
 
 .cdk-global-overlay-wrapper, .cdk-overlay-container { z-index: 99999 !important; }

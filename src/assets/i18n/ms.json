@@ -1,103 +1,117 @@
 {
-    "_comment"  : "** Kata kunci umum dalam aplikasi **",
-    ""          : "====================================",
-    "BACK"      : "Kembali",
-    "EMAIL"     : "Emel",
-    "LANGUAGE"  : "Bahasa",
-    "MOBILENO"  : "No. Telefon Bimbit",
-    "NEXT"      : "Seterusnya",
-    "PASSWORD"  : "Kata Laluan",
-    "SUBMIT"    : "Hantar",
-    "VEFIRY"    : "Sahkan",
+    "_comment"                  : "** Kata kunci umum dalam aplikasi **",
+    ""                          : "====================================",
+    "BACK"                      : "Kembali",
+    "CANCEL"                    : "Batal",
+    "EMAIL"                     : "Alamat Emel",
+    "FULLNAME"                  : "Nama Penuh",
+    "GENDER"                    : "Jantina",
+    "LANGUAGE"                  : "Bahasa",
+    "MOBILENO"                  : "No. Telefon Bimbit",
+    "NEXT"                      : "Seterusnya",
+    "NRIC"                      : "No. Kad Pengenalan",
+    "PASSWORD"                  : "Kata Laluan",
+    "PASSWORD_RETYPE"           : "Sahkan Kata Laluan",
+    "PROCEED"                   : "Teruskan",
+    "SUBMIT"                    : "Hantar",
+    "UCID"                      : "ID Panggilan Unik (UCID)",
+    "VERIFY"                    : "Sahkan",
+    "WITHOUT_DASH"              : "Tanpa aksara '-'",
+    "YES"                       : "Ya",
+    
+    "TOAST_MSG"                 : {
+        "SENDING_OTP"           : "Pengesahan OTP sedang dihantar..."
+    },
 
-    "ERROR": {
-        "_comment"      : "** Kata kunci ralat **",
-        ""              : "======================",
-        "INVALID"       : "Tidak sah",
-        "INVALID_OTP"   : "OTP Tidak Sah",
+    "_ERROR"                    : {
+        "_comment"              : "** Kata kunci ralat **",
+        ""                      : "======================",
+        "INVALID"               : "Tidak sah",
+        "MAXLENGTH"             : "Panjang melebihi",
+        "MINLENGTH"             : "Panjang tidak mencukupi",
         "PASSWORD"              : {
             "CRITERIA"          : {
-                "DIGIT"         : "mengandungi sekurangnya satu aksara digit",
-                "LOWERCASE"     : "mengandungi sekurangnya satu aksara kecil",
-                "UPPERCASE"     : "mengandungi sekurangnya satu aksara besar",
-                "SPECIALCHAR"   : "mengandungi sekurangnya satu aksara istimewa",
-                "MINCHAR"       : "mengandungi sekurangnya 8 aksara",
-                "NOTMATCH"      : "Kata laluan tidak sepadan"
+                "DIGIT"         : "Mengandungi sekurangnya satu aksara digit",
+                "LOWERCASE"     : "Mengandungi sekurangnya satu aksara kecil",
+                "MINCHAR"       : "Mengandungi sekurangnya 8 aksara",
+                "NOTMATCH"      : "Kata laluan tidak sepadan",
+                "SPECIALCHAR"   : "Mengandungi sekurangnya satu aksara istimewa",
+                "UPPERCASE"     : "Mengandungi sekurangnya satu aksara besar"
             }
         },
-        "REQUIRED"      : "Diperlukan"
-    },
-
-    "REGISTER": {
-        "_comment"            : "** Kata kunci dalam skrin REGISTER **",
-        ""                    : "==============================",
-        "TITLE"               : "Daftar Akaun Baru",
-        "PASSWORD"            : "Kata Laluan",
-        "PASSWORD_INVALID"    : "Kata Laluan Tidak Sah!",
-        "PASSWORD_NOTMATCH"   : "Kata Laluan Tidak Sama!",
-        "PASSWORD_ENTER"      : "Masukkan Kata Laluan",
-        "PASSWORD_RETYPE"     : "Masukkan Kata Laluan Semula",
-        "PASSWORD_CRITERIA1"  : "Mengandungi sekurang-kurangnya satu huruf!",
-        "CONFIRMPASS"         : "Sahkan Kata Laluan",
-        "FULLNAME"            : "Nama Penuh",
-        "FULLNAME_INVALID"    : "Name Penuh Tidak Sah!",
-        "FULLNAME_PLACEHOLD"  : "Masukkan Nama Penuh",
-        "GENDER"              : "Jantina",
-        "GENDER_PLACEHOLD"    : "--Pilih Jantina--",
-        "NRIC"                : "No. Kad Pengenalan",
-        "NRIC_INVALID"        : "No. Kad Pengenalan Tidak Sah!",
-        "NRIC_PLACEHOLD"      : "Masukkan No. NRIC",
-        "NRIC_VERIFY_MSG"     : "No. kad pengenalan ini pernah didaftarkan sebelum ini!",
-        "EMAIL"               : "Alamat E-mel",
-        "EMAIL_INVALID"       : "Alamat E-mel Tidak Sah!",
-        "EMAIL_PLACEHOLD"     : "Masukkan Alamat E-mel",
-        "EMAIL_VERIFY_MSG0"   : "Alamat e-mel ini pernah didaftarkan sebelum ini!",
-        "OTP_VERIFY_MSG1"     : "Sila pastikan semua butiran adalah betul.",
-        "OTP_VERIFY_MSG2"     : "Kami akan menghantar pengesahan OTP ke alamat e-mel yang diberikan.",
-        "MOBILENO"            : "No. Telefon Bimbit",
-        "MOBILENO_INVALID"    : "No. Telefon Bimbit Tidak Sah!",
-        "MOBILENO_PLACEHOLD"  : "Masukkan No. Telefon Bimbit",
-        "MOBILENO_VERIFY_MSG" : "Nombor telefon binbit ini pernah didaftarkan sebelum ini!",
-        "UCID"                : "ID Panggilan Unik (UCID)",
-        "UCID_INVALID"        : "UCID Tidak Sah!",
-        "UCID_PLACEHOLD"      : "Masukkan ID Panggilan Unik",
-        "UCID_CUSTOM"         : "Tetapan Sendiri",
-        "UCID_CUSTOM_MSG"     : "Masukkan sebarang nama panggilan yang boleh digunakan untuk mewakili anda, Kami akan memanggil anda berdasarkan ID Panggilan Unik yang anda tetapkan apabila sampai giliran anda.",
-        "UCID_DEFAULT"        : "Janaan Automatik",
-        "UCID_DEFAULT_MSG"    : "ID Panggilan Unik akan dijana berdasarkan maklumat yang diberikan.<br>Anda boleh menukarkannya kemudian dalam bahagian profil setelah pendaftaran selesai.",
-        "UCID_VERIFY_MSG"     : "ID panggilan unik sudah digunakan!",
-        "SEND_OTP_MSG"        : "Pengesahan OTP sedang dihantar...",
-        "MSG_WITHOUT_DASH"    : "**Tanpa symbol '-'"
-    },
-
-    "FORGOT_PASSWORD": {
-        "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
-        ""                      : "==============================",
-        "TITLE"                 : {
-            "FORGOT"            : "Lupa Kata Laluan",
-            "OTP"               : "Pengesahan OTP",
-            "RESET"             : "Tetapan Semula Kata Laluan"
-        },
-        "DESCRIPTION"           : {
-            "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
-            "OTP"               : "Sila masukkan 6 digit OTP yang dihantar ke",
-            "RESET"             : "Sila masukkan kata laluan baharu anda"
+        "REQUIRED"              : "Diperlukan",
+        "UCID"                  : {
+            "CRITERIA"          : {
+                "MINCHAR"       : "Mengandungi sekurangnya 5 aksara"
+            }
         }
     },
 
-    "LOGIN": {
-        "_comment"          : "** Kata kunci dalam skrin LOGIN **",
-        ""                  : "==================================",
-        "TITLE"             : "Log Masuk Pelanggan",
-        "BTN_LOGIN"         : "Log Masuk",
-        "SIGN_UP"           : "Daftar akaun",
-        "FORGOT_PASSWORD"   : "Lupa kata laluan",
-        "INVALID_LOGIN"     : "ID / Kata Laluan Tidak Sah!"
+    "OTP_VERIFICATION"          : {
+        "CONFIRM_RESEND"        : "Hantar semula OTP?",
+        "DESCR"                 : "Sila masukkan 6 digit OTP yang dihantar ke",
+        "INVALID_OTP"           : "OTP tidak sah",
+        "RESEND"                : "Hantar semula OTP",
+        "TITLE"                 : "Pengesahan OTP"
     },
 
-    "HOME": {
-        "_comment"  : "** Kata kunci dalam skrin HOME **",
-        ""          : "==============================",
-        "GREETING"  : "Selamat datang ke ARX eQMS"
+    "SCRN_REGISTER"             : {
+        "_comment"              : "** Kata kunci dalam skrin REGISTER **",
+        ""                      : "==============================",
+        "ALERT_CONFIRM"         : {
+            "DESCR"             : "Kami akan menghantar pengesahan OTP ke alamat e-mel yang telah diberikan",
+            "TITLE"             : "Sila pastikan semua butiran adalah betul"
+        },
+        "PLACEHOLDER"           : {
+            "EMAIL"             : "Masukkan alamat emel anda",
+            "FULLNAME"          : "Masukkan nama penuh anda",
+            "GENDER"            : "--Pilih jantina--",
+            "NRIC"              : "Masukkan no. kad pengenalan anda",
+            "PASSWORD"          : "Masukkan kata laluan anda",
+            "PASSWORD_RETYPE"   : "Masukkan semula kata laluan anda",
+            "UCID"              : "Masukkan ID Panggilan Unik anda"
+        },
+        "TITLE"                 : "Daftar Akaun Baru",
+        "UCID"                  : {
+            "DESCR_CUSTOM"      : "Masukkan sebarang nama panggilan bagi mewakili anda. Kami akan memanggil anda berdasarkan panggilan yang telah anda tetapkan apabila sampai giliran anda.",
+            "DESCR_DEFAULT"     : "ID Panggilan Unik akan dijana secara rawak berdasarkan maklumat anda. Anda boleh menukarnya kemudian dalam bahagian profil setelah pendaftaran selesai.",
+            "TITLE_CUSTOM"      : "Tetapan Sendiri",
+            "TITLE_DEFAULT"     : "Janaan Automatik"
+        },
+        "VERIFY"                : {
+            "EMAIL"             : "E-mel ini telah didaftarkan!",
+            "MOBILENO"          : "No. telefon bimbit ini telah didaftarkan!",
+            "NRIC"              : "No. kad pengenalan ini telah didaftarkan!",
+            "UCID"              : "UCID ini telah didaftarkan!"
+        }
+    },
+
+    "SCRN_FORGOT_PASSWORD"      : {
+        "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
+        ""                      : "==============================",
+        "DESCR"                 : {
+            "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
+            "RESET"             : "Sila masukkan kata laluan baharu anda"
+        },
+        "TITLE"                 : {
+            "FORGOT"            : "Lupa Kata Laluan",
+            "RESET"             : "Tetapan Semula Kata Laluan"
+        }
+    },
+
+    "SCRN_LOGIN"                : {
+        "_comment"              : "** Kata kunci dalam skrin LOGIN **",
+        ""                      : "==================================",
+        "BTN_LOGIN"             : "Log Masuk",
+        "FORGOT_PASSWORD"       : "Lupa kata laluan",
+        "INVALID_LOGIN"         : "ID / Kata Laluan Tidak Sah!",
+        "SIGN_UP"               : "Daftar akaun",
+        "TITLE"                 : "Log Masuk Pelanggan"
+    },
+
+    "SCRN_HOME"                 : {
+        "_comment"              : "** Kata kunci dalam skrin HOME **",
+        ""                      : "==============================",
+        "GREETING"              : "Selamat datang ke ARX eQMS"
     }
 }
