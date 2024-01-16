@@ -70,6 +70,19 @@
         "MSG_WITHOUT_DASH"    : "**Tanpa symbol '-'"
     },
 
+    "REGISTER_STATUS": {
+        "_comment"               : "** Keywords in REGISTER_STATUS screen **",
+        ""                       : "==============================",
+        "REG_STATUS_SUCCESS"     : "Account Created",
+        "REG_STATUS_EXISTS"      : "Akaun Sudah Wujud",
+        "REG_STATUS_UNVERIFIED"  : "Akaun Belum Disahkan",
+        "REG_ACC_EXISTS_MSG"     : "Maaf, akaun dengan alamat e-mel atau nombor telefon bimbit sudah wujud.",
+        "REG_ACC_SUCCESS_MSG"    : "Terima kasih kerana mendaftar dengan kami. Sila teruskan ke skrin login untuk mula menggunakan ciri kami.",
+        "REG_ACC_UNVERIFY_MSG"   : "Nampaknya anda belum mengesahkan akaun anda menggunakan pautan pengesahan yang dihantar ke alamat e-mel anda.",
+        "REG_BACK_TO_LOGIN"      : "Kembali ke skrin login",
+        "REG_BACK"               : "Kembali"
+    },
+
     "FORGOT_PASSWORD": {
         "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
         ""                      : "==============================",

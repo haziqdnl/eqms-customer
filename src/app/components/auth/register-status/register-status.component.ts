@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector    : 'app-register-status',
@@ -13,7 +14,8 @@ export class RegisterStatusComponent {
   constructor(
     private routeParam: ActivatedRoute,
     private g: GeneralService,
-    public  location: Location
+    public  location: Location,
+    public translate: TranslateService
   ) {}
 
   ionViewWillEnter() {
@@ -28,7 +30,7 @@ export class RegisterStatusComponent {
    */
   public urlParamStatus: any;
   public urlParamType: any;
-  public  btnBackText: any = "Back to Login";
+  public btnBackText: any = this.translate.instant('REGISTER_STATUS.REG_BACK_TO_LOGIN');
   private getUrlParam() {
     this.routeParam.queryParamMap.subscribe( paramMap => {
       this.urlParamStatus = paramMap.get('is');
@@ -36,7 +38,7 @@ export class RegisterStatusComponent {
     });
 
     if (this.urlParamStatus != 'success' && this.urlParamStatus != 'exist' && this.urlParamStatus != 'unverified')  this.g.redirectBack('login');
-    if (this.urlParamType   == 'adhoc')                                                                             this.btnBackText = "Back";
+    if (this.urlParamType   == 'adhoc')                                                                             this.btnBackText = this.translate.instant('REGISTER_STATUS.REG_BACK');
   }
 
   /**

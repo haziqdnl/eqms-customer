@@ -10,6 +10,7 @@ import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
 import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector    : 'app-index',
@@ -29,6 +30,7 @@ export class IndexComponent {
     private sanitizer: DomSanitizer,
     public  g: GeneralService,
     public  http: HttpClient,
+    public translate: TranslateService
   ) {}
   
   public urlCurentGoldMarketPrice = this.sanitizer.bypassSecurityTrustResourceUrl("https://arxonline.com.my/rms.tawaruq/EIS/rate.php");

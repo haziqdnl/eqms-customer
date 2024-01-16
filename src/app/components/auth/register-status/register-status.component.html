@@ -4,15 +4,15 @@
             <div class="content bg-light shadow-lg rounded-3 p-5 text-center">
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
                 <h1 [class]="'text-center fw-bold text-uppercase title ' + (urlParamStatus == 'success' ? 'text-success' : 'text-danger')">
-                    {{ urlParamStatus == 'success'      ? 'Account Created'          : '' }}
-                    {{ urlParamStatus == 'exist'        ? 'Account Already Exist'    : '' }}
-                    {{ urlParamStatus == 'unverified'   ? 'Account Not Yet Verified' : '' }}
+                    {{ urlParamStatus == 'success'      ? "{{ 'REGISTER_STATUS.REG_STATUS_SUCCESS' | translate }}" : '' }}
+                    {{ urlParamStatus == 'exist'        ? "{{ 'REGISTER_STATUS.REG_STATUS_EXISTS' | translate }}" : '' }}
+                    {{ urlParamStatus == 'unverified'   ? "{{ 'REGISTER_STATUS.REG_STATUS_EXISTS' | translate }}" : '' }}
                 </h1>
                 <div class="mt-3 text-center">
-                    <p *ngIf="urlParamStatus == 'success'" class="font-size-14">Thank you for registering with us. Please proceed to the login screen to start using our features.</p>
+                    <p *ngIf="urlParamStatus == 'success'" class="font-size-14">{{ 'REGISTER_STATUS.REG_ACC_SUCCESS_MSG' | translate }}</p>
                     <p class="font-size-14">
-                        {{ urlParamStatus == 'exist'        ? 'Sorry, an account with the registered email address or telephone number already exist.' : '' }}
-                        {{ urlParamStatus == 'unverified'   ? 'It seems that you haven\'t verify your account using the verification link sent to your email address.' : '' }}
+                        {{ urlParamStatus == 'exist'        ? "{{ 'REGISTER_STATUS.REG_ACC_EXISTS_MSG' | translate }}" : '' }}
+                        {{ urlParamStatus == 'unverified'   ? "{{ 'REGISTER_STATUS.REG_ACC_UNVERIFY_MSG' | translate }}" : '' }}
                     </p>
                     <button type="button" class="btn btn-secondary mt-2" (click)="back()">{{ btnBackText }}</button>
                 </div>
