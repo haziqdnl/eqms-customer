@@ -11,6 +11,7 @@ import { ApiWalkinService } from 'src/app/api/api-walkin.service';
 import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector    : 'app-index',
@@ -29,8 +30,8 @@ export class IndexComponent {
     private checkInService: CheckInService,
     private sanitizer: DomSanitizer,
     public  g: GeneralService,
-    public  http: HttpClient,
-    public translate: TranslateService
+    private titleCase: TitleCasePipe,
+    private translate: TranslateService
   ) {}
   
   public urlCurentGoldMarketPrice = this.sanitizer.bypassSecurityTrustResourceUrl("https://arxonline.com.my/rms.tawaruq/EIS/rate.php");
@@ -182,16 +183,10 @@ export class IndexComponent {
   private alertLogout: any;
   public  async openAlertLogout() {
     this.alertLogout = await this.alertController.create({
-      header    : 'Confirm logout?',
+      header    : this.translate.instant('SCRN_HOME.ALERT.LOGOUT'),
       buttons   : [
-        {
-          text: 'No', role: 'cancel', cssClass: 'text-primary',
-          handler: () => {},
-        },
-        {
-          text: 'Yes', role: 'confirm', cssClass: 'text-danger',
-          handler: () => { this.g.endSession(); },
-        },
+        { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
+        { text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => { this.g.endSession(); } },
       ],
     });
     await this.alertLogout.present();
@@ -203,7 +198,8 @@ export class IndexComponent {
   private alertCheckInSuccess: any;
   public  async openAlertCheckInSuccess() {
     this.alertCheckInSuccess = await this.alertController.create({
-      message : `<h4 class="fw-bold text-success">Check-In Successful</h4><p class="m-0 mt-2">Please wait at the waiting area. We'll call and serve you in a few minutes.</p>`,
+      message : `<h4 class="fw-bold text-success">${this.titleCase.transform(this.translate.instant('SCRN_HOME.CHECKIN_SUCCESS'))}</h4>
+                <p class="m-0 mt-2">${this.translate.instant('SCRN_HOME.WAIT_MSG')}</p>`,
       buttons : [{ text: 'OK', role: 'confirm' }],
     });
     await this.alertCheckInSuccess.present();
@@ -215,14 +211,11 @@ export class IndexComponent {
   private alertCancelAppt: any;
   public  async openAlertCancelAppt() {
     this.alertCancelAppt = await this.alertController.create({
-      header    : 'Confirm cancel appointment?',
+      header    : this.translate.instant('SCRN_HOME.ALERT.APPT_CANCEL'),
       buttons   : [
+        { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
         {
-          text: 'No', role: 'cancel', cssClass: 'text-primary',
-          handler: () => {},
-        },
-        {
-          text: 'Yes', role: 'confirm', cssClass: 'text-danger',
+          text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',
           handler: () => {
             let request = {
               objRequest: { 

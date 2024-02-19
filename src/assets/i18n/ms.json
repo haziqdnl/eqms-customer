@@ -7,8 +7,11 @@
     "FULLNAME"                  : "Nama Penuh",
     "GENDER"                    : "Jantina",
     "LANGUAGE"                  : "Bahasa",
+    "LOGOUT"                    : "Log keluar",
     "MOBILENO"                  : "No. Telefon Bimbit",
     "NEXT"                      : "Seterusnya",
+    "NO"                        : "Tidak",
+    "NOTE"                      : "Nota",
     "NRIC"                      : "No. Kad Pengenalan",
     "PASSWORD"                  : "Kata Laluan",
     "PASSWORD_RETYPE"           : "Sahkan Kata Laluan",
@@ -55,6 +58,14 @@
         "TITLE"                 : "Pengesahan OTP"
     },
 
+    "SCANNER_STATUS"          : {
+        "APPT_DISABLED"         : "Pengimbas daftar masuk dinyahaktifkan buat sementara waktu sehingga ke tarikh temujanji yang ditempah.",
+        "APPT_ENABLED"          : "Pengimbas daftar masuk diaktifkan untuk temujanji yang ditempah.",
+        "CHECKED_IN"            : "Anda telah mendaftar masuk, pengimbas daftar masuk dinyahaktifkan buat sementara waktu.",
+        "UNSUPPORTED"           : "Untuk menggunakan pengimbas daftar masuk, sila muat turun aplikasi ini daripada Play Store atau App Store.",
+        "WALKIN_ENABLED"        : "Pengimbas daftar masuk diaktifkan untuk walk-in."
+    },
+
     "SCRN_REGISTER"             : {
         "_comment"              : "** Kata kunci dalam skrin REGISTER **",
         ""                      : "==============================",
@@ -87,16 +98,16 @@
     },
 
     "SCRN_REGISTER_STATUS": {
-        "_comment"               : "** Keywords in REGISTER STATUS screen **",
-        ""                       : "==============================",
-        "REG_STATUS_SUCCESS"     : "Account Created",
-        "REG_STATUS_EXISTS"      : "Akaun Sudah Wujud",
-        "REG_STATUS_UNVERIFIED"  : "Akaun Belum Disahkan",
-        "REG_ACC_EXISTS_MSG"     : "Maaf, akaun dengan alamat e-mel atau nombor telefon bimbit sudah wujud.",
-        "REG_ACC_SUCCESS_MSG"    : "Terima kasih kerana mendaftar dengan kami. Sila teruskan ke skrin login untuk mula menggunakan ciri kami.",
-        "REG_ACC_UNVERIFY_MSG"   : "Nampaknya anda belum mengesahkan akaun anda menggunakan pautan pengesahan yang dihantar ke alamat e-mel anda.",
-        "REG_BACK_TO_LOGIN"      : "Kembali ke skrin login",
-        "REG_BACK"               : "Kembali"
+        "_comment"              : "** Keywords in REGISTER STATUS screen **",
+        ""                      : "==============================",
+        "REG_STATUS_SUCCESS"    : "Account Created",
+        "REG_STATUS_EXISTS"     : "Akaun Sudah Wujud",
+        "REG_STATUS_UNVERIFIED" : "Akaun Belum Disahkan",
+        "REG_ACC_EXISTS_MSG"    : "Maaf, akaun dengan alamat e-mel atau nombor telefon bimbit sudah wujud.",
+        "REG_ACC_SUCCESS_MSG"   : "Terima kasih kerana mendaftar dengan kami. Sila teruskan ke skrin login untuk mula menggunakan ciri kami.",
+        "REG_ACC_UNVERIFY_MSG"  : "Nampaknya anda belum mengesahkan akaun anda menggunakan pautan pengesahan yang dihantar ke alamat e-mel anda.",
+        "REG_BACK_TO_LOGIN"     : "Kembali ke skrin login",
+        "REG_BACK"              : "Kembali"
     },
 
     "SCRN_FORGOT_PASSWORD"      : {
@@ -122,27 +133,37 @@
         "TITLE"                 : "Log Masuk Pelanggan"
     },
 
+    "SCRN_LAYOUT"               : {
+        "_comment"              : "** Kata kunci dalam skrin LAYOUT **",
+        ""                      : "==============================",
+        "TAB"                   : {
+            "HOME"              : "Utama",
+            "CHECKIN"           : "Daftar",
+            "APPT"              : "Temujanji",
+            "PROFILE"           : "Profil"
+        }
+    },
+
     "SCRN_HOME"                 : {
         "_comment"              : "** Kata kunci dalam skrin HOME **",
         ""                      : "==============================",
+        "ABOUT_US_CONTENT"      : "Matlamat utama Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) adalah untuk menyediakan perkhidmatan pelanggan yang cekap, mengurangkan masa menunggu dan meningkatkan pengalaman pelanggan.",
+        "ALERT"                 : {
+            "APPT_CANCEL"       : "Mahu batalkan temujanji?",
+            "LOGOUT"            : "Mahu log keluar?"
+        },
+        "APPT_NEW_MSG"          : "Jangan lupa bahawa anda ada temu janji dengan kami!",
+        "APPT_NEW_NOTICE"       : "Sila berada di kedai 15 minit sebelum waktu temujanji bagi mengelakkan temujanji anda dibatalkan.",
+        "CALLING_MSG"           : "Giliran anda! Sila tuju ke kaunter panggilan.",
+        "CHECKIN_SUCCESS"       : "Daftar masuk berjaya",
         "GREETING"              : "Selamat datang ke ARX eQMS",
-
-        "CHECKIN_SUCCESS_MSG"   : "You've successfully checked-in!",
-        "CALLING_MSG"           : "It's your turn! Please head to the calling counter",
-        "SERVING_MSG"           : "You're currently being served!",
-        "QUEUING_MSG"           : "*Please wait in the waiting area, we'll call and serve you in a few minutes.",
-        "APPT_NEW_MSG"          : "'Don't forget you've an appointment with us!'",
-        "APPT_QUEUE_MSG"        : "You've successfully checked-in!",
-        "APPT_SERVE_MSG"        : "You're currently being served!",
-        "APPT_NEW_NOTICE"       : "Please be at the outlet 15 minutes before the appointment time to avoid being forfeited.",
-        "APPT_QUEUE_NOTICE"     : "Please wait in the waiting area, we'll call and serve you in a few minutes.",
-        "APPT_NO_APPT"          : "You don't have any appointment with us at the moment",
-        "APPT_NOTE"             : "Note:",
-        "GOLD_MARKET_PRICE"     : "Gold Market Price",
-        "LATEST_NEWS"           : "Latest News",
-        "ABOUT_US"              : "About Us",
-        "ABOUT_US_CONTENT"      : "The ultimate goal of Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient customer service, reduce waiting time and enhance customer experience.",
-        "POPUP_CHECKIN_SUCCESS" : "Check-In Successful",
-        "POPUP_CHECKIN_MSG"     : "Please wait at the waiting area. We'll call and serve you in a few minutes."
+        "NO_APPT"               : "Anda tidak mempunyai sebarang temujanji dengan kami buat masa ini.",
+        "SERVING_MSG"           : "Anda sedang dilayan.",
+        "TITLE"                 : {
+            "ABOUT_US"          : "Tentang Kami",
+            "GOLD_MARKET_PRICE" : "Harga Pasaran Emas",
+            "LATEST_NEWS"       : "Berita Terkini"
+        },
+        "WAIT_MSG"              : "Sila berada di ruangan menunggu. Kami akan memanggil anda sebentar lagi."
     }
 }

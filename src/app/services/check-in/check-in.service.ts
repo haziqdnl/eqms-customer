@@ -4,6 +4,7 @@ import { GeneralService } from '../general/general.service';
 import { ApiWalkinService } from 'src/app/api/api-walkin.service';
 import { lastValueFrom } from 'rxjs';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({ providedIn: 'root' })
 export class CheckInService {
@@ -21,7 +22,8 @@ export class CheckInService {
   constructor(
     private apiApptService: ApiApptService,
     private apiWalkInService: ApiWalkinService,
-    private g: GeneralService
+    private g: GeneralService,
+    private translate: TranslateService
   ) { }
 
   /**
@@ -46,7 +48,7 @@ export class CheckInService {
     await BarcodeScanner.isSupported().then((result) => { this.checkInData.isSupported = true; })
       .catch((err: any) => {
         this.checkInData.isSupported        = false;
-        this.checkInData.msgDisabledScanner = "To use the check-in feature, please download the app from Play Store or App Store.";
+        this.checkInData.msgDisabledScanner = this.translate.instant('SCANNER_STATUS.UNSUPPORTED');
       });
   }
 
@@ -63,11 +65,11 @@ export class CheckInService {
           //  Check if the booked appointment is the current datetime
           if ((new Date(rsp.d.RespData[0].ApptDate)).getTime() === this.g.getCurrentDateOnly().getTime()) {
             this.checkInData.enableScanner = true;
-            this.checkInData.msgDisabledScanner = "The check-in scanner is enabled for the booked appointment.";
+            this.checkInData.msgDisabledScanner = this.translate.instant('SCANNER_STATUS.APPT_ENABLED');
           }
           else {
             this.checkInData.enableScanner = false;
-            this.checkInData.msgDisabledScanner = "The check-in scanner is disabled temporarily until the booked appointment date.";
+            this.checkInData.msgDisabledScanner = this.translate.instant('SCANNER_STATUS.APPT_DISABLED');
           }
         }      
         else await this.isWalkedIn();
@@ -83,13 +85,13 @@ export class CheckInService {
   private async isWalkedIn() {
     var rsp = await lastValueFrom(this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken));
     this.checkInData.enableScanner = true;
-    this.checkInData.msgDisabledScanner = "The check-in scanner is enabled for walk-in.";
+    this.checkInData.msgDisabledScanner = this.translate.instant('SCANNER_STATUS.WALKIN_ENABLED');
     if (rsp.d.RespCode == "200") {
       this.g.setCustToken(rsp.d.ExtendedToken);
       if (rsp.d.RespData != "" && rsp.d.RespData != undefined) {
         if (rsp.d.RespData[0].WalkInStat != "COMPLETE" && rsp.d.RespData[0].WalkInStat != "NOSHOW") {
           this.checkInData.enableScanner = false;
-          this.checkInData.msgDisabledScanner = "You already checked in, the check-in scanner is disabled temporarily.";
+          this.checkInData.msgDisabledScanner = this.translate.instant('SCANNER_STATUS.CHECKED_IN');
         }
       }
     }

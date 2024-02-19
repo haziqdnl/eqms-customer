@@ -2,19 +2,19 @@
     <ion-tab-bar slot="bottom" class="pt-2 pb-3 pb-lg-2">
         <ion-tab-button tab="home">
             <ion-icon name="home-outline"></ion-icon>
-            <ion-label>Home</ion-label>
+            <ion-label>{{ "SCRN_LAYOUT.TAB.HOME" | translate }}</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="checkinredirect" *ngIf="scannerData.enableScanner">
             <ion-icon name="scan-outline"></ion-icon>
-            <ion-label>Check-In</ion-label>
+            <ion-label>{{ "SCRN_LAYOUT.TAB.CHECKIN" | translate }}</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="book-appt">
             <ion-icon name="bookmark-outline"></ion-icon>
-            <ion-label>Appointment</ion-label>
+            <ion-label>{{ "SCRN_LAYOUT.TAB.APPT" | translate }}</ion-label>
         </ion-tab-button>
         <ion-tab-button tab="profile">
             <ion-icon name="person-outline"></ion-icon>
-            <ion-label>Profile</ion-label>
+            <ion-label>{{ "SCRN_LAYOUT.TAB.PROFILE" | translate }}</ion-label>
         </ion-tab-button>
     </ion-tab-bar>
 </ion-tabs>
