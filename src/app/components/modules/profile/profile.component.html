@@ -1,44 +1,40 @@
 <ion-content>
     <ion-toolbar [class]="'topbar ' + (g.isMobileWeb ? '' : 'pt-5')">
-        <ion-title>My Profile</ion-title>
+        <ion-title>{{'SCRN_PROFILE.TITLE' | translate}}</ion-title>
     </ion-toolbar>
-    <div id="profileTop" class="text-center text-light py-4">
+    <div id="profileTop" class="text-center text-light pt-2 pb-4">
         <div id="avatar" class="mx-auto bg-light rounded-circle">
             <img src="https://www.svgrepo.com/show/530198/fox.svg" alt="" class="rounded-circle" />
-            <button class="overlay rounded-circle" (click)="openCloseModalEditProfile(true, '2')">
-                <span class="icon"><fa-icon icon="pen"></fa-icon></span>
-            </button>
+            <button class="overlay rounded-circle" (click)="openModal(true, '2')"><span class="icon"><fa-icon icon="pen"></fa-icon></span></button>
         </div>
         <h2 class="fw-bold py-0">
-            {{ profileData.Name }}
-            <button class="btn text-light p-1" (click)="openCloseModalEditProfile(true, '0')"><fa-icon icon="pen"></fa-icon></button>
+            {{ profileData.Name }} <button class="btn text-light p-1" (click)="openModal(true, '0')"><fa-icon icon="pen"></fa-icon></button>
         </h2>
         <h5>
-            {{ profileData.UniqCallID }}
-            <button class="btn text-light p-1" (click)="openCloseModalEditProfile(true, '1')"><fa-icon icon="pen"></fa-icon></button>
+            {{ profileData.UniqCallID }} <button class="btn text-light p-1" (click)="openModal(true, '1')"><fa-icon icon="pen"></fa-icon></button>
         </h5>
     </div>
-    <ion-list class="px-3 pt-1 pb-3">
+    <ion-list class="px-4 py-2 rounded-4 border border-secondary-subtle m-3">
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="mars-and-venus"></fa-icon>
-            <ion-label><h2>Gender</h2><p>{{ profileData.Sex }}</p></ion-label>
+            <ion-label><h2>{{'GENDER' | translate}}</h2><p>{{ profileData.Sex }}</p></ion-label>
         </ion-item>
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="id-card"></fa-icon>
-            <ion-label><h2>Identification</h2><p>{{ profileData.IDNum }}</p></ion-label>
+            <ion-label><h2>{{'NRIC' | translate}}</h2><p>{{ profileData.IDNum }}</p></ion-label>
         </ion-item>
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="phone"></fa-icon>
-            <ion-label><h2>Mobile No.</h2><p>{{ profileData.MobileNo }}</p></ion-label>
+            <ion-label><h2>{{'MOBILENO' | translate}}</h2><p>{{ profileData.MobileNo }}</p></ion-label>
         </ion-item>
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="envelope"></fa-icon>
-            <ion-label><h2>Email Address</h2><p>{{ profileData.Email }}</p></ion-label>
+            <ion-label><h2>{{'EMAIL' | translate}}</h2><p>{{ profileData.Email }}</p></ion-label>
         </ion-item>
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="address-book"></fa-icon>
             <ion-label>
-                <h2>Home Address</h2>
+                <h2>{{'ADDRESS' | translate}}</h2>
                 <p>
                     {{ profileData.Address1 }}<br>
                     {{ profileData.Address2 + ', ' + profileData.PostCode }}<br>
@@ -46,95 +42,82 @@
                 </p>
             </ion-label>
         </ion-item>
-        <div>
-            <button id="btnChangePwd" class="mt-3 btn w-100" (click)="openCloseModalEditProfile(true, '3')">Change Password</button>
-        </div>
+        <button id="btnChangePwd" class="my-3 btn btn-primary w-100" (click)="openModal(true, '3')">{{'CHANGE_PASSWORD' | translate}}</button>
     </ion-list>
     <!-- Modal: Edit Profile -->
-    <ion-modal [isOpen]="isOpenModalEditProfile" [canDismiss]="!isOpenModalEditProfile">
+    <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen">
         <ng-template>
             <ion-header>
-                <ion-toolbar [class]="(g.isMobileWeb ? '' : 'pt-5') + ' ' + (modeModal == '3' ? 'modalChangePwd' : 'modalEdit')">
-                    <ion-title>{{ titleModal }}</ion-title>
+                <ion-toolbar [class]="(g.isMobileWeb ? '' : 'pt-5') + ' ' + (modalMode == '3' ? 'modalChangePwd' : 'modalEdit')">
+                    <ion-title>{{ modalTitle }}</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content class="ion-padding">
+            <ion-content>
                 <!-- Form: Edit Info -->
-                <form *ngIf="modeModal == '0'" id="formEditInfo" class="mx-auto" [formGroup]="formEditInfo" (ngSubmit)="submitEditInfo()">
+                <form *ngIf="modalMode == '0'" id="formEditInfo" class="px-5 py-3 w-100" [formGroup]="formEditInfo" (ngSubmit)="submitForm()">
                     <!-- Fullname -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-2">
-                        <mat-label>Name</mat-label>
-                        <input matInput #fullname formControlName="fullname" type="text" placeholder="Fullname" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
-                        <mat-error *ngIf="(formEditInfoControl['fullname'].touched || formEditInfoSubmitted) && formEditInfoControl['fullname'].invalid">
-                            <span *ngIf="formEditInfoControl['fullname'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formEditInfoControl['fullname'].errors?.['pattern'] || formEditInfoControl['fullname'].errors?.['minlength'] || formEditInfoControl['fullname'].errors?.['maxlength']">
-                                <strong>invalid fullname</strong>
-                            </span>
-                        </mat-error>
-                        <mat-hint align="end">{{ fullname.value.length }} / 60</mat-hint>
-                    </mat-form-field>
+                    <div>
+                        <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="stacked" minlength="3" maxlength="80" 
+                            class="px-2 border-bottom {{ errFormEditInfo_fullname ? 'border-danger' : 'border-secondary-subtle' }}" oninput="this.value = this.value.toUpperCase()" />
+                        <ion-text class="input-err">{{ errFormEditInfo_fullname }}</ion-text>
+                    </div>
                     <!-- Gender -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                        <mat-label>Gender</mat-label>
-                        <mat-select formControlName="gender" placeholder="--select gender--" (selectionChange)="changeGender($event)" required>
-                            <mat-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="(formEditInfoControl['gender'].touched || formEditInfoSubmitted) && formEditInfoControl['gender'].invalid">
-                            <span *ngIf="formEditInfoControl['gender'].errors?.['required']"><strong>required</strong></span>
-                        </mat-error>
-                    </mat-form-field>
+                    <div>
+                        <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
+                            class="px-2 border-bottom {{ errFormEditInfo_gender ? 'border-danger' : 'border-secondary-subtle' }}" (ionChange)="changeGender(gender.value)">
+                            <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</ion-select-option>
+                        </ion-select>
+                        <ion-text class="input-err">{{ errFormEditInfo_gender }}</ion-text>
+                    </div>
                     <!-- Address: Line 1 -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="mt-3">
-                        <mat-label>Address Line 1</mat-label>
-                        <input matInput #address1 formControlName="address1" type="text" placeholder="Address line 1" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" required />
-                        <mat-error *ngIf="(formEditInfoControl['address1'].touched || formEditInfoSubmitted) && formEditInfoControl['address1'].invalid">
-                            <span *ngIf="formEditInfoControl['address1'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formEditInfoControl['address1'].errors?.['pattern'] || formEditInfoControl['address1'].errors?.['maxlength']"><strong>invalid address</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ address1.value.length }} / 60</mat-hint>
-                    </mat-form-field>
+                    <div>
+                        <ion-input type="text" #address1 formControlName="address1" [label]="'ADDRESS' | translate" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" labelPlacement="stacked" minlength="3" maxlength="80"
+                            class="px-2 border-bottom {{ errFormEditInfo_address1 ? 'border-danger' : 'border-secondary-subtle' }}" oninput="this.value = this.value.toUpperCase()" />
+                        <ion-text class="input-err">{{ errFormEditInfo_address1 }}</ion-text>
+                    </div>
                     <!-- Address: Line 2 -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="true" floatLabel="always" class="mt-3">
-                        <mat-label>Address Line 2</mat-label>
-                        <input matInput #address2 formControlName="address2" type="text" placeholder="Address line 2 - optional" minlength="3" maxlength="60" oninput="this.value = this.value.toUpperCase()" />
-                        <mat-error *ngIf="(formEditInfoControl['address2'].touched || formEditInfoSubmitted) && formEditInfoControl['address2'].invalid">
-                            <span *ngIf="formEditInfoControl['address2'].errors?.['pattern'] || formEditInfoControl['address2'].errors?.['maxlength']"><strong>invalid address</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ address2.value.length }} / 60</mat-hint>
-                    </mat-form-field>
+                    <div>
+                        <ion-input type="text" #address2 formControlName="address2" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" minlength="3" maxlength="80" 
+                            class="px-2 border-bottom {{ errFormEditInfo_address2 ? 'border-danger' : 'border-secondary-subtle' }}" oninput="this.value = this.value.toUpperCase()" />
+                        <ion-text class="input-err">{{ errFormEditInfo_address2 }}</ion-text>
+                    </div>
                     <!-- Postcode -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                        <mat-label>Postcode</mat-label>
-                        <input matInput #postcode formControlName="postcode" type="text" placeholder="Postcode" minlength="5" maxlength="5" (keypress)="g.numberOnly($event)" required />
-                        <mat-error *ngIf="(formEditInfoControl['postcode'].touched || formEditInfoSubmitted) && formEditInfoControl['postcode'].invalid">
-                            <span *ngIf="formEditInfoControl['postcode'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formEditInfoControl['postcode'].errors?.['pattern'] || formEditInfoControl['postcode'].errors?.['maxlength']"><strong>invalid postcode</strong></span>
-                        </mat-error>
-                    </mat-form-field>
+                    <div>
+                        <ion-input type="text" #postcode formControlName="postcode" [label]="'POSTCODE' | translate" placeholder="ex. 12345" labelPlacement="stacked" minlength="5" maxlength="5"
+                            class="px-2 border-bottom {{ errFormEditInfo_postcode ? 'border-danger' : 'border-secondary-subtle' }}" (keypress)="g.numberOnly($event)" />
+                        <ion-text class="input-err">{{ errFormEditInfo_postcode }}</ion-text>
+                    </div>
                     <!-- State -->
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="always" class="col-12 col-lg mt-3">
-                        <mat-label>State</mat-label>
-                        <mat-select formControlName="state" placeholder="--select state--" (selectionChange)="changeState($event)" required>
-                            <mat-option *ngFor="let item of stateList" [value]="item.StateID">{{ item.StateSDesc }}</mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="(formEditInfoControl['state'].touched || formEditInfoSubmitted) && formEditInfoControl['state'].invalid">
-                            <span *ngIf="formEditInfoControl['state'].errors?.['required']"><strong>required</strong></span>
-                        </mat-error>
-                    </mat-form-field>
-                    <div class="mt-3 btn-group w-100">
-                        <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '0')">Cancel</button>
-                        <button type="submit" class="btn btn-success w-50" [disabled]="!this.formEditInfo.valid">Save</button>
+                    <div>
+                        <ion-select #state formControlName="state" [label]="'STATE' | translate" [placeholder]="'PLACEHOLDER.STATE_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
+                            class="px-2 border-bottom {{ errFormEditInfo_state ? 'border-danger' : 'border-secondary-subtle' }}" (ionChange)="changeState(state.value)">
+                            <ion-select-option *ngFor="let item of stateList" [value]="item.StateID">{{ item.StateSDesc }}</ion-select-option>
+                        </ion-select>
+                        <ion-text class="input-err">{{ errFormEditInfo_state }}</ion-text>
+                    </div>
+                    <div class="my-3 btn-group w-100">
+                        <button type="button" class="btn btn-secondary w-50" (click)="openModal(false, '0')">{{'CANCEL' | translate}}</button>
+                        <button type="submit" class="btn btn-success w-50" [disabled]="!formEditInfo.valid">{{'SAVE' | translate}}</button>
                     </div>
                 </form>
                 <!-- Form: Rename Unique Call ID -->
-                <form *ngIf="modeModal == '1'" class="mx-auto">
+                <form *ngIf="modalMode == '1'" id="formEditUCID" class="px-5 py-3 w-100" [formGroup]="formEditUCID" (ngSubmit)="submitForm()">
+                    <div>
+                        <ion-input type="text" #uniqCallID formControlName="uniqCallID" [label]="'UCID' | translate" [placeholder]="'PLACEHOLDER.UCID' | translate" labelPlacement="stacked" minlength="5" maxlength="30"
+                            class="px-2 border-bottom {{ errFormUniqCallId ? 'border-danger' : 'border-secondary-subtle' }}" oninput="this.value = this.value.toUpperCase()" />
+                        <ion-text class="input-err">{{ errFormUniqCallId }}</ion-text>
+                    </div>
+                    <div class="my-2">
+                        <mat-password-strength #uniqCallIDStrength [password]="formEditUCID.value.uniqCallID ? formEditUCID.value.uniqCallID : ''" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [enableUpperCaseLetterRule]="false" [min]="5" [max]="30"></mat-password-strength>
+                        <mat-password-strength-info [passwordComponent]="uniqCallIDStrength" class="font-size-10" [digitsCriteriaMsg]="'_ERROR.PASSWORD.CRITERIA.DIGIT' | translate" [minCharsCriteriaMsg]="'_ERROR.UCID.CRITERIA.MINCHAR' | translate"></mat-password-strength-info>
+                    </div>
                     <div class="mt-3 btn-group w-100">
-                        <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '1')">Cancel</button>
-                        <button type="submit" class="btn btn-success w-50" [disabled]="!this.formChangePwd.valid">Confirm</button>
+                        <button type="button" class="btn btn-secondary w-50" (click)="openModal(false, '1')">{{'CANCEL' | translate}}</button>
+                        <button type="submit" class="btn btn-success w-50" [disabled]="!formEditUCID.valid">{{'SAVE' | translate}}</button>
                     </div>
                 </form>
                 <!-- Form: Change Profile Picture -->
-                <form *ngIf="modeModal == '2'" class="mx-auto">
+                <form *ngIf="modalMode == '2'" id="formEditDP" class="px-5 py-3 w-100" (ngSubmit)="submitForm()">
                     <ion-grid id="availableProfileImg">
                         <ion-row class="ion-justify-content-center">
                             <ion-col *ngFor="let item of availableProfileImg" size="auto">
@@ -143,39 +126,29 @@
                         </ion-row>
                     </ion-grid>
                     <div class="mt-3 btn-group w-100">
-                        <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '2')">Cancel</button>
-                        <button type="submit" class="btn btn-success w-50" [disabled]="!this.formChangePwd.valid">Confirm</button>
+                        <button type="button" class="btn btn-secondary w-50" (click)="openModal(false, '2')">{{'CANCEL' | translate}}</button>
+                        <button type="submit" class="btn btn-success w-50" disabled>{{'SAVE' | translate}}</button>
                     </div>
                 </form>
                 <!-- Form: Change Password -->
-                <form *ngIf="modeModal == '3'" id="formChangePwd" class="mx-auto" [formGroup]="formChangePwd" (ngSubmit)="submitChangePwd()">
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="auto" class="mt-3">
-                        <mat-label>Password</mat-label>
-                        <mat-pass-toggle-visibility #togglePwdVisbility matSuffix></mat-pass-toggle-visibility>
-                        <input matInput #password formControlName="password" [type]="togglePwdVisbility.type" placeholder="Your password" minlength="8" maxlength="30" required />
-                        <mat-error *ngIf="(formChangePwdControl['password'].touched || formChangePwdSubmitted) && formChangePwdControl['password'].invalid">
-                            <span *ngIf="formChangePwdControl['password'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formChangePwdControl['password'].errors?.['pattern']"><strong>invalid password</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ password.value.length }} / 30</mat-hint>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" hideRequiredMarker="false" floatLabel="auto" class="mt-3">
-                        <mat-label>Confirm Password</mat-label>
-                        <mat-pass-toggle-visibility #toggleCfrmPwdVisbility matSuffix></mat-pass-toggle-visibility>
-                        <input matInput #confirmPassword formControlName="confirmPassword" [type]="toggleCfrmPwdVisbility.type" placeholder="Re-type password" maxlength="30" required />
-                        <mat-error *ngIf="(formChangePwdControl['confirmPassword'].touched || formChangePwdSubmitted) && formChangePwdControl['confirmPassword'].invalid">
-                            <span *ngIf="formChangePwdControl['confirmPassword'].errors?.['required']"><strong>required</strong></span>
-                            <span *ngIf="formChangePwdControl['confirmPassword'].errors?.['passwordMismatch']"><strong>passwords not match</strong></span>
-                        </mat-error>
-                        <mat-hint align="end">{{ confirmPassword.value.length }} / 30</mat-hint>
-                    </mat-form-field>
+                <form *ngIf="modalMode == '3'" id="formChangePwd" class="px-5 py-3 w-100" [formGroup]="formChangePwd" (ngSubmit)="submitForm()">
+                    <div>
+                        <ion-input type="password" #password formControlName="password" [label]="'PASSWORD' | translate" [placeholder]="'PLACEHOLDER.PASSWORD' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
+                            class="px-2 border-bottom {{ errFormChangePwd_password ? 'border-danger' : 'border-secondary-subtle'}}" />
+                        <ion-text class="input-err">{{ errFormChangePwd_password }}</ion-text>
+                    </div>
+                    <div>
+                        <ion-input type="password" #confirmPassword formControlName="confirmPassword" [label]="'PASSWORD_RETYPE' | translate" [placeholder]="'PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
+                            class="px-2 border-bottom {{ errFormChangePwd_confirmPassword ? 'border-danger' : 'border-secondary-subtle'}}" />
+                        <ion-text class="input-err">{{ errFormChangePwd_confirmPassword }}</ion-text>
+                    </div>
                     <div class="my-2">
-                        <mat-password-strength #pwdStrength [password]="password.value" [enableSpecialCharRule]="false"></mat-password-strength>
+                        <mat-password-strength #pwdStrength [password]="formChangePwd.value.password ? formChangePwd.value.password : ''" [enableSpecialCharRule]="false"></mat-password-strength>
                         <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
                     </div>
                     <div class="mt-3 btn-group w-100">
-                        <button type="button" class="btn btn-secondary w-50" (click)="openCloseModalEditProfile(false, '3')">Cancel</button>
-                        <button type="submit" class="btn btn-success w-50" [disabled]="!this.formChangePwd.valid">Confirm</button>
+                        <button type="button" class="btn btn-secondary w-50" (click)="openModal(false, '3')">{{'CANCEL' | translate}}</button>
+                        <button type="submit" class="btn btn-success w-50" [disabled]="!formChangePwd.valid">{{'SAVE' | translate}}</button>
                     </div>
                 </form>
             </ion-content>

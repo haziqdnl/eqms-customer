@@ -193,7 +193,7 @@ export class ForgotPasswordComponent {
     return msg.toLowerCase();
   }
   public submitFormResetPwd() {
-    this.g.toastSuccess("Password reset completed!");
+    this.g.toastSuccess(this.translate.instant('SCRN_FORGOT_PASSWORD.RESET_SUCCESS'));
     this.g.redirectTo('login');
   }
 }

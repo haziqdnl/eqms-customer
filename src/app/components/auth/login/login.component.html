@@ -6,30 +6,30 @@
                 <section class="text-center">
                     <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="200" />
                     <h6 class="mt-1 text-center font-size-10 fw-bold">{{ g.getEnvName + ' ' + g.getEnvAppVer | uppercase }}</h6>
-                    <h5 class="mt-3 text-center fw-bold">{{ 'SCRN_LOGIN.TITLE' | translate }}</h5>
+                    <h5 class="mt-3 text-center fw-bold">{{'SCRN_LOGIN.TITLE' | translate}}</h5>
                 </section>
                 <!-- Form: Login -->
                 <form [formGroup]="formIdPassword" class="w-100" (ngSubmit)="submit()">
                     <div>
-                        <ion-input type="text" formControlName="id" label="ID" placeholder="+60" labelPlacement="floating" autocapitalize="none" maxlength="14"
-                            class="px-2 border-bottom {{ errFormIdPassword_id ? 'border-danger' : 'border-dark'}}" [maskito]="idMask" [maskitoElement]="maskPredicate" />
+                        <ion-input type="text" formControlName="id" label="ID" placeholder="+60" labelPlacement="floating" maxlength="14"
+                            class="px-2 border-bottom {{ errFormIdPassword_id ? 'border-danger' : 'border-secondary-subtle'}}" [maskito]="idMask" [maskitoElement]="maskPredicate" />
                         <ion-text class="input-err">{{ errFormIdPassword_id }}</ion-text>
                     </div>
                     <div>
-                        <ion-input type="password" formControlName="password" label="{{ 'PASSWORD' | translate }}" labelPlacement="floating" autocapitalize="none" 
-                            class="px-2 border-bottom {{ errFormIdPassword_password ? 'border-danger' : 'border-dark'}}" />
+                        <ion-input type="password" formControlName="password" [label]="'PASSWORD' | translate" labelPlacement="floating" 
+                            class="px-2 border-bottom {{ errFormIdPassword_password ? 'border-danger' : 'border-secondary-subtle'}}" />
                         <ion-text class="input-err">{{ errFormIdPassword_password }}</ion-text>
                     </div>
-                    <button class="btn btn-success w-100 mt-3" type="submit">{{ 'SCRN_LOGIN.BTN_LOGIN' | translate }}</button>
+                    <button class="btn btn-success w-100 mt-3" type="submit">{{'SCRN_LOGIN.BTN_LOGIN' | translate}}</button>
                 </form>
                 <div class="mt-3 font-size-12">
                     <ion-grid class="text-center text-primary">
                         <ion-row>
-                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('forgot-password')">{{ 'SCRN_LOGIN.FORGOT_PASSWORD' | translate }}</a><br></ion-col>
-                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('register')">{{ 'SCRN_LOGIN.SIGN_UP' | translate }}</a><br></ion-col>
+                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('forgot-password')">{{'SCRN_LOGIN.FORGOT_PASSWORD' | translate}}</a><br></ion-col>
+                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('register')">{{'SCRN_LOGIN.SIGN_UP' | translate}}</a><br></ion-col>
                         </ion-row>
                     </ion-grid>
-                    <ion-select #drpLanguage [(ngModel)]="defaultLang" class="text-center border-bottom" label="{{ 'LANGUAGE' | translate }}:" interface="action-sheet" (ionChange)="this.g.setLanguage(drpLanguage.value)">
+                    <ion-select #drpLanguage [(ngModel)]="defaultLang" class="text-center border-bottom" [label]="('LANGUAGE' | translate) + ':'" interface="action-sheet" (ionChange)="g.setLanguage(drpLanguage.value)">
                         <ion-select-option value="en">English</ion-select-option>
                         <ion-select-option value="ms">Bahasa Melayu</ion-select-option>
                     </ion-select>

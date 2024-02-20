@@ -3,11 +3,6 @@ ion-toolbar {
     ion-title { --color: #fff; --border: none; }
 }
 
-::ng-deep .mat-form-field-appearance-outline.specific-border .mat-form-field-outline  {
-    background-color: lightgray !important;
-    border-radius: 5px;  
-}
-
 div#profileTop {
     background: var(--primary-color) !important;
 
@@ -52,33 +47,6 @@ ion-item {
     h2, p       { font-weight: 600; }
 }
 
-button#btnChangePwd { 
-    color: #fff;
-    background: #ff8800 !important; 
-    &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -2;
-        background-color: #ff9720;
-    }
-    &:before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0%;
-        height: 100%;
-        transition: all 0.3s;
-        z-index: -1;
-        background-color: #d68b00;
-    }
-    &:hover:before { width: 100%; }
-}
-
 ion-modal {
     ion-toolbar  {
         ion-title, ion-button { --color: #fff !important; }
@@ -92,6 +60,12 @@ ion-modal {
         img {
             border: 4px solid var(--secondary-color);
             width: 100px !important;
+
+            &:hover {
+                transform: scale(0.9);
+                transition: 0.3s ease-in-out;
+                border: 4px solid var(--primary-color);
+            }
         }
     }
 }

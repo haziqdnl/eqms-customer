@@ -1,13 +1,20 @@
 {
     "_comment"                  : "** Kata kunci umum dalam aplikasi **",
     ""                          : "====================================",
+    "ADDRESS"                   : "Alamat Rumah",
     "BACK"                      : "Kembali",
     "CANCEL"                    : "Batal",
+    "CHANGE_PASSWORD"           : "Tukar Password",
+    "CHECKIN"                   : "Daftar Masuk",
+    "CLOSE"                     : "Tutup",
+    "CONFIRM"                   : "Sahkan",
     "EMAIL"                     : "Alamat Emel",
+    "ERROR"                     : "Ralat",
     "FULLNAME"                  : "Nama Penuh",
     "GENDER"                    : "Jantina",
     "LANGUAGE"                  : "Bahasa",
-    "LOGOUT"                    : "Log keluar",
+    "LOGIN"                     : "Log Masuk",
+    "LOGOUT"                    : "Log Keluar",
     "MOBILENO"                  : "No. Telefon Bimbit",
     "NEXT"                      : "Seterusnya",
     "NO"                        : "Tidak",
@@ -15,14 +22,24 @@
     "NRIC"                      : "No. Kad Pengenalan",
     "PASSWORD"                  : "Kata Laluan",
     "PASSWORD_RETYPE"           : "Sahkan Kata Laluan",
+    "PAWN"                      : "Pajak Gadai",
+    "PAYMENT"                   : "Pembayaran",
+    "POSTCODE"                  : "Poskod",
     "PROCEED"                   : "Teruskan",
+    "REDEMPTION"                : "Penebusan",
+    "RESET"                     : "Set Semula",
+    "SAVE"                      : "Simpan",
+    "STATE"                     : "Negeri",
     "SUBMIT"                    : "Hantar",
-    "UCID"                      : "ID Panggilan Unik (UCID)",
+    "UCID"                      : "Panggilan ID Unik (UCID)",
+    "UNDEFINED"                 : "Tidak ditakrif",
     "VERIFY"                    : "Sahkan",
     "WITHOUT_DASH"              : "Tanpa aksara '-'",
     "YES"                       : "Ya",
     
     "TOAST_MSG"                 : {
+        "_comment"              : "** Kata kunci umum 'toast' **",
+        ""                      : "===========================",
         "SENDING_OTP"           : "Pengesahan OTP sedang dihantar..."
     },
 
@@ -51,6 +68,8 @@
     },
 
     "OTP_VERIFICATION"          : {
+        "_comment"              : "** Kata kunci untuk OTP **",
+        ""                      : "==========================",
         "CONFIRM_RESEND"        : "Hantar semula OTP?",
         "DESCR"                 : "Sila masukkan 6 digit OTP yang dihantar ke",
         "INVALID_OTP"           : "OTP tidak sah",
@@ -58,29 +77,57 @@
         "TITLE"                 : "Pengesahan OTP"
     },
 
+    "PLACEHOLDER"               : {
+        "_comment"              : "** Kata kunci untuk 'placeholder' **",
+        ""                      : "====================================",
+        "ADDRESS"               : "Masukkan alamat rumah anda",
+        "EMAIL"                 : "Masukkan alamat emel anda",
+        "FULLNAME"              : "Masukkan nama penuh anda",
+        "GENDER_DRP"            : "--pilih jantina--",
+        "NRIC"                  : "Masukkan no. kad pengenalan anda",
+        "OUTLET_DRP"            : "--pilih outlet--",
+        "PASSWORD"              : "Masukkan kata laluan anda",
+        "PASSWORD_RETYPE"       : "Masukkan semula kata laluan anda",
+        "STATE_DRP"             : "--pilih negeri--",
+        "UCID"                  : "Masukkan ID Panggilan Unik anda"
+    },
+
     "SCANNER_STATUS"          : {
+        "_comment"              : "** Kata kunci untuk pengimbas **",
+        ""                      : "================================",
         "APPT_DISABLED"         : "Pengimbas daftar masuk dinyahaktifkan buat sementara waktu sehingga ke tarikh temujanji yang ditempah.",
         "APPT_ENABLED"          : "Pengimbas daftar masuk diaktifkan untuk temujanji yang ditempah.",
         "CHECKED_IN"            : "Anda telah mendaftar masuk, pengimbas daftar masuk dinyahaktifkan buat sementara waktu.",
+        "GRANTED"               : {
+            "YES"               : "Dibenarkan untuk menggunakan pengimbas",
+            "NO"                : "Tidak dibenarkan menggunakan pengimbas"
+        },
+        "TURNED_ON"             : "Pengimbas dibuka",
+        "TURNED_OFF"            : "Pengimbas ditutup",
         "UNSUPPORTED"           : "Untuk menggunakan pengimbas daftar masuk, sila muat turun aplikasi ini daripada Play Store atau App Store.",
         "WALKIN_ENABLED"        : "Pengimbas daftar masuk diaktifkan untuk walk-in."
     },
 
+    "SCRN_401"                  : {
+        "_comment"              : "** Kata kunci dalam skrin 401 **",
+        ""                      : "================================",
+        "TITLE"                 : "Tiada Kebenaran",
+        "TITLE_DESCR"           : "Sesi anda mungkin telah pun tamat. Sila log masuk semula untuk meneruskan."
+    },
+
+    "SCRN_404"                  : {
+        "_comment"              : "** Kata kunci dalam skrin 404 **",
+        ""                      : "================================",
+        "TITLE"                 : "Tidak Ditemui",
+        "TITLE_DESCR"           : "Maaf! Kami tidak dapat mencari halaman yang ada mahu akses."
+    },
+
     "SCRN_REGISTER"             : {
         "_comment"              : "** Kata kunci dalam skrin REGISTER **",
-        ""                      : "==============================",
+        ""                      : "=====================================",
         "ALERT_CONFIRM"         : {
             "DESCR"             : "Kami akan menghantar pengesahan OTP ke alamat e-mel yang telah diberikan",
             "TITLE"             : "Sila pastikan semua butiran adalah betul"
-        },
-        "PLACEHOLDER"           : {
-            "EMAIL"             : "Masukkan alamat emel anda",
-            "FULLNAME"          : "Masukkan nama penuh anda",
-            "GENDER"            : "--Pilih jantina--",
-            "NRIC"              : "Masukkan no. kad pengenalan anda",
-            "PASSWORD"          : "Masukkan kata laluan anda",
-            "PASSWORD_RETYPE"   : "Masukkan semula kata laluan anda",
-            "UCID"              : "Masukkan ID Panggilan Unik anda"
         },
         "TITLE"                 : "Daftar Akaun Baru",
         "UCID"                  : {
@@ -99,7 +146,7 @@
 
     "SCRN_REGISTER_STATUS": {
         "_comment"              : "** Keywords in REGISTER STATUS screen **",
-        ""                      : "==============================",
+        ""                      : "========================================",
         "REG_STATUS_SUCCESS"    : "Account Created",
         "REG_STATUS_EXISTS"     : "Akaun Sudah Wujud",
         "REG_STATUS_UNVERIFIED" : "Akaun Belum Disahkan",
@@ -112,7 +159,7 @@
 
     "SCRN_FORGOT_PASSWORD"      : {
         "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
-        ""                      : "==============================",
+        ""                      : "============================================",
         "DESCR"                 : {
             "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
             "RESET"             : "Sila masukkan kata laluan baharu anda"
@@ -120,7 +167,8 @@
         "TITLE"                 : {
             "FORGOT"            : "Lupa Kata Laluan",
             "RESET"             : "Tetapan Semula Kata Laluan"
-        }
+        },
+        "RESET_SUCCESS"         : "Tetapan semula kata laluan berjaya!"
     },
 
     "SCRN_LOGIN"                : {
@@ -135,7 +183,7 @@
 
     "SCRN_LAYOUT"               : {
         "_comment"              : "** Kata kunci dalam skrin LAYOUT **",
-        ""                      : "==============================",
+        ""                      : "===================================",
         "TAB"                   : {
             "HOME"              : "Utama",
             "CHECKIN"           : "Daftar",
@@ -146,14 +194,14 @@
 
     "SCRN_HOME"                 : {
         "_comment"              : "** Kata kunci dalam skrin HOME **",
-        ""                      : "==============================",
+        ""                      : "=================================",
         "ABOUT_US_CONTENT"      : "Matlamat utama Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) adalah untuk menyediakan perkhidmatan pelanggan yang cekap, mengurangkan masa menunggu dan meningkatkan pengalaman pelanggan.",
         "ALERT"                 : {
             "APPT_CANCEL"       : "Mahu batalkan temujanji?",
             "LOGOUT"            : "Mahu log keluar?"
         },
         "APPT_NEW_MSG"          : "Jangan lupa bahawa anda ada temu janji dengan kami!",
-        "APPT_NEW_NOTICE"       : "Sila berada di kedai 15 minit sebelum waktu temujanji bagi mengelakkan temujanji anda dibatalkan.",
+        "APPT_NEW_NOTICE"       : "Sila berada di outlet 15 minit sebelum waktu temujanji bagi mengelakkan temujanji anda dibatalkan.",
         "CALLING_MSG"           : "Giliran anda! Sila tuju ke kaunter panggilan.",
         "CHECKIN_SUCCESS"       : "Daftar masuk berjaya",
         "GREETING"              : "Selamat datang ke ARX eQMS",
@@ -165,5 +213,42 @@
             "LATEST_NEWS"       : "Berita Terkini"
         },
         "WAIT_MSG"              : "Sila berada di ruangan menunggu. Kami akan memanggil anda sebentar lagi."
+    },
+
+    "SCRN_CHECKIN"              : {
+        "_comment"              : "** Kata kunci dalam skrin CHECK-IN **",
+        ""                      : "=====================================",
+        "ERROR"                 : {
+            "QR_INVALID"        : "Kod QR tidak sah",
+            "QR_EXPIRED"        : "Kod QR telah tamat tempoh",
+            "UNRECOGNIZED"      : "Pengimbasan gagal akibat ralat yang tidak diketahui"
+        },
+        "SELECT_SERVICE"        : "Sila pilih jenis servis"
+    },
+
+    "SCRN_BOOK_APPT"            : {
+        "_comment"              : "** Kata kunci dalam skrin BOOK APPT **",
+        ""                      : "======================================",
+        "APPT_ACTIVE_1"         : "Anda sudah mempunyai temujanji.",
+        "APPT_ACTIVE_2"         : "Oleh itu, anda tidak dibenarkan menempah yang lain.",
+        "AVAILABLE_DATE"        : "Tarikh Tersedia",
+        "AVAILABLE_TIME"        : "Slot Masa Tersedia",
+        "CONFIRM_APPT"          : "Sahkan Temujanji",
+        "NO_AVAILABLE_DATE"     : "Maaf, tiada tarikh tersedia. Sila pilih outlet yang lain.",
+        "NO_AVAILABLE_TIME"     : "Maaf, tiada slot masa tersedia. Sila pilih tarikh yang lain.",
+        "PREFERRED_OUTLET"      : "Outlet Pilihan",
+        "PREFERRED_SERVICE"     : "Servis Pilihan",
+        "TITLE"                 : "Temujanji"
+    },
+
+    "SCRN_PROFILE"              : {
+        "_comment"              : "** Kata kunci dalam skrin PROFILE **",
+        ""                      : "====================================",
+        "MODAL"                 : {
+            "EDIT_PROFILE"      : "Edit Profil",
+            "RENAME_UCID"       : "Penamaan Semula UCID",
+            "EDIT_PICTURE"      : "Edit Gambar Profil"
+        },
+        "TITLE"                 : "Profil Saya"
     }
 }

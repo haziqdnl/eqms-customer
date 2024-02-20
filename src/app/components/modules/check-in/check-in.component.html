@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
     <ion-toolbar [class]="'topbar px-3 ' + (g.isMobileWeb ? '' : 'pt-5')">
         <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
-        <ion-title>Check-In</ion-title>
+        <ion-title>{{'CHECKIN' | translate}}</ion-title>
     </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="loaded">
@@ -15,20 +15,20 @@
         <ion-header>
             <ion-toolbar [class]="(g.isMobileWeb ? '' : 'pt-5') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
                 <ion-title>{{ modalTitle }}</ion-title>
-                <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">Close</ion-buttons>
+                <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">{{'CLOSE' | translate}}</ion-buttons>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding text-center">
             <section *ngIf="modalMode == 'walkInServiceType'">
-                <p class="text-secondary font-size-12 mt-3">Please select your prefered service:</p>
+                <p class="text-secondary font-size-12 mt-3">{{'SCRN_CHECKIN.SELECT_SERVICE' | translate}}:</p>
                 <div class="fw-bold mb-5">
-                    <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3">Redemption</ion-chip>
-                    <ion-chip (click)="selectedWalkInServiceType = '1'" [color]="selectedWalkInServiceType == '1' ? 'primary' : 'medium'" class="px-4 py-3">Pawn</ion-chip>
-                    <ion-chip (click)="selectedWalkInServiceType = '2'" [color]="selectedWalkInServiceType == '2' ? 'primary' : 'medium'" class="px-4 py-3">Payment</ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3">{{'REDEMPTION' | translate}}</ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '1'" [color]="selectedWalkInServiceType == '1' ? 'primary' : 'medium'" class="px-4 py-3">{{'PAWN'       | translate}}</ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '2'" [color]="selectedWalkInServiceType == '2' ? 'primary' : 'medium'" class="px-4 py-3">{{'PAYMENT'    | translate}}</ion-chip>
                 </div>
                 <div class="btn-group w-100">
-                    <button type="button" class="btn btn-secondary" (click)="openModal(false, '')">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="openModal(false, ''); walkIn()" [disabled]="selectedWalkInServiceType == ''">Confirm</button>
+                    <button type="button" class="btn btn-secondary" (click)="openModal(false, '')">{{'CANCEL' | translate}}</button>
+                    <button type="button" class="btn btn-primary" (click)="openModal(false, ''); walkIn()" [disabled]="selectedWalkInServiceType == ''">{{'SUBMIT' | translate}}</button>
                 </div>
             </section>
             <section *ngIf="modalMode == 'errorMsg'">

@@ -10,7 +10,5 @@ export class AppComponent {
 
   constructor(private g: GeneralService) {}
 
-  ngOnInit() {
-    this.g.setDefaultLanguage();
-  }
+  ngOnInit() { this.g.setDefaultLanguage(); }
 }

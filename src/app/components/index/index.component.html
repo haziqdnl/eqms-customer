@@ -3,7 +3,7 @@
         <ion-img slot="start" id="topbarLogo" class="mx-auto" src="assets/img/arx_logo.jpeg" alt="image"></ion-img>
         <ion-buttons slot="end">
             <a id="topbarLogout" class="ms-auto text-light" href="javascript: void(0);" (click)="openAlertLogout()">
-                <fa-icon icon="power-off" class="my-auto me-2"></fa-icon><span class="font-size-14">{{ 'LOGOUT' | translate }}</span>
+                <fa-icon icon="power-off" class="my-auto me-2"></fa-icon><span class="font-size-14">{{'LOGOUT' | translate}}</span>
             </a>
         </ion-buttons>
     </ion-toolbar>
@@ -14,7 +14,7 @@
             <ion-col class="ion-text-center">
                 <ion-label>
                     <ion-note color="light" class="font-size-20 fw-bold">
-                        {{ 'SCRN_HOME.GREETING' | translate }},<br>
+                        {{'SCRN_HOME.GREETING' | translate}},<br>
                         {{ username | titlecase }}<fa-icon icon="face-smile-beam" class="face-smile-beam ms-1 text-warning"></fa-icon>
                     </ion-note>
                 </ion-label>
@@ -33,15 +33,15 @@
                                 <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Walk-In: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? "{{ 'SCRN_HOME.CHECKIN_SUCCESS' | translate }}" : ''}}
-                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? "{{ 'SCRN_HOME.CALLING_MSG' | translate }}": '' }}
-                                    {{ walkInData[0].WalkInStat == 'SERVING' ? "{{ 'SCRN_HOME.SERVING_MSG' | translate }}" : '' }}
+                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? "{{'SCRN_HOME.CHECKIN_SUCCESS'   | translate}}" : ''}}
+                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? "{{'SCRN_HOME.CALLING_MSG'       | translate}}": '' }}
+                                    {{ walkInData[0].WalkInStat == 'SERVING' ? "{{'SCRN_HOME.SERVING_MSG'       | translate}}" : '' }}
                                 </p>
                                 <!-- Walk-In: Status Title / UniqCallID -->
                                 <h2>{{ this.uniqCallID | uppercase }}</h2>
                                 <h3>{{ walkInData[0].Service }}</h3>
                                 <!-- Walk-In: Notice -->
-                                <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3">{{ 'SCRN_HOME.WAIT_MSG' | translate }}</p>
+                                <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3">{{'SCRN_HOME.WAIT_MSG' | translate}}</p>
                             </div>
                         </section>
                         <section *ngIf="apptData[0] != null && apptData[0].ApptStat != 'COMPLETE'">
@@ -69,16 +69,16 @@
                                     {{ apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.WAIT_MSG'        | translate) : '' }}
                                 </p>
                                 <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
-                                    <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">{{ 'CANCEL' | translate }}</button>
+                                    <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">{{'CANCEL' | translate}}</button>
                                 </div>
                             </div>
                         </section>
                         <div *ngIf="apptData[0] == null && walkInData[0] == null">
                             <fa-icon icon="calendar-xmark" size="4x" class="text-danger"></fa-icon>
-                            <h5 class="mt-3">{{ 'SCRN_HOME.NO_APPT' | translate }}</h5>
+                            <h5 class="mt-3">{{'SCRN_HOME.NO_APPT' | translate}}</h5>
                         </div>
                         <div *ngIf="!checkInData.enableScanner">
-                            <p class="font-size-10 mt-2"><b>{{ 'NOTE' | translate }}:</b> {{ checkInData.msgDisabledScanner }}</p>
+                            <p class="font-size-10 mt-2"><b>{{'NOTE' | translate}}:</b> {{ checkInData.msgDisabledScanner }}</p>
                         </div>
                     </ion-card-content>
                 </ion-card>
@@ -86,14 +86,14 @@
         </ion-row>
         <!-- Current Market Price & Rate -->
         <section id="market" class="section">
-            <ion-label class="title">{{ 'SCRN_HOME.TITLE.GOLD_MARKET_PRICE' | translate }}</ion-label>
+            <ion-label class="title">{{'SCRN_HOME.TITLE.GOLD_MARKET_PRICE' | translate}}</ion-label>
             <div class="mt-4 rounded-3 bg-white py-3 w-100">
                 <iframe [src]="urlCurentGoldMarketPrice" class="w-100" style="height: 270px;"></iframe>
             </div>
         </section>
         <!-- Latest News -->
         <section id="news" class="section">
-            <ion-label class="title">{{ 'SCRN_HOME.TITLE.LATEST_NEWS' | translate }}</ion-label>
+            <ion-label class="title">{{'SCRN_HOME.TITLE.LATEST_NEWS' | translate}}</ion-label>
             <ion-row class="mt-4 ion-justify-content-center">
                 <ion-col size="12" size-sm="3" *ngFor="let item of newsFeedData">
                     <div [innerHTML]="item.HTMLContent" class="py-2 h-100 w-100"></div>
@@ -102,17 +102,17 @@
         </section>
         <!-- About Us -->
         <section id="aboutus" class="section">
-            <ion-label class="title">{{ 'SCRN_HOME.TITLE.ABOUT_US' | translate }}</ion-label>
+            <ion-label class="title">{{'SCRN_HOME.TITLE.ABOUT_US' | translate}}</ion-label>
             <p class="mt-4 px-3 text-center">
-                {{ 'SCRN_HOME.ABOUT_US_CONTENT' | translate }}
+                {{'SCRN_HOME.ABOUT_US_CONTENT' | translate}}
             </p>
         </section>
     </ion-grid>
     <!-- Modal: Check-In Success -->
     <ng-template #modalCheckInSuccess let-modal>
         <div class="modal-body text-center p-4">
-            <h1 class="text-success fw-bolder">{{ 'SCRN_HOME.CHECKIN_SUCCESS' | translate }}</h1>
-            <h6>{{ 'SCRN_HOME.WAIT_MSG' | translate }}</h6>
+            <h1 class="text-success fw-bolder">{{'SCRN_HOME.CHECKIN_SUCCESS' | translate}}</h1>
+            <h6>{{'SCRN_HOME.WAIT_MSG' | translate}}</h6>
             <button type="button" class="btn btn-secondary mt-3 w-100" (click)="modal.close('OK')">OK</button>
         </div>
     </ng-template>

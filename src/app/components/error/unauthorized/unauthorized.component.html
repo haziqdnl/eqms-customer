@@ -4,9 +4,9 @@
             <div class="text-center bg-light rounded-4 shadow p-5 m-2">
                 <fa-icon icon="ban" size="10x" class="text-danger"></fa-icon>
                 <h1 class="m-0 mt-3 fw-bolder">401</h1>
-                <h4 class="m-0 fw-bolder">Unauthorized</h4>
-                <h6>Oh no! It seems like your session has ended. Please log in again to proceed.</h6>
-                <button type="button" class="btn btn-secondary mt-3" (click)="g.endSession()">to login page</button>
+                <h4 class="m-0 fw-bolder">{{'SCRN_401.TITLE' | translate}}</h4>
+                <h6>{{'SCRN_401.TITLE_DESCR' | translate}}</h6>
+                <button type="button" class="btn btn-secondary mt-3" (click)="g.endSession()">{{'LOGIN' | translate}}</button>
             </div>
         </div>
     </div>

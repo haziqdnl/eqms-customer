@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BarcodeFormat, BarcodeScanner, LensFacing } from '@capacitor-mlkit/barcode-scanning';
+import { TranslateService } from '@ngx-translate/core';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { CheckInService } from 'src/app/services/check-in/check-in.service';
 import { GeneralService } from 'src/app/services/general/general.service';
@@ -15,6 +16,7 @@ export class CheckInComponent {
     private apiUtilityService: ApiUtilityService,
     private checkInService: CheckInService,
     public  g: GeneralService,
+    private translate: TranslateService
   ) {}
   
   public loaded = false;
@@ -41,8 +43,8 @@ export class CheckInComponent {
     if (open && mode) {
       this.modalMode = mode;
       if      (mode == "walkInServiceType") this.modalTitle = "Walk-In";
-      else if (mode == "errorMsg")          this.modalTitle = "Error";
-      else                                  this.modalTitle = "Undefined";
+      else if (mode == "errorMsg")          this.modalTitle = this.translate.instant('ERROR');
+      else                                  this.modalTitle = this.translate.instant('UNDEFINED');
       this.stopScan();
     }
     else {
@@ -77,7 +79,7 @@ export class CheckInComponent {
   private async isScannerEnabled() {
     this.scannerData = await this.checkInService.isCheckInEnabled();
     if (this.scannerData.isSupported && this.scannerData.enableScanner) {
-      BarcodeScanner.checkPermissions().then((result) => { result.camera === 'granted' ? 'Granted to use the scanner' : 'Not granted to use the scanner' });
+      BarcodeScanner.checkPermissions().then((result) => { this.translate.instant('SCANNER_STATUS.GRANTED.' + (result.camera === 'granted' ? 'YES' : 'NO')) });
       setTimeout( () => { this.startScan(); }, 250)
     }
     else this.g.redirectTo('');
@@ -94,7 +96,7 @@ export class CheckInComponent {
   public formats: BarcodeFormat[] = []
   public readonly lensFacing: LensFacing = LensFacing.Back;
   public async startScan(): Promise<void> {
-    this.g.toastInfo("Scanner turned on");
+    this.g.toastInfo(this.translate.instant('SCANNER_STATUS.TURNED_ON'));
     await BarcodeScanner.addListener('barcodeScanned', async result => { this.onScanSuccess(result.barcode.rawValue.toString()); });
     await BarcodeScanner.startScan({formats: this.formats, lensFacing: this.lensFacing});
   }
@@ -102,7 +104,7 @@ export class CheckInComponent {
    *  Method: Close and stop scanner
    */
   public async stopScan(): Promise<void> {
-    this.g.toastInfo("Scanner turned off");
+    this.g.toastInfo(this.translate.instant('SCANNER_STATUS.TURNED_OFF'));
     await BarcodeScanner.removeAllListeners();
     await BarcodeScanner.stopScan();
   }
@@ -111,7 +113,7 @@ export class CheckInComponent {
    *  Method: QR Scanner
    *  - get value from QR
    */
-  public  errMsgTitle: any = '';
+  public  errMsgTitle: any = "";
   private qrValue: string = "";
   public  onScanSuccess(resultString: string) {
     if (resultString !== undefined && !this.qrValue) {
@@ -123,14 +125,14 @@ export class CheckInComponent {
         }
       };
       this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
-        this.errMsgTitle = '';
+        this.errMsgTitle = "";
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
         if      (rsp.d.RespCode == "200") this.g.redirectTo('');
         else if (rsp.d.RespCode == "444") this.openModal(true, "walkInServiceType");
         else {
-          if      (rsp.d.RespCode == "400") this.errMsgTitle = 'QR code invalid';
-          else if (rsp.d.RespCode == "401") this.errMsgTitle = 'QR code expired';
-          else                              this.errMsgTitle = 'Scanning failed due to unrecognized error';
+          if      (rsp.d.RespCode == "400") this.errMsgTitle = this.translate.instant('SCRN_CHECKIN.ERROR.QR_INVALID');
+          else if (rsp.d.RespCode == "401") this.errMsgTitle = this.translate.instant('SCRN_CHECKIN.ERROR.QR_EXPIRED');
+          else                              this.errMsgTitle = this.translate.instant('SCRN_CHECKIN.ERROR.UNRECOGNIZED');
           this.openModal(true, "errorMsg");
         }
       });
@@ -151,7 +153,7 @@ export class CheckInComponent {
     };
     this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode != "200") {
-        this.errMsgTitle = 'Check-in failed! ' + rsp.d.RespMessage + '. Please try again.';
+        this.errMsgTitle = rsp.d.RespMessage;
         this.openModal(true, "errorMsg");
       }
       else {

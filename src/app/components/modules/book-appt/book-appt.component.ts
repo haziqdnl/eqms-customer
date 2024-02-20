@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiOutletService } from 'src/app/api/api-outlet.service';
@@ -19,6 +20,7 @@ export class BookApptComponent {
     private apiUtilityService: ApiUtilityService,
     private apiWalkInService: ApiWalkinService,
     public  g: GeneralService,
+    private translate: TranslateService
   ) {} 
   
   public loaded = false;
@@ -188,9 +190,9 @@ export class BookApptComponent {
   public setApptServiceType(sType: any) {
     this.selectedServiceType_Data = sType;
     if (sType != "") {
-      if      (sType == '0') this.selectedServiceType_Disp = 'Redemption';
-      else if (sType == '1') this.selectedServiceType_Disp = 'Pawn';
-      else                   this.selectedServiceType_Disp = 'Payment';
+      if      (sType == '0') this.selectedServiceType_Disp = this.translate.instant('REDEMPTION');
+      else if (sType == '1') this.selectedServiceType_Disp = this.translate.instant('PAWN');
+      else                   this.selectedServiceType_Disp = this.translate.instant('PAYMENT');
     }
     else this.selectedServiceType_Disp = ""
   }

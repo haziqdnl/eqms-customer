@@ -4,9 +4,9 @@
             <div class="text-center bg-light rounded-4 shadow p-5 m-2">
                 <fa-icon icon="clipboard-question" size="10x" class="text-danger"></fa-icon>
                 <h1 class="m-0 mt-3 fw-bolder">404</h1>
-                <h4 class="m-0 fw-bolder">Not Found</h4>
-                <h6>Sorry! We cannot find the requested page.</h6>
-                <button type="button" class="btn btn-secondary mt-3" (click)="location.back()">Go Back</button>
+                <h4 class="m-0 fw-bolder">{{'SCRN_404.TITLE' | translate}}</h4>
+                <h6>{{'SCRN_404.TITLE_DESCR' | translate}}</h6>
+                <button type="button" class="btn btn-secondary mt-3" (click)="location.back()">{{'BACK' | translate}}</button>
             </div>
         </div>
     </div>

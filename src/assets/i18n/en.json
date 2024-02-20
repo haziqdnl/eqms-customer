@@ -1,12 +1,19 @@
 {
     "_comment"                  : "** Common keywords in the app **",
-    ""                          : "==============================",
+    ""                          : "================================",
+    "ADDRESS"                   : "Home Address",
     "BACK"                      : "Back",
     "CANCEL"                    : "Cancel",
+    "CHANGE_PASSWORD"           : "Change Password",
+    "CHECKIN"                   : "Check-In",
+    "CLOSE"                     : "Close",
+    "CONFIRM"                   : "Confirm",
     "EMAIL"                     : "Email Address",
+    "ERROR"                     : "Error",
     "FULLNAME"                  : "Full Name",
     "GENDER"                    : "Gender",
     "LANGUAGE"                  : "Language",
+    "LOGIN"                     : "Login",
     "LOGOUT"                    : "Logout",
     "MOBILENO"                  : "Mobile Number",
     "NEXT"                      : "Next",
@@ -15,14 +22,24 @@
     "NRIC"                      : "NRIC Number",
     "PASSWORD"                  : "Password",
     "PASSWORD_RETYPE"           : "Re-type Password",
+    "PAWN"                      : "Pawn",
+    "PAYMENT"                   : "Payment",
+    "POSTCODE"                  : "Postcode",
     "PROCEED"                   : "Proceed",
+    "REDEMPTION"                : "Redemption",
+    "RESET"                     : "Reset",
+    "SAVE"                      : "Save",
+    "STATE"                     : "State",
     "SUBMIT"                    : "Submit",
     "UCID"                      : "Unique Call ID",
+    "UNDEFINED"                 : "Undefined",
     "VERIFY"                    : "Verify",
     "WITHOUT_DASH"              : "Without '-' character",
     "YES"                       : "Yes",
     
     "TOAST_MSG"                 : {
+        "_comment"              : "** Common toast keywords **",
+        ""                      : "===========================",
         "SENDING_OTP"           : "Sending OTP verification..."
     },
 
@@ -51,6 +68,8 @@
     },
 
     "OTP_VERIFICATION"          : {
+        "_comment"              : "** Keywords for OTP **",
+        ""                      : "======================",
         "CONFIRM_RESEND"        : "Confirm resend OTP?",
         "DESCR"                 : "Please enter the 6 digit OTP sent to",
         "INVALID_OTP"           : "OTP not valid",
@@ -58,29 +77,57 @@
         "TITLE"                 : "OTP Verification"
     },
 
+    "PLACEHOLDER"               : {
+        "_comment"              : "** Keywords for placeholder **",
+        ""                      : "==============================",
+        "ADDRESS"               : "Enter your home address",
+        "EMAIL"                 : "Enter your email address",
+        "FULLNAME"              : "Enter your full name",
+        "GENDER_DRP"            : "--select gender--",
+        "NRIC"                  : "Enter your NRIC no.",
+        "OUTLET_DRP"            : "--select outlet--",
+        "PASSWORD"              : "Enter your Password",
+        "PASSWORD_RETYPE"       : "Retype your password",
+        "STATE_DRP"             : "--select state--",
+        "UCID"                  : "Enter your Unique Call ID"
+    },
+
     "SCANNER_STATUS"            : {
+        "_comment"              : "** Keywords for scanner **",
+        ""                      : "==========================",
         "APPT_DISABLED"         : "Check-in scanner is disabled temporarily until the booked appointment date.",
         "APPT_ENABLED"          : "Check-in scanner is enabled for the booked appointment.",
         "CHECKED_IN"            : "You already checked in, the check-in scanner is disabled temporarily.",
+        "GRANTED"               : {
+            "YES"               : "Granted to use the scanner",
+            "NO"                : "Not granted to use the scanner"
+        },
+        "TURNED_ON"             : "The scanner is open",
+        "TURNED_OFF"            : "The scanner is closed",
         "UNSUPPORTED"           : "To use the check-in scanner, please download the app from Play Store or App Store.",
         "WALKIN_ENABLED"        : "Check-in scanner is enabled for the walk-in."
     },
 
+    "SCRN_401"                  : {
+        "_comment"              : "** Keywords in 401 screen **",
+        ""                      : "============================",
+        "TITLE"                 : "Unauthorized",
+        "TITLE_DESCR"           : "Your session may have already expired. Please log in again to continue."
+    },
+
+    "SCRN_404"                  : {
+        "_comment"              : "** Keywords in 404 screen **",
+        ""                      : "============================",
+        "TITLE"                 : "Not Found",
+        "TITLE_DESCR"           : "Sorry! We cannot find the requested page."
+    },
+
     "SCRN_REGISTER"             : {
         "_comment"              : "** Keywords in REGISTER screen **",
-        ""                      : "==============================",
+        ""                      : "=================================",
         "ALERT_CONFIRM"         : {
             "DESCR"             : "We'll send an OTP verification to the provided email address",
             "TITLE"             : "Please ensure all details are correct"
-        },
-        "PLACEHOLDER"           : {
-            "EMAIL"             : "Enter your email address",
-            "FULLNAME"          : "Enter your full name",
-            "GENDER"            : "--Select gender--",
-            "NRIC"              : "Enter your NRIC no.",
-            "PASSWORD"          : "Enter your Password",
-            "PASSWORD_RETYPE"   : "Retype your password",
-            "UCID"              : "Enter your Unique Call ID"
         },
         "TITLE"                 : "Register New Account",
         "UCID"                  : {
@@ -99,7 +146,7 @@
 
     "SCRN_REGISTER_STATUS": {
         "_comment"              : "** Keywords in REGISTER STATUS screen **",
-        ""                      : "==============================",
+        ""                      : "========================================",
         "REG_STATUS_SUCCESS"    : "Account Created",
         "REG_STATUS_EXISTS"     : "Account Already Exist",
         "REG_STATUS_UNVERIFIED" : "Account Not Yet Verified",
@@ -112,7 +159,7 @@
 
     "SCRN_FORGOT_PASSWORD"      : {
         "_comment"              : "** Keywords in FORGOT PASSWORD screen **",
-        ""                      : "==============================",
+        ""                      : "========================================",
         "DESCR"                 : {
             "FORGOT"            : "Enter your ID to get the password reset link",
             "RESET"             : "Please enter your new password"
@@ -120,7 +167,8 @@
         "TITLE"                 : {
             "FORGOT"            : "Forgot Password",
             "RESET"             : "Reset Password"
-        }
+        },
+        "RESET_SUCCESS"         : "Password reset successful"
     },
 
     "SCRN_LOGIN"                : {
@@ -135,7 +183,7 @@
 
     "SCRN_LAYOUT"               : {
         "_comment"              : "** Keywords in LAYOUT screen **",
-        ""                      : "==============================",
+        ""                      : "===============================",
         "TAB"                   : {
             "HOME"              : "Home",
             "CHECKIN"           : "Check-In",
@@ -146,7 +194,7 @@
 
     "SCRN_HOME"                 : {
         "_comment"              : "** Keywords in HOME screen **",
-        ""                      : "==============================",
+        ""                      : "=============================",
         "ABOUT_US_CONTENT"      : "The ultimate goal of the Ar-Rahnu Exchange Electronic Queue Management System (ARX eQMS) is to provide efficient customer service, reduce waiting time, and enhance customer experience.",
         "ALERT"                 : {
             "APPT_CANCEL"       : "Confirm cancel appointment?",
@@ -165,5 +213,42 @@
             "LATEST_NEWS"       : "Latest News"
         },
         "WAIT_MSG"              : "Please sit in the waiting area. We will call you shortly"
+    },
+
+    "SCRN_CHECKIN"              : {
+        "_comment"              : "** Keywords in CHECK-IN screen **",
+        ""                      : "=================================",
+        "ERROR"                 : {
+            "QR_INVALID"        : "QR code is invalid",
+            "QR_EXPIRED"        : "QR code is expired",
+            "UNRECOGNIZED"      : "Scanning failed due to unrecognized error"
+        },
+        "SELECT_SERVICE"        : "Please select the type of service"
+    },
+
+    "SCRN_BOOK_APPT"            : {
+        "_comment"              : "** Keywords in BOOK APPT screen **",
+        ""                      : "==================================",
+        "APPT_ACTIVE_1"         : "You already have an appointment.",
+        "APPT_ACTIVE_2"         : "Therefore, you are not allowed to book another one.",
+        "AVAILABLE_DATE"        : "Available Date",
+        "AVAILABLE_TIME"        : "Available Time Slot",
+        "CONFIRM_APPT"          : "Confirm Appointment",
+        "NO_AVAILABLE_DATE"     : "Sorry, there are no available dates. Please select other outlets.",
+        "NO_AVAILABLE_TIME"     : "Sorry, there are no available time. Please select other dates.",
+        "PREFERRED_OUTLET"      : "Prefered Outlet",
+        "PREFERRED_SERVICE"     : "Prefered Service",
+        "TITLE"                 : "Book Appointment"
+    },
+
+    "SCRN_PROFILE"              : {
+        "_comment"              : "** Keywords in PROFILE screen **",
+        ""                      : "================================",
+        "MODAL"                 : {
+            "EDIT_PROFILE"      : "Edit Profile",
+            "RENAME_UCID"       : "Rename UCID",
+            "EDIT_PICTURE"      : "Edit Profile Picture"
+        },
+        "TITLE"                 : "My Profile"
     }
 }

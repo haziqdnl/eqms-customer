@@ -92,7 +92,7 @@ export class RegisterComponent {
    *  Method: Form mobile no.
    */
   readonly maskMobileNo: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
-  public formMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(14), Validators.pattern('[+][6][0][1][0-9]\\d*$')]], });
+  public formMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(15), Validators.pattern('[+][6][0][1][0-9]\\d*$')]], });
   public get errFormMobileNo() {
     var msg = "";
     if (this.formMobileNo.controls['mobileNo'].touched && this.formMobileNo.controls['mobileNo'].invalid) {
@@ -107,7 +107,7 @@ export class RegisterComponent {
   /**
    *  Method: Form unique call ID
    */
-  public formUniqCallId = this.fb.group({ uniqCallID: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(20), Validators.pattern('^(?=.*[A-Z])(?=.*\\d)[A-Z\\d]{5,20}$')]] });
+  public formUniqCallId = this.fb.group({ uniqCallID: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d\\(\\)\\*\\s]{5,30}$')]] });
   public isCustom: boolean = true;
   public onChangeOptionUniqCallId(e: any) {
     this.isCustom = e.value == "1" ? true : false; 
@@ -147,8 +147,8 @@ export class RegisterComponent {
    *  Method: Password form
    */
   public formPassword = this.fb.group({ 
-    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
-    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
+    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
+    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
   }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
   public get errFormPassword_password() {
     var msg = "";
@@ -182,11 +182,11 @@ export class RegisterComponent {
                   localStorage['eqmsCustomer_registerData'] = JSON.stringify({
                     Email     : this.formEmail.value.email,
                     MobileNo  : this.formMobileNo.value.mobileNo,
-                    Name      : this.formBasicInfo.value.fullname,
+                    Name      : this.formBasicInfo.value.fullname?.toUpperCase(),
                     Sex       : this.formBasicInfo.value.gender,
                     Password  : this.formPassword.value.password,
                     IDNum     : this.formBasicInfo.value.identificationNo?.replaceAll('-', ''),
-                    UniqCallID: this.formUniqCallId.value.uniqCallID == "DEFAULT123" ? '' : this.formUniqCallId.value.uniqCallID,
+                    UniqCallID: this.formUniqCallId.value.uniqCallID == "DEFAULT123" ? '' : this.formUniqCallId.value.uniqCallID?.toUpperCase(),
                     OTP       : rsp.d.RespData[0].OTP,
                   });
                   this.g.toastSuccess(rsp.d.RespData[0].Status);
