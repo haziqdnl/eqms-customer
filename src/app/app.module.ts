@@ -107,7 +107,5 @@ import { ProfileComponent } from './components/modules/profile/profile.component
 export class AppModule {
   constructor(faIcon: FaIconLibrary) { faIcon.addIconPacks(fas); }
 }
-
 export function HttpLoaderFactory(http: HttpClient) { return new TranslateHttpLoader(http); }
-
 export function tokenGetter() { return localStorage.getItem('jtwToken'); }

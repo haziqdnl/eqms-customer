@@ -25,7 +25,7 @@ export class LoginComponent {
   ionViewWillLeave()  { this.formIdPassword.reset(); }
 
   /**
-   *  Method: Auto login if token from previous login still valid
+   *  Method: Auto login if token from the previous login still valid
    */
   public defaultLang = this.g.getDefaultLanguage;
   private validateToken() {
