@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
-import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
@@ -42,7 +42,7 @@ export class ForgotPasswordComponent {
   /**
    *  Method: Forgot Password with mobile number or email form
    */
-  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
+  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly phoneMask: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
   public formMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.maxLength(15), Validators.pattern('[+][6][0][1][0-9]\\d*$')]] });
   public get errFormMobileNo() {

@@ -6,7 +6,7 @@ import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 import { TranslateService } from '@ngx-translate/core';
-import { MaskitoElementPredicateAsync, MaskitoOptions } from '@maskito/core';
+import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 
 @Component({
   selector    : 'app-register',
@@ -37,10 +37,10 @@ export class RegisterComponent {
    *  Method: Basic profile form
    */
   //  Gender dropdown
-  public genderList: any = [{ id: 'M', desc: 'MALE' }, { id: 'F', desc: 'FEMALE' },];
+  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') },];
   public changeGender(e: any) { this.formBasicInfo.controls['gender']?.setValue(e, { onlySelf: true }); }
   //  Input masking
-  readonly maskPredicate: MaskitoElementPredicateAsync = async (el) => (el as HTMLIonInputElement).getInputElement();
+  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly maskIdentificationNo: MaskitoOptions = { mask: [/\d/, /\d/, /[01]/, /\d/, /[01]/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]};
   //  Form
   public formBasicInfo = this.fb.group({ 

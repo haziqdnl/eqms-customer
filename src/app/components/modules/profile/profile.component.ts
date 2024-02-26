@@ -253,7 +253,7 @@ export class ProfileComponent {
   /**
    *  Method: Get gender data
    */
-  public genderList: any = [{ id: 'M', desc: 'MALE' }, { id: 'F', desc: 'FEMALE' },];
+  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') },];
   public changeGender(val: any) { this.formEditInfo.controls['gender']?.setValue(val, { onlySelf: true }); }
 
   /**
