@@ -33,9 +33,9 @@
                                 <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Walk-In: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? "{{'SCRN_HOME.CHECKIN_SUCCESS'   | translate}}" : ''}}
-                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? "{{'SCRN_HOME.CALLING_MSG'       | translate}}": '' }}
-                                    {{ walkInData[0].WalkInStat == 'SERVING' ? "{{'SCRN_HOME.SERVING_MSG'       | translate}}" : '' }}
+                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : '' }}
+                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? ('SCRN_HOME.CALLING_MSG'     | translate) : '' }}
+                                    {{ walkInData[0].WalkInStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : '' }}
                                 </p>
                                 <!-- Walk-In: Status Title / UniqCallID -->
                                 <h2>{{ this.uniqCallID | uppercase }}</h2>
@@ -52,7 +52,7 @@
                                 <fa-icon *ngIf="apptData[0].ApptStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Appt: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_MSG'    | translate) : ''}}
+                                    {{ apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_MSG'    | translate) : '' }}
                                     {{ apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : '' }}
                                     {{ apptData[0].ApptStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : '' }}
                                 </p>
