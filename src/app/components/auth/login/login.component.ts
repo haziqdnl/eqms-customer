@@ -54,7 +54,7 @@ export class LoginComponent {
   public get errFormIdPassword_password() {
     var msg = "";
     if (this.formIdPassword.controls['password'].touched && this.formIdPassword.controls['password'].invalid) {
-      if (this.formIdPassword.controls['id'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
+      if (this.formIdPassword.controls['password'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
     }
     return msg.toLowerCase();
   }
