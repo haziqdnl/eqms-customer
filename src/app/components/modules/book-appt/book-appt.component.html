@@ -48,9 +48,9 @@
             <mat-step *ngIf="enableSelectServiceType()">
                 <ng-template matStepLabel>{{'SCRN_BOOK_APPT.PREFERRED_SERVICE' | translate}}: <b class="ms-2">{{ selectedServiceType_Disp }}</b></ng-template>
                 <div class="fw-bold mt-3 text-center">
-                    <ion-chip (click)="setApptServiceType('0')" [color]="selectedServiceType_Data == '0' ? 'dark' : 'tertiary'" class="px-4 py-3">{{'REDEMPTION' | translate}}</ion-chip>
-                    <ion-chip (click)="setApptServiceType('1')" [color]="selectedServiceType_Data == '1' ? 'dark' : 'tertiary'" class="px-4 py-3">{{'PAWN'       | translate}}</ion-chip>
-                    <ion-chip (click)="setApptServiceType('2')" [color]="selectedServiceType_Data == '2' ? 'dark' : 'tertiary'" class="px-4 py-3">{{'PAYMENT'    | translate}}</ion-chip>
+                    <ion-chip (click)="setApptServiceType('0')" [color]="selectedServiceType_Data == '0' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'REDEMPTION' | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="setApptServiceType('1')" [color]="selectedServiceType_Data == '1' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAWN'       | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="setApptServiceType('2')" [color]="selectedServiceType_Data == '2' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAYMENT'    | translate}}</ion-label></ion-chip>
                 </div>
             </mat-step>
             <!-- Confirmation -->
