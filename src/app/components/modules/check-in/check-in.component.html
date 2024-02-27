@@ -13,7 +13,7 @@
 <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="0.5" [breakpoints]="[0.5, 1]">
     <ng-template>
         <ion-header>
-            <ion-toolbar [class]="(g.isMobileWeb ? '' : 'pt-5') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
+            <ion-toolbar [class]="(g.isMobileWeb ? 'pt-5' : '') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
                 <ion-title>{{ modalTitle }}</ion-title>
                 <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">{{'CLOSE' | translate}}</ion-buttons>
             </ion-toolbar>
