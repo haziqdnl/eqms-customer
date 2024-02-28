@@ -111,7 +111,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   var appUrl = window.location.origin;
   var folderPath = "";
   if (!appUrl.includes('localhost'))  folderPath = "eqmscustomer"
-  
-  return new TranslateHttpLoader(http, folderPath + '/assets/i18n/', '.json');
+
+  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
 }
 export function tokenGetter() { return localStorage.getItem('jtwToken'); }
