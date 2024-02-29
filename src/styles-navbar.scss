@@ -4,27 +4,15 @@
     
 	a {
         color: #fff;
-        &:hover {
-            color: var(--secondary-color);
-        }
+        &:hover { color: var(--secondary-color); }
     }
 }
 
-ion-header {
-    ion-toolbar {
-        ion-buttons ion-back-button, ion-title {
-            --color: #fff;
-        }
-    }
-}
+ion-header { ion-toolbar { ion-buttons ion-back-button, ion-title { --color: #fff; } } }
 
-ion-toolbar, ion-tab-bar {
-    --background: #fff;
-}
+ion-toolbar, ion-tab-bar { --background: #fff; }
 
-ion-tab-bar { 
-    ion-tab-button { --color: #bdbdbd !important; }
-}
+ion-tab-bar { ion-tab-button { --color: #bdbdbd !important; } }
 
 /* Laptops/desktops, 1200px and up */
 @media only screen and (min-width: 1200px) {}
@@ -34,9 +22,7 @@ ion-tab-bar {
 
 /* Landscape tablets, 992px and down */
 @media only screen and (max-width: 992px) {
-	.topbar {
-		#topbarLogo { width: 150px; }
-	}
+	.topbar { #topbarLogo { width: 150px; } }
 }
 
 /* Landscape tablets, 768px and up */

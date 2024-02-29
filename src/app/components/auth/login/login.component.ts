@@ -21,8 +21,8 @@ export class LoginComponent {
     private translate: TranslateService
   ) {}
 
-  ngOnInit()          { this.validateToken(); }
-  ionViewWillLeave()  { this.formIdPassword.reset(); }
+  ngOnInit()          { this.validateToken();         }
+  ionViewWillLeave()  { this.formIdPassword.reset();  }
 
   /**
    *  Method: Auto login if token from the previous login still valid

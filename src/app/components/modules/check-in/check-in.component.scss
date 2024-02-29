@@ -15,11 +15,6 @@ ion-content { --background: transparent; }
 }
 
 ion-modal {
-    ion-toolbar  {
-        &.walkInServiceType {  --background: #1a9d48 !important; }
-        &.errorMsg          {  --background: #bc1d32 !important; }
-    }
-
     ion-buttons {
         &:hover { 
             transform: scale(0.95);

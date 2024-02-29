@@ -235,6 +235,7 @@
         "APPT_ACTIVE_2"         : "Therefore, you are not allowed to book another one.",
         "AVAILABLE_DATE"        : "Available Date",
         "AVAILABLE_TIME"        : "Available Time Slot",
+        "CLICK_HERE"            : "Click here to add",
         "CONFIRM_APPT"          : "Confirm Appointment",
         "NO_AVAILABLE_DATE"     : "Sorry, there are no available dates. Please select other outlets.",
         "NO_AVAILABLE_TIME"     : "Sorry, there are no available time. Please select other dates.",

@@ -205,7 +205,6 @@ export class ProfileComponent {
    *  Method: Submit edited info and change password
    */
   public async submitForm() {
-
     if (this.modalMode == '0' || this.modalMode == '1') {
       var ucid: any = this.profileData.UniqCallID;
       //  check if the new UCID is already exist
@@ -253,7 +252,7 @@ export class ProfileComponent {
   /**
    *  Method: Get gender data
    */
-  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') },];
+  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') }];
   public changeGender(val: any) { this.formEditInfo.controls['gender']?.setValue(val, { onlySelf: true }); }
 
   /**

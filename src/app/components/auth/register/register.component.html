@@ -7,29 +7,26 @@
                 <h5 class="mt-2 fw-bold">{{'SCRN_REGISTER.TITLE' | translate}}</h5>
                 <!-- Forms -->
                 <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.isMobile ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
-                    <!-- Step 1: Fullname & NRIC no. verification -->
+                    <!-- Step 1: Fullname & NRIC Verification -->
                     <mat-step [stepControl]="formBasicInfo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="id-card"></fa-icon></ng-template>
                         <form [formGroup]="formBasicInfo" class="w-100 text-start" (ngSubmit)="checkExist('NRIC', this.formBasicInfo.value.identificationNo?.replaceAll('-', ''))">
-                            <!-- Fullname -->
-                            <div>
+                            <div><!-- Fullname -->
                                 <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="floating" minlength="3" maxlength="80" 
-                                    class="px-2 border-bottom {{ errFormBasicInfo_fullname ? 'border-danger' : 'border-secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
-                                <ion-text class="input-err">{{ errFormBasicInfo_fullname }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_fullname ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                                <ion-text class="input-err">{{errFormBasicInfo_fullname}}</ion-text>
                             </div>
-                            <!-- Gender -->
-                            <div>
+                            <div><!-- Gender -->
                                 <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="floating" interface="action-sheet"
-                                    class="px-2 border-bottom {{ errFormBasicInfo_gender ? 'border-danger' : 'border-secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
-                                    <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{ item.desc }}</ion-select-option>
+                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_gender ? 'danger' : 'secondary-subtle')" (ionChange)="changeGender(gender.value)">
+                                    <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
                                 </ion-select>
-                                <ion-text class="input-err">{{ errFormBasicInfo_gender }}</ion-text>
+                                <ion-text class="input-err">{{errFormBasicInfo_gender}}</ion-text>
                             </div>
-                            <!-- NRIC no. -->
-                            <div>
+                            <div><!-- NRIC no. -->
                                 <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" 
-                                    class="px-2 border-bottom {{ errFormBasicInfo_identificationNo ? 'border-danger' : 'border-secondary-subtle'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
-                                <ion-text class="input-err">{{ errFormBasicInfo_identificationNo }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle')" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
+                                <ion-text class="input-err">{{errFormBasicInfo_identificationNo}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
                                 <button type="button" class="btn btn-secondary w-50" (click)="back()">{{'BACK' | translate}}</button>
@@ -38,14 +35,14 @@
                         </form>
                         <button #btnNextBasicInfo matStepperNext type="button" class="d-none"></button>
                     </mat-step>
-                    <!-- Step 2: Email verification -->
+                    <!-- Step 2: Email Verification -->
                     <mat-step [stepControl]="formEmail" editable="true">
                         <ng-template matStepLabel><fa-icon icon="envelope"></fa-icon></ng-template>
                         <form [formGroup]="formEmail" class="w-100 text-start" (ngSubmit)="checkExist('EMAIL', this.formEmail.value.email)">
                             <div>
                                 <ion-input type="email" #email formControlName="email" [label]="'EMAIL' | translate" [placeholder]="'PLACEHOLDER.EMAIL' | translate" labelPlacement="floating" maxlength="80" 
-                                    class="px-2 border-bottom {{ errFormEmail ? 'border-danger' : 'border-secondary-subtle'}}" />
-                                <ion-text class="input-err">{{ errFormEmail }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormEmail ? 'danger' : 'secondary-subtle')" />
+                                <ion-text class="input-err">{{errFormEmail}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
                                 <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{'BACK' | translate}}</button>
@@ -54,14 +51,14 @@
                         </form>
                         <button #btnNextEmail matStepperNext type="button" class="d-none"></button>
                     </mat-step>
-                    <!-- Step 3: Mobile no. verification -->
+                    <!-- Step 3: Mobile No. Verification -->
                     <mat-step [stepControl]="formMobileNo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="phone"></fa-icon></ng-template>
                         <form [formGroup]="formMobileNo" class="w-100 text-start" (ngSubmit)="checkExist('MOBILENO', this.formMobileNo.value.mobileNo)">
                             <div>
                                 <ion-input type="text" #mobileNo formControlName="mobileNo" [label]="'MOBILENO' | translate" placeholder="+60" labelPlacement="floating" maxlength="15"
-                                    class="px-2 border-bottom {{ errFormMobileNo ? 'border-danger' : 'border-secondary-subtle'}}" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
-                                <ion-text class="input-err">{{ errFormMobileNo }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormMobileNo ? 'danger' : 'secondary-subtle')" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
+                                <ion-text class="input-err">{{errFormMobileNo}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
                                 <button matStepperPrevious type="button" class="btn btn-secondary w-50">{{'BACK' | translate}}</button>
@@ -86,8 +83,8 @@
                         <form *ngIf="isCustom" [formGroup]="formUniqCallId" class="w-100 text-start">
                             <div>
                                 <ion-input type="text" #uniqCallID formControlName="uniqCallID" [label]="'UCID' | translate" [placeholder]="'PLACEHOLDER.UCID' | translate" labelPlacement="floating" minlength="5" maxlength="30"
-                                    class="px-2 border-bottom {{ errFormUniqCallId ? 'border-danger' : 'border-secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
-                                <ion-text class="input-err">{{ errFormUniqCallId }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormUniqCallId ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                                <ion-text class="input-err">{{errFormUniqCallId}}</ion-text>
                             </div>
                             <div class="my-2">
                                 <mat-password-strength #uniqCallIDStrength [password]="formUniqCallId.value.uniqCallID ? formUniqCallId.value.uniqCallID : ''" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [enableUpperCaseLetterRule]="false" [min]="5" [max]="30"></mat-password-strength>
@@ -106,13 +103,13 @@
                         <form [formGroup]="formPassword" class="w-100 text-start" (ngSubmit)="submitFormPassword()">
                             <div>
                                 <ion-input type="password" #password formControlName="password" [label]="'PASSWORD' | translate" [placeholder]="'PLACEHOLDER.PASSWORD' | translate" labelPlacement="floating" minlength="8" maxlength="40" 
-                                    class="px-2 border-bottom {{ errFormPassword_password ? 'border-danger' : 'border-secondary-subtle'}}" />
-                                <ion-text class="input-err">{{ errFormPassword_password }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormPassword_password ? 'danger' : 'secondary-subtle')" />
+                                <ion-text class="input-err">{{errFormPassword_password}}</ion-text>
                             </div>
                             <div>
                                 <ion-input type="password" #confirmPassword formControlName="confirmPassword" [label]="'PASSWORD_RETYPE' | translate" [placeholder]="'PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="floating" minlength="8" maxlength="40" 
-                                    class="px-2 border-bottom {{ errFormPassword_confirmPassword ? 'border-danger' : 'border-secondary-subtle'}}" />
-                                <ion-text class="input-err">{{ errFormPassword_confirmPassword }}</ion-text>
+                                    [class]="'px-2 border-bottom border-' + (errFormPassword_confirmPassword ? 'danger' : 'secondary-subtle')" />
+                                <ion-text class="input-err">{{errFormPassword_confirmPassword}}</ion-text>
                             </div>
                             <div class="mt-4">
                                 <mat-password-strength #pwdStrength [password]="formPassword.value.password ? formPassword.value.password : ''" [enableSpecialCharRule]="true"></mat-password-strength>

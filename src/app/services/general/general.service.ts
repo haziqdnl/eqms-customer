@@ -73,7 +73,7 @@ export class GeneralService {
     this.snackBar.open(msg, 'OK', {
       duration          : duration,
       horizontalPosition: pos,
-      verticalPosition  : this.isMobileWeb ? 'top' : 'bottom',
+      verticalPosition  : this.isMobileWeb ? 'bottom' : 'top',
       panelClass        : panelClass,
     });
   }
@@ -83,10 +83,7 @@ export class GeneralService {
    *  Method: Ionic loader
    */
   public async showLoading(duration: number) {
-    const loading = await this.loadingCtrl.create({
-      message: 'Loading',
-      duration: duration,
-    });
+    const loading = await this.loadingCtrl.create({ message: 'Loading', duration: duration });
     loading.present();
   }
 

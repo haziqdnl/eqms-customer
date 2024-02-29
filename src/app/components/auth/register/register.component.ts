@@ -23,7 +23,7 @@ export class RegisterComponent {
     private fb: FormBuilder,
     public  g: GeneralService,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   ionViewWillEnter() { this.getUrlParam(); }
 
@@ -172,10 +172,9 @@ export class RegisterComponent {
         header    : this.translate.instant('SCRN_REGISTER.ALERT_CONFIRM.TITLE'),
         message   : this.translate.instant('SCRN_REGISTER.ALERT_CONFIRM.DESCR'),
         buttons   : [
-          { text: this.translate.instant('CANCEL'), role: 'cancel', cssClass: 'text-danger', handler: () => {} },
+          { text: this.translate.instant('CANCEL'),   role: 'cancel',   cssClass: 'text-danger',  handler: () => {} },
           {
-            text: this.translate.instant('PROCEED'), role: 'confirm', cssClass: 'text-primary',
-            handler: () => {
+            text: this.translate.instant('PROCEED'),  role: 'confirm',  cssClass: 'text-primary', handler: () => {
               this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
               this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
                 if (rsp.d.RespCode == "200") {

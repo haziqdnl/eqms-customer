@@ -8,49 +8,65 @@
         <fa-icon icon="triangle-exclamation" size="5x" class="text-warning"></fa-icon>
         <p class="mt-3">{{'SCRN_BOOK_APPT.APPT_ACTIVE_1' | translate}}<br>{{'SCRN_BOOK_APPT.APPT_ACTIVE_2' | translate}}</p>
     </section>
-    <section *ngIf="!isWalkIn && !isAppt">
-        <mat-stepper #stepperBookAppt linear orientation="vertical" animationDuration="700" class="rounded-3 shadow m-3">
+    <section *ngIf="!isWalkIn && !isAppt" class="pt-3 px-3">
+        <mat-stepper #stepperBookAppt linear orientation="vertical" animationDuration="700" class="rounded-4 shadow p-2">
             <!-- Select State & Outlet -->
             <mat-step>
-                <ng-template matStepLabel>{{'SCRN_BOOK_APPT.PREFERRED_OUTLET' | translate}}: <b class="ms-2">{{ selectedOutletDesc }}</b></ng-template>
+                <ng-template matStepLabel>
+                    {{'SCRN_BOOK_APPT.PREFERRED_OUTLET' | translate}}: 
+                    <b *ngIf="selectedOutletDesc" class="ms-2">{{selectedOutletDesc}}</b>
+                    <ion-note *ngIf="!selectedOutletDesc" class="ms-2">{{'SCRN_BOOK_APPT.CLICK_HERE' | translate | lowercase}}</ion-note>
+                </ng-template>
                 <div id="panelOutlet" class="row justify-content-center mt-3">
                     <ion-select #drpState class="col col-lg-5 border rounded-3 m-1" [label]="('STATE' | translate) + ':'" [placeholder]="'PLACEHOLDER.STATE_DRP' | translate"
                         justify="start" interface="action-sheet" (ionChange)="getOutletList(drpState.value)">
-                        <ion-select-option *ngFor="let item of stateOutletData" [value]="item.StateID">{{ item.StateName }}</ion-select-option>
+                        <ion-select-option *ngFor="let item of stateOutletData" [value]="item.StateID">{{item.StateName}}</ion-select-option>
                     </ion-select>
                     <ion-select #drpOutlet class="col col-lg-5 border rounded-3 m-1" label="Outlet:" [placeholder]="'PLACEHOLDER.OUTLET_DRP' | translate"
                         justify="start" interface="action-sheet" (ionChange)="getApptDates(drpOutlet.value)" [disabled]="selectedStateID == ''" >
-                        <ion-select-option *ngFor="let item of outletByStateData" [value]="item.OutletID + '|' + item.OutletSDesc">{{ item.OutletSDesc }}</ion-select-option>
+                        <ion-select-option *ngFor="let item of outletByStateData" [value]="item.OutletID + '|' + item.OutletSDesc">{{item.OutletSDesc}}</ion-select-option>
                     </ion-select>
                 </div>
             </mat-step>
             <!-- Select Date -->
             <mat-step *ngIf="enableSelectApptDate()">
-                <ng-template matStepLabel>{{'SCRN_BOOK_APPT.AVAILABLE_DATE' | translate}}: <b class="ms-2">{{ selectedDate_Disp }}</b></ng-template>
+                <ng-template matStepLabel>
+                    {{'SCRN_BOOK_APPT.AVAILABLE_DATE' | translate}}: 
+                    <b *ngIf="selectedDate_Disp" class="ms-2">{{selectedDate_Disp}}</b>
+                    <ion-note *ngIf="!selectedDate_Disp" class="ms-2">{{'SCRN_BOOK_APPT.CLICK_HERE' | translate | lowercase}}</ion-note>
+                </ng-template>
                 <div id="panelDate" class="text-center mt-3 fw-bold">
                     <section *ngIf="apptDateList.length > 0">
-                        <ion-chip *ngFor="let item of apptDateList" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)" [color]="item.ApptDate_Data == selectedDate_Data ? 'dark' : 'success'" class="py-4 m-2">{{ item.ApptDate_Disp }}</ion-chip>
+                        <ion-chip *ngFor="let item of apptDateList" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)" [color]="item.ApptDate_Data == selectedDate_Data ? 'tertiary' : 'dark'" class="py-3 m-2">{{item.ApptDate_Disp}}</ion-chip>
                     </section>
                     <p *ngIf="apptDateList.length == 0" class="text-secondary fst-italic">{{'SCRN_BOOK_APPT.NO_AVAILABLE_DATE' | translate}}</p>
                 </div>
             </mat-step>
             <!-- Select Time -->
             <mat-step *ngIf="enableSelectApptTime()">
-                <ng-template matStepLabel>{{'SCRN_BOOK_APPT.AVAILABLE_TIME' | translate}}: <b class="ms-2">{{ selectedTime_Disp }}</b></ng-template>
+                <ng-template matStepLabel>
+                    {{'SCRN_BOOK_APPT.AVAILABLE_TIME' | translate}}: 
+                    <b *ngIf="selectedTime_Disp" class="ms-2">{{selectedTime_Disp}}</b>
+                    <ion-note *ngIf="!selectedTime_Disp" class="ms-2">{{'SCRN_BOOK_APPT.CLICK_HERE' | translate | lowercase}}</ion-note>
+                </ng-template>
                 <div id="panelTime" class="text-center mt-3 fw-bold">
                     <section *ngIf="apptTimeList.length > 0">
-                        <ion-chip *ngFor="let item of apptTimeList" (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)" [color]="item.SlotTime_Data == selectedTime_Data ? 'dark' : 'warning'" class="px-3 py-4">{{ item.SlotTime_Disp }}</ion-chip>
+                        <ion-chip *ngFor="let item of apptTimeList" (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)" [color]="item.SlotTime_Data == selectedTime_Data ? 'tertiary' : 'dark'" class="px-3 py-4">{{item.SlotTime_Disp}}</ion-chip>
                     </section>
                     <p *ngIf="apptTimeList.length == 0" class="text-secondary fst-italic">{{'SCRN_BOOK_APPT.NO_AVAILABLE_TIME' | translate}}</p>
                 </div>
             </mat-step>
             <!-- Select Service Type -->
             <mat-step *ngIf="enableSelectServiceType()">
-                <ng-template matStepLabel>{{'SCRN_BOOK_APPT.PREFERRED_SERVICE' | translate}}: <b class="ms-2">{{ selectedServiceType_Disp }}</b></ng-template>
+                <ng-template matStepLabel>
+                    {{'SCRN_BOOK_APPT.PREFERRED_SERVICE' | translate}}: 
+                    <b *ngIf="selectedServiceType_Disp" class="ms-2">{{selectedServiceType_Disp}}</b>
+                    <ion-note *ngIf="!selectedServiceType_Disp" class="ms-2">{{'SCRN_BOOK_APPT.CLICK_HERE' | translate | lowercase}}</ion-note>
+                </ng-template>
                 <div class="fw-bold mt-3 text-center">
-                    <ion-chip (click)="setApptServiceType('0')" [color]="selectedServiceType_Data == '0' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'REDEMPTION' | translate}}</ion-label></ion-chip>
-                    <ion-chip (click)="setApptServiceType('1')" [color]="selectedServiceType_Data == '1' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAWN'       | translate}}</ion-label></ion-chip>
-                    <ion-chip (click)="setApptServiceType('2')" [color]="selectedServiceType_Data == '2' ? 'dark' : 'tertiary'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAYMENT'    | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="setApptServiceType('0')" [color]="selectedServiceType_Data == '0' ? 'tertiary' : 'dark'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'REDEMPTION' | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="setApptServiceType('1')" [color]="selectedServiceType_Data == '1' ? 'tertiary' : 'dark'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAWN'       | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="setApptServiceType('2')" [color]="selectedServiceType_Data == '2' ? 'tertiary' : 'dark'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAYMENT'    | translate}}</ion-label></ion-chip>
                 </div>
             </mat-step>
             <!-- Confirmation -->

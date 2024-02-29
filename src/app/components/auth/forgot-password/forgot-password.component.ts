@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
@@ -84,10 +83,9 @@ export class ForgotPasswordComponent {
     const alert = await this.alertCtrl.create({
       header  : this.translate.instant('OTP_VERIFICATION.CONFIRM_RESEND'),
       buttons : [
-        { text: this.translate.instant('CANCEL'), role: 'cancel', cssClass: 'text-danger', handler: () => {} },
+        { text: this.translate.instant('CANCEL'), role: 'cancel',   cssClass: 'text-danger',  handler: () => {} },
         {
-          text: this.translate.instant('YES'), role: 'confirm', cssClass: 'text-primary',
-          handler: () => {
+          text: this.translate.instant('YES'),    role: 'confirm',  cssClass: 'text-primary', handler: () => {
             this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
             this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
               if (rsp.d.RespCode == "200") {

@@ -4,7 +4,7 @@
             <div class="content bg-light shadow-lg rounded-3 p-lg-5 p-4 text-center">
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
                 <h5 class="mt-3 text-center fw-bold">{{'OTP_VERIFICATION.TITLE' | translate}}</h5>
-                <p class="font-size-12">{{'OTP_VERIFICATION.DESCR' | translate}} <b class="text-dark-emphasis">{{ registerData.Email }}</b></p>
+                <p class="font-size-12">{{'OTP_VERIFICATION.DESCR' | translate}} <b class="text-dark-emphasis">{{registerData.Email}}</b></p>
                 <form id="formOTPVerification" [formGroup]="formOTPVerification" class="mt-3 w-100">
                     <input #otp1 formControlName="otp1" type="text" maxlength="1" (keypress)="g.numberOnly($event)" (keyup)="keyupOTP1($event)" required />
                     <input #otp2 formControlName="otp2" type="text" maxlength="1" (keypress)="g.numberOnly($event)" (keyup)="keyupOTP2($event)" required />

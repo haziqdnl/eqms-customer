@@ -22,9 +22,7 @@ ion-content {
         
         ion-row {
             ion-col {
-                ion-label {
-                    ion-note { line-height: 8px; }
-                }
+                ion-label { ion-note { line-height: 8px; } }
 
                 ion-card {
                     margin: 3px 0;

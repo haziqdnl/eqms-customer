@@ -39,7 +39,6 @@
               "src/styles.scss",
               "src/styles-animation.scss",
               "src/styles-button.scss",
-              "src/styles-hero.scss",
               "src/styles-navbar.scss",
               "src/styles-table.scss",
               "src/styles-toast.scss",

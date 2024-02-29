@@ -6,7 +6,7 @@
 	<a href="https://www.freepik.com/free-photo/line-queue-row-waiting-standing-crowded-group_2761094.htm#query=queue&position=5&from_view=search&track=sph">Image by rawpixel.com</a> on Freepik
 */
 //  Fonts
-@import url("https://fonts.googleapis.com/css?family=Oxygen:700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Oxygen");
 @import url("https://fonts.googleapis.com/css2?family=Poppins");
 @import url("https://fonts.googleapis.com/css?family=Rokkitt");
 @import url("https://fonts.googleapis.com/css?family=Orbitron");
@@ -17,13 +17,16 @@
 	--primary-color: rgb(5, 115, 186);
 	--secondary-color: rgb(189, 160, 50);
 	--primary-font: "Rokkitt", sans-serif;
+	--secondary-font: "Poppins", sans-serif;
 }
 
 body {
-    font-family: "Poppins", sans-serif;
-    height: 100vh !important;
-	max-width: 100vw;
-    background: #fff;
+    ion-content {
+        font-family: var(--secondary-font);
+        height: 100vh !important;
+        width: 100vw;
+        background: #fff;
+    }
 }
 .bg-default {
     background: linear-gradient(rgba(5, 115, 186, 0.7), rgba(5, 115, 186, 0.7)), url("^assets/img/queue_bg.png");
@@ -43,6 +46,7 @@ body {
     flex-direction: column;
     justify-content: center;
     min-height: 100vh;
+    padding: 20px;
 }
 
 //  wrap 2 group of elements and the second group to fill up the remaining screen height
@@ -71,17 +75,14 @@ a {
 
 h1, h2, h3, h4, h5, h6 { font-family: var(--primary-font); }
 
-.font-size-10 { font-size: 10px !important; }
-.font-size-11 { font-size: 11px !important; }
-.font-size-12 { font-size: 12px !important; }
-.font-size-13 { font-size: 13px !important; }
-.font-size-14 { font-size: 14px !important; }
-.font-size-15 { font-size: 15px !important; }
-.font-size-16 { font-size: 16px !important; }
-.font-size-25 { font-size: 25px !important; }
-.font-size-30 { font-size: 30px !important; }
-
-.card { border: none; }
+.font-size-10 { font-size: 10px; }
+.font-size-12 { font-size: 12px; }
+.font-size-14 { font-size: 14px; }
+.font-size-16 { font-size: 16px; }
+.font-size-18 { font-size: 18px; }
+.font-size-20 { font-size: 20px; }
+.font-size-25 { font-size: 25px; }
+.font-size-30 { font-size: 30px; }
 
 form {
     background: #fff;
@@ -139,7 +140,9 @@ ion-title { text-align: center; }
 @media only screen and (max-width: 768px) {}
 
 /* Portrait tablets and larger phones, 600px and up */
-@media only screen and (min-width: 600px) {}
+@media only screen and (min-width: 600px) {
+    ion-modal { --height: auto; }
+}
 
 /* Phones, 600px and down */
 @media only screen and (max-width: 600px) {}

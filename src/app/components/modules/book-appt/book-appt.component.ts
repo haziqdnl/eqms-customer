@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { IonContent } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
 import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
@@ -115,8 +116,10 @@ export class BookApptComponent {
   /**
    *  Method: Get available time of appt based on the selected date
    */
+  @ViewChild(IonContent) content: IonContent | undefined;
   public apptTimeList: Array<any> = [];
   public getApptTime(dData:any, dDisp:any) {
+    this.content?.scrollToBottom(500);
     this.setApptDate(dData, dDisp)
     this.apiApptService.apiGetApptTime({ objRequest: { OutletID: this.selectedOutletID, ApptDate: dData } }, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
@@ -177,6 +180,7 @@ export class BookApptComponent {
   public selectedTime_Data: any = "";
   public selectedTime_Disp: any = "";
   public setApptTime(tData: any, tDisp: any) {
+    this.content?.scrollToBottom(500);
     this.setApptServiceType("");
     this.selectedTime_Data = tData;
     this.selectedTime_Disp = tDisp;
@@ -188,13 +192,14 @@ export class BookApptComponent {
   public selectedServiceType_Data: any = "";
   public selectedServiceType_Disp: any = "";
   public setApptServiceType(sType: any) {
+    this.content?.scrollToBottom(500);
     this.selectedServiceType_Data = sType;
     if (sType != "") {
       if      (sType == '0') this.selectedServiceType_Disp = this.translate.instant('REDEMPTION');
       else if (sType == '1') this.selectedServiceType_Disp = this.translate.instant('PAWN');
       else                   this.selectedServiceType_Disp = this.translate.instant('PAYMENT');
     }
-    else this.selectedServiceType_Disp = ""
+    else this.selectedServiceType_Disp = "";
   }
 
   public enableSelectApptDate()     { return this.selectedOutletID ? true : false; }
@@ -219,8 +224,6 @@ export class BookApptComponent {
         }
       }
     };
-    this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe( rsp => {
-      rsp.d.RespCode == "200" ? this.g.redirectBack('') : this.g.apiRespError(rsp.d);
-    });
+    this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe(rsp => { rsp.d.RespCode == "200" ? this.g.redirectBack('') : this.g.apiRespError(rsp.d); });
   }
 }

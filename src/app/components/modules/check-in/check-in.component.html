@@ -1,4 +1,4 @@
-<ion-header class="ion-no-border">
+<ion-header *ngIf="loaded" class="ion-no-border">
     <ion-toolbar [class]="'topbar px-3 ' + (g.isMobileWeb ? 'pt-5' : '')">
         <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
         <ion-title>{{'CHECKIN' | translate}}</ion-title>
@@ -10,31 +10,26 @@
     </section>
 </ion-content>
 <!-- Modals -->
-<ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="0.5" [breakpoints]="[0.5, 1]">
+<ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
-        <ion-header>
-            <ion-toolbar [class]="(g.isMobileWeb ? 'pt-5' : '') + ' ' + (modalMode == 'errorMsg' ? 'errorMsg' : 'walkInServiceType')">
-                <ion-title>{{ modalTitle }}</ion-title>
-                <ion-buttons slot="end" (click)="openModal(false, '')" class="text-decoration-underline text-light">{{'CLOSE' | translate}}</ion-buttons>
+        <div class="pt-3 pb-5">
+            <ion-toolbar>
+                <ion-title class="text-secondary">{{modalTitle}}</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button (click)="selectedWalkInServiceType = ''; openModal(false, '')">
+                        <ion-icon slot="icon-only" name="close" color="danger" size="large"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
             </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding text-center">
-            <section *ngIf="modalMode == 'walkInServiceType'">
-                <p class="text-secondary font-size-12 mt-3">{{'SCRN_CHECKIN.SELECT_SERVICE' | translate}}:</p>
-                <div class="fw-bold mb-5">
-                    <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3">{{'REDEMPTION' | translate}}</ion-chip>
-                    <ion-chip (click)="selectedWalkInServiceType = '1'" [color]="selectedWalkInServiceType == '1' ? 'primary' : 'medium'" class="px-4 py-3">{{'PAWN'       | translate}}</ion-chip>
-                    <ion-chip (click)="selectedWalkInServiceType = '2'" [color]="selectedWalkInServiceType == '2' ? 'primary' : 'medium'" class="px-4 py-3">{{'PAYMENT'    | translate}}</ion-chip>
+            <section *ngIf="modalMode == 'walkInServiceType'" class="w-100 px-5">
+                <p class="text-center text-secondary font-size-12 mt-3">{{'SCRN_CHECKIN.SELECT_SERVICE' | translate}}:</p>
+                <div class="fw-bold mt-1 text-center">
+                    <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'REDEMPTION' | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '1'" [color]="selectedWalkInServiceType == '1' ? 'primary' : 'medium'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAWN'       | translate}}</ion-label></ion-chip>
+                    <ion-chip (click)="selectedWalkInServiceType = '2'" [color]="selectedWalkInServiceType == '2' ? 'primary' : 'medium'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'PAYMENT'    | translate}}</ion-label></ion-chip>
                 </div>
-                <div class="btn-group w-100">
-                    <button type="button" class="btn btn-secondary" (click)="openModal(false, '')">{{'CANCEL' | translate}}</button>
-                    <button type="button" class="btn btn-primary" (click)="openModal(false, ''); walkIn()" [disabled]="selectedWalkInServiceType == ''">{{'SUBMIT' | translate}}</button>
-                </div>
+                <button type="button" class="btn btn-primary mt-4 w-100" (click)="openModal(false, ''); walkIn()" [disabled]="selectedWalkInServiceType == ''">{{'SUBMIT' | translate}}</button>
             </section>
-            <section *ngIf="modalMode == 'errorMsg'">
-                <fa-icon icon="circle-exclamation" size="5x" class="text-danger"></fa-icon>
-                <h2 class="fw-bolder my-3">{{ errMsgTitle }}</h2>
-            </section>
-        </ion-content>
+        </div>
     </ng-template>
 </ion-modal>

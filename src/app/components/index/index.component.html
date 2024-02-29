@@ -13,15 +13,14 @@
         <ion-row>
             <ion-col class="ion-text-center">
                 <ion-label>
-                    <ion-note color="light" class="font-size-20 fw-bold">
-                        {{'SCRN_HOME.GREETING' | translate}},<br>
-                        {{ username | titlecase }}<fa-icon icon="face-smile-beam" class="face-smile-beam ms-1 text-warning"></fa-icon>
+                    <ion-note color="light" class="font-size-18 fw-bold">
+                        {{'SCRN_HOME.GREETING' | translate}},<br>{{username | titlecase}}
                     </ion-note>
                 </ion-label>
             </ion-col>
         </ion-row>
         <!-- Appointment/Booking/Walk-in Card -->
-        <ion-row class="ion-justify-content-center mt-3">
+        <ion-row class="ion-justify-content-center mt-2">
             <ion-col size="auto">
                 <ion-card class="ion-text-center shadow-sm rounded-4">
                     <ion-card-content>
@@ -33,13 +32,13 @@
                                 <fa-icon *ngIf="walkInData[0].WalkInStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Walk-In: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ walkInData[0].WalkInStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : '' }}
-                                    {{ walkInData[0].WalkInStat == 'UNKNOWN' ? ('SCRN_HOME.CALLING_MSG'     | translate) : '' }}
-                                    {{ walkInData[0].WalkInStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : '' }}
+                                    {{walkInData[0].WalkInStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : ''}}
+                                    {{walkInData[0].WalkInStat == 'UNKNOWN' ? ('SCRN_HOME.CALLING_MSG'     | translate) : ''}}
+                                    {{walkInData[0].WalkInStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : ''}}
                                 </p>
                                 <!-- Walk-In: Status Title / UniqCallID -->
-                                <h2>{{ this.uniqCallID | uppercase }}</h2>
-                                <h3>{{ walkInData[0].Service }}</h3>
+                                <h2>{{this.uniqCallID | uppercase}}</h2>
+                                <h3>{{walkInData[0].Service}}</h3>
                                 <!-- Walk-In: Notice -->
                                 <p *ngIf="walkInData[0].WalkInStat == 'QUEUING'" class="font-size-12 mt-3">{{'SCRN_HOME.WAIT_MSG' | translate}}</p>
                             </div>
@@ -52,25 +51,23 @@
                                 <fa-icon *ngIf="apptData[0].ApptStat == 'SERVING'" icon="bell-concierge" size="5x" class="text-dark"></fa-icon>
                                 <!-- Appt: Message -->
                                 <p class="font-size-12 my-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_MSG'    | translate) : '' }}
-                                    {{ apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : '' }}
-                                    {{ apptData[0].ApptStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : '' }}
+                                    {{apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_MSG'    | translate) : ''}}
+                                    {{apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.CHECKIN_SUCCESS' | translate) : ''}}
+                                    {{apptData[0].ApptStat == 'SERVING' ? ('SCRN_HOME.SERVING_MSG'     | translate) : ''}}
                                 </p>
                                 <!-- Appt: Status Title / UniqCallID -->
-                                <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{ this.uniqCallID | uppercase }}</h2>
+                                <h2 *ngIf="apptData[0].ApptStat == 'QUEUING' || apptData[0].ApptStat == 'SERVING'">{{this.uniqCallID | uppercase}}</h2>
                                 <h3>
-                                    {{ apptData[0].Service }}<br>
-                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp : '' }}<br *ngIf="apptData[0].ApptStat == 'NEW'">
-                                    {{ apptData[0].ApptStat == 'NEW' ? apptData[0].OutletDesc : '' }}
+                                    {{apptData[0].Service}}<br>
+                                    {{apptData[0].ApptStat == 'NEW' ? apptData[0].ApptTime_Disp + ', ' + apptData[0].ApptDate_Disp : ''}}<br *ngIf="apptData[0].ApptStat == 'NEW'">
+                                    {{apptData[0].ApptStat == 'NEW' ? apptData[0].OutletDesc : ''}}
                                 </h3>
                                 <!-- Appt: Notice -->
                                 <p *ngIf="apptData[0].ApptStat == 'NEW' || apptData[0].ApptStat == 'QUEUING'" class="font-size-12 mt-3">
-                                    {{ apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_NOTICE' | translate) : '' }}
-                                    {{ apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.WAIT_MSG'        | translate) : '' }}
+                                    {{apptData[0].ApptStat == 'NEW'     ? ('SCRN_HOME.APPT_NEW_NOTICE' | translate) : ''}}
+                                    {{apptData[0].ApptStat == 'QUEUING' ? ('SCRN_HOME.WAIT_MSG'        | translate) : ''}}
                                 </p>
-                                <div *ngIf="apptData[0].ApptStat == 'NEW'" class="btn-group mt-2">
-                                    <button type="button" class="btn btn-danger" (click)="openAlertCancelAppt();">{{'CANCEL' | translate}}</button>
-                                </div>
+                                <button *ngIf="apptData[0].ApptStat == 'NEW'" type="button" class="btn btn-danger mt-2" (click)="openAlertCancelAppt();">{{'CANCEL' | translate}}</button>
                             </div>
                         </section>
                         <div *ngIf="apptData[0] == null && walkInData[0] == null">
@@ -78,7 +75,7 @@
                             <h5 class="mt-3">{{'SCRN_HOME.NO_APPT' | translate}}</h5>
                         </div>
                         <div *ngIf="!checkInData.enableScanner">
-                            <p class="font-size-10 mt-2"><b>{{'NOTE' | translate}}:</b> {{ checkInData.msgDisabledScanner }}</p>
+                            <p class="font-size-10 mt-2"><b>{{'NOTE' | translate}}:</b> {{checkInData.msgDisabledScanner}}</p>
                         </div>
                     </ion-card-content>
                 </ion-card>
@@ -103,9 +100,7 @@
         <!-- About Us -->
         <section id="aboutus" class="section">
             <ion-label class="title">{{'SCRN_HOME.TITLE.ABOUT_US' | translate}}</ion-label>
-            <p class="mt-4 px-3 text-center">
-                {{'SCRN_HOME.ABOUT_US_CONTENT' | translate}}
-            </p>
+            <p class="mt-4 px-3 text-center">{{'SCRN_HOME.ABOUT_US_CONTENT' | translate}}</p>
         </section>
     </ion-grid>
     <!-- Modal: Check-In Success -->
@@ -117,10 +112,3 @@
         </div>
     </ng-template>
 </ion-content>
-<!--
-    <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="pe-3">
-        <ion-fab-button (click)="scrollToTop()" color="secondary" matTooltip="Scroll to top">
-            <fa-icon icon="plane-up" class="text-light"></fa-icon>
-        </ion-fab-button>
-    </ion-fab>
--->

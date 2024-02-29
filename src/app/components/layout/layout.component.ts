@@ -41,5 +41,5 @@ export class LayoutComponent {
     msgDisabledScanner: "",
   };
   public a: any = 0;
-  private intervalIsCheckInEnabled: Subscription = interval(1000).subscribe( async () => { this.scannerData = await this.checkInService.isCheckInEnabled(); });
+  private intervalIsCheckInEnabled: Subscription = interval(1000).subscribe(async () => { this.scannerData = await this.checkInService.isCheckInEnabled(); });
 }

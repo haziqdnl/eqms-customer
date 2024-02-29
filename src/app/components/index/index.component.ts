@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AlertController, IonContent } from '@ionic/angular';
@@ -129,9 +128,7 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
           if (rsp.d.RespData != "" && rsp.d.RespData != null) {
-            rsp.d.RespData.forEach( (e: any) => {
-              if (e.AppStat != "COMPLETE" && e.AppStat != "NOSHOW") this.apptData.push(e)
-            });
+            rsp.d.RespData.forEach( (e: any) => { if (e.AppStat != "COMPLETE" && e.AppStat != "NOSHOW") this.apptData.push(e) });
           }
         }
         else this.g.apiRespError(rsp.d);
@@ -151,9 +148,7 @@ export class IndexComponent {
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
           if (rsp.d.RespData != "" && rsp.d.RespData != null) {
-            rsp.d.RespData.forEach( (e: any) => {
-              if (e.WalkInStat != "COMPLETE" && e.WalkInStat != "NOSHOW") this.walkInData.push(e)
-            });
+            rsp.d.RespData.forEach( (e: any) => { if (e.WalkInStat != "COMPLETE" && e.WalkInStat != "NOSHOW") this.walkInData.push(e) });
           }
         }
         else this.g.apiRespError(rsp.d);
@@ -172,9 +167,7 @@ export class IndexComponent {
   };
   private intervalIsCheckInEnabled: any;
   private isCheckInEnabled() {
-    this.intervalIsCheckInEnabled = interval(1000).subscribe( async () => { 
-      this.checkInData = await this.checkInService.isCheckInEnabled(); 
-    });
+    this.intervalIsCheckInEnabled = interval(1000).subscribe(async () => { this.checkInData = await this.checkInService.isCheckInEnabled(); });
   }
 
   /**
@@ -183,8 +176,8 @@ export class IndexComponent {
   private alertLogout: any;
   public  async openAlertLogout() {
     this.alertLogout = await this.alertController.create({
-      header    : this.translate.instant('SCRN_HOME.ALERT.LOGOUT'),
-      buttons   : [
+      header  : this.translate.instant('SCRN_HOME.ALERT.LOGOUT'),
+      buttons : [
         { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
         { text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => { this.g.endSession(); } },
       ],
@@ -198,9 +191,9 @@ export class IndexComponent {
   private alertCheckInSuccess: any;
   public  async openAlertCheckInSuccess() {
     this.alertCheckInSuccess = await this.alertController.create({
-      message : `<h4 class="fw-bold text-success">${this.titleCase.transform(this.translate.instant('SCRN_HOME.CHECKIN_SUCCESS'))}</h4>
+      message: `<h4 class="m-0 fw-bold text-success">${this.titleCase.transform(this.translate.instant('SCRN_HOME.CHECKIN_SUCCESS'))}</h4>
                 <p class="m-0 mt-2">${this.translate.instant('SCRN_HOME.WAIT_MSG')}</p>`,
-      buttons : [{ text: 'OK', role: 'confirm' }],
+      buttons: [{ text: 'OK', role: 'confirm' }],
     });
     await this.alertCheckInSuccess.present();
   }
@@ -211,12 +204,11 @@ export class IndexComponent {
   private alertCancelAppt: any;
   public  async openAlertCancelAppt() {
     this.alertCancelAppt = await this.alertController.create({
-      header    : this.translate.instant('SCRN_HOME.ALERT.APPT_CANCEL'),
-      buttons   : [
+      header  : this.translate.instant('SCRN_HOME.ALERT.APPT_CANCEL'),
+      buttons : [
         { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
         {
-          text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',
-          handler: () => {
+          text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => {
             let request = {
               objRequest: { 
                 Mode    : "DELETE",
@@ -227,9 +219,7 @@ export class IndexComponent {
                 }
               }
             };
-            this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe( rsp => {
-              rsp.d.RespCode == "200" ? this.getApptInfo() : this.g.apiRespError(rsp.d);
-            });
+            this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe(rsp => { rsp.d.RespCode == "200" ? this.getApptInfo() : this.g.apiRespError(rsp.d); });
           },
         },
       ],

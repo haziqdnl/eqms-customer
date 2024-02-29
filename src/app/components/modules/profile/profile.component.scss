@@ -1,4 +1,4 @@
-ion-toolbar {
+ion-toolbar.topbar {
     --background: var(--primary-color);
     ion-title { --color: #fff; --border: none; }
 }
@@ -48,11 +48,6 @@ ion-item {
 }
 
 ion-modal {
-    ion-toolbar  {
-        ion-title, ion-button { --color: #fff !important; }
-        &.modalChangePwd    {  --background: #ff9720 !important; }
-        &.modalEdit         {  --background: var(--primary-color) !important; }
-    }
 
     form#formChangePwd { width: 100% !important; }
 
