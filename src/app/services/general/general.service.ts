@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoadingController, NavController, Platform } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
@@ -85,6 +85,21 @@ export class GeneralService {
   public async showLoading(duration: number) {
     const loading = await this.loadingCtrl.create({ message: 'Loading', duration: duration });
     loading.present();
+  }
+
+  /**
+   *  Method: Form validation
+   */
+  public getFormErrMsg(form: any) {
+    var msg = "";
+    if (form.touched && form.invalid) {
+      if (form.hasError('required'))          msg = '_ERROR.REQUIRED';
+      if (form.hasError('pattern'))           msg = '_ERROR.INVALID';
+      if (form.hasError('minlength'))         msg = '_ERROR.MINLENGTH';
+      if (form.hasError('maxlength'))         msg = '_ERROR.MAXLENGTH';
+      if (form.hasError('passwordMismatch'))  msg = '_ERROR.PASSWORD.CRITERIA.NOTMATCH';
+    }
+    return msg ? this.translate.instant(msg).toLowerCase() : "";
   }
 
   /**

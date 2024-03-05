@@ -21,8 +21,8 @@
 }
 
 body {
+    ion-header, ion-content { font-family: var(--secondary-font) !important; }
     ion-content {
-        font-family: var(--secondary-font);
         height: 100vh !important;
         width: 100vw;
         background: #fff;

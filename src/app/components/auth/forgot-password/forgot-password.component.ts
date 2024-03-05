@@ -44,23 +44,9 @@ export class ForgotPasswordComponent {
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly phoneMask: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
   public formMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.maxLength(15), Validators.pattern('[+][6][0][1][0-9]\\d*$')]] });
-  public get errFormMobileNo() {
-    var msg = "";
-    if (this.formMobileNo.controls['mobileNo'].touched && this.formMobileNo.controls['mobileNo'].invalid) {
-      if (this.formMobileNo.controls['mobileNo'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
-      if (this.formMobileNo.controls['mobileNo'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
-    }
-    return msg.toLowerCase();
-  }
+  public get errFormMobileNo() { return this.g.getFormErrMsg(this.formMobileNo.controls['mobileNo']); }
   public formEmail = this.fb.group({ email: ['', [Validators.required, Validators.maxLength(80), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]] });
-  public get errFormEmail() {
-    var msg = "";
-    if (this.formEmail.controls['email'].touched && this.formEmail.controls['email'].invalid) {
-      if (this.formEmail.controls['email'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
-      if (this.formEmail.controls['email'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
-    }
-    return msg.toLowerCase();
-  }
+  public get errFormEmail() { return this.g.getFormErrMsg(this.formEmail.controls['email']); }
   private otp: string = "";
   public  submitForgotPassword(mode: number) {
     this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
@@ -174,22 +160,8 @@ export class ForgotPasswordComponent {
     password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
     confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
   }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
-  public get errFormResetPwd_password() {
-    var msg = "";
-    if (this.formResetPwd.controls['password'].touched && this.formResetPwd.controls['password'].invalid) {
-      if (this.formResetPwd.controls['password'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
-      if (this.formResetPwd.controls['password'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
-    }
-    return msg.toLowerCase();
-  }
-  public get errFormResetPwd_confirmPassword() {
-    var msg = "";
-    if (this.formResetPwd.controls['confirmPassword'].touched && this.formResetPwd.controls['confirmPassword'].invalid) {
-      if (this.formResetPwd.controls['confirmPassword'].hasError('required'))          msg = this.translate.instant('_ERROR.REQUIRED');
-      if (this.formResetPwd.controls['confirmPassword'].hasError('passwordMismatch'))  msg = this.translate.instant('_ERROR.PASSWORD.CRITERIA.NOTMATCH');
-    }
-    return msg.toLowerCase();
-  }
+  public get errFormResetPwd_password()         { return this.g.getFormErrMsg(this.formResetPwd.controls['password']);        }
+  public get errFormResetPwd_confirmPassword()  { return this.g.getFormErrMsg(this.formResetPwd.controls['confirmPassword']); }
   public submitFormResetPwd() {
     this.g.toastSuccess(this.translate.instant('SCRN_FORGOT_PASSWORD.RESET_SUCCESS'));
     this.g.redirectTo('login');

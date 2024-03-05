@@ -43,21 +43,8 @@ export class LoginComponent {
     id      : ['', [Validators.required, Validators.pattern('[+][6][0][1][0-9]\\d*$')]],
     password: ['', [Validators.required]],
   });
-  public get errFormIdPassword_id() {
-    var msg = "";
-    if (this.formIdPassword.controls['id'].touched && this.formIdPassword.controls['id'].invalid) {
-      if (this.formIdPassword.controls['id'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
-      if (this.formIdPassword.controls['id'].hasError('pattern'))   msg = this.translate.instant('_ERROR.INVALID');
-    }
-    return msg.toLowerCase();
-  }
-  public get errFormIdPassword_password() {
-    var msg = "";
-    if (this.formIdPassword.controls['password'].touched && this.formIdPassword.controls['password'].invalid) {
-      if (this.formIdPassword.controls['password'].hasError('required'))  msg = this.translate.instant('_ERROR.REQUIRED');
-    }
-    return msg.toLowerCase();
-  }
+  public get errFormIdPassword_id()       { return this.g.getFormErrMsg(this.formIdPassword.controls['id']);       }
+  public get errFormIdPassword_password() { return this.g.getFormErrMsg(this.formIdPassword.controls['password']); }
 
   /**
    *  Method: Submit login form

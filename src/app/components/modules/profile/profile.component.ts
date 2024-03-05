@@ -42,9 +42,7 @@ export class ProfileComponent {
       if (mode == "2")  this.modalTitle = this.translate.instant('SCRN_PROFILE.MODAL.EDIT_PICTURE');
       if (mode == "3")  this.modalTitle = this.translate.instant('CHANGE_PASSWORD');
     } 
-    else {
-      if (mode == "3")  this.formChangePwd.reset();
-    }
+    else this.formChangePwd.reset();
   }
 
   /**
@@ -103,79 +101,25 @@ export class ProfileComponent {
    *  Method: Edit info form
    */
   public formEditInfo: FormGroup = this.fb.group({
-    fullname        : ['', [Validators.required,  Validators.minLength(3),  Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
+    fullname        : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
     gender          : ['', [Validators.required]],
-    address1        : ['', [Validators.required,  Validators.minLength(3),  Validators.maxLength(80), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
-    address2        : ['', [                      Validators.minLength(3),  Validators.maxLength(80), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
-    postcode        : ['', [Validators.required,  Validators.minLength(5),  Validators.maxLength(5),  Validators.pattern('^[0-9]{5}$')]],
+    address1        : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
+    address2        : ['', [                     Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
+    postcode        : ['', [Validators.required, Validators.minLength(5), Validators.maxLength(5),  Validators.pattern('^[0-9]{5}$')]],
     state           : ['', [Validators.required]],
   });
-  public get errFormEditInfo_fullname() {
-    var msg = "";
-    if (this.formEditInfo.controls['fullname'].touched && this.formEditInfo.controls['fullname'].invalid) {
-      if (this.formEditInfo.controls['fullname'].hasError('required'))   msg = '_ERROR.REQUIRED';
-      if (this.formEditInfo.controls['fullname'].hasError('pattern'))    msg = '_ERROR.INVALID';
-      if (this.formEditInfo.controls['fullname'].hasError('minlength'))  msg = '_ERROR.MINLENGTH';
-      if (this.formEditInfo.controls['fullname'].hasError('maxlength'))  msg = '_ERROR.MAXLENGTH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormEditInfo_gender() {
-    var msg = "";
-    if (this.formEditInfo.controls['gender'].touched && this.formEditInfo.controls['gender'].invalid)
-      if (this.formEditInfo.controls['gender'].hasError('required')) msg = '_ERROR.REQUIRED';
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormEditInfo_address1() {
-    var msg = "";
-    if (this.formEditInfo.controls['address1'].touched && this.formEditInfo.controls['address1'].invalid) {
-      if (this.formEditInfo.controls['address1'].hasError('required'))   msg = '_ERROR.REQUIRED';
-      if (this.formEditInfo.controls['address1'].hasError('pattern'))    msg = '_ERROR.INVALID';
-      if (this.formEditInfo.controls['address1'].hasError('minlength'))  msg = '_ERROR.MINLENGTH';
-      if (this.formEditInfo.controls['address1'].hasError('maxlength'))  msg = '_ERROR.MAXLENGTH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormEditInfo_address2() {
-    var msg = "";
-    if (this.formEditInfo.controls['address2'].touched && this.formEditInfo.controls['address2'].invalid) {
-      if (this.formEditInfo.controls['address2'].hasError('pattern'))    msg = '_ERROR.INVALID';
-      if (this.formEditInfo.controls['address2'].hasError('minlength'))  msg = '_ERROR.MINLENGTH';
-      if (this.formEditInfo.controls['address2'].hasError('maxlength'))  msg = '_ERROR.MAXLENGTH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormEditInfo_postcode() {
-    var msg = "";
-    if (this.formEditInfo.controls['postcode'].touched && this.formEditInfo.controls['postcode'].invalid) {
-      if (this.formEditInfo.controls['postcode'].hasError('required'))   msg = '_ERROR.REQUIRED';
-      if (this.formEditInfo.controls['postcode'].hasError('pattern'))    msg = '_ERROR.INVALID';
-      if (this.formEditInfo.controls['postcode'].hasError('minlength'))  msg = '_ERROR.MINLENGTH';
-      if (this.formEditInfo.controls['postcode'].hasError('maxlength'))  msg = '_ERROR.MAXLENGTH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormEditInfo_state() {
-    var msg = "";
-    if (this.formEditInfo.controls['state'].touched && this.formEditInfo.controls['state'].invalid)
-      if (this.formEditInfo.controls['state'].hasError('required')) msg = '_ERROR.REQUIRED';
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
+  public get errFormEditInfo_fullname() { return this.g.getFormErrMsg(this.formEditInfo.controls['fullname']);  }
+  public get errFormEditInfo_gender()   { return this.g.getFormErrMsg(this.formEditInfo.controls['gender']);    }
+  public get errFormEditInfo_address1() { return this.g.getFormErrMsg(this.formEditInfo.controls['address1']);  }
+  public get errFormEditInfo_address2() { return this.g.getFormErrMsg(this.formEditInfo.controls['address2']);  }
+  public get errFormEditInfo_postcode() { return this.g.getFormErrMsg(this.formEditInfo.controls['postcode']);  }
+  public get errFormEditInfo_state()    { return this.g.getFormErrMsg(this.formEditInfo.controls['state']);     }
 
   /**
    *  Method: Form unique call ID
    */
   public formEditUCID = this.fb.group({ uniqCallID: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d\\(\\)\\*\\s]{5,30}$')]] });
-  public get errFormUniqCallId() {
-    var msg = "";
-    if (this.formEditUCID.controls['uniqCallID'].touched && this.formEditUCID.controls['uniqCallID'].invalid) {
-      if (this.formEditUCID.controls['uniqCallID'].hasError('required'))  msg = '_ERROR.REQUIRED';
-      if (this.formEditUCID.controls['uniqCallID'].hasError('pattern'))   msg = '_ERROR.INVALID';
-      if (this.formEditUCID.controls['uniqCallID'].hasError('minlength')) msg = '_ERROR.MINLENGTH';
-      if (this.formEditUCID.controls['uniqCallID'].hasError('maxlength')) msg = '_ERROR.MAXLENGTH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
+  public get errFormUniqCallId() { return this.g.getFormErrMsg(this.formEditUCID.controls['uniqCallID']); }
 
   /**
    *  Method: Change password form
@@ -184,22 +128,8 @@ export class ProfileComponent {
     password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
     confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
   }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
-  public get errFormChangePwd_password() {
-    var msg = "";
-    if (this.formChangePwd.controls['password'].touched && this.formChangePwd.controls['password'].invalid) {
-      if (this.formChangePwd.controls['password'].hasError('required'))  msg = '_ERROR.REQUIRED';
-      if (this.formChangePwd.controls['password'].hasError('pattern'))   msg = '_ERROR.INVALID';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
-  public get errFormChangePwd_confirmPassword() {
-    var msg = "";
-    if (this.formChangePwd.controls['confirmPassword'].touched && this.formChangePwd.controls['confirmPassword'].invalid) {
-      if (this.formChangePwd.controls['confirmPassword'].hasError('required'))          msg = '_ERROR.REQUIRED';
-      if (this.formChangePwd.controls['confirmPassword'].hasError('passwordMismatch'))  msg = '_ERROR.PASSWORD.CRITERIA.NOTMATCH';
-    }
-    return msg ? this.translate.instant(msg).toLowerCase() : "";
-  }
+  public get errFormChangePwd_password()        { return this.g.getFormErrMsg(this.formChangePwd.controls['password']); }
+  public get errFormChangePwd_confirmPassword() { return this.g.getFormErrMsg(this.formChangePwd.controls['confirmPassword']); }
 
   /**
    *  Method: Submit edited info and change password
