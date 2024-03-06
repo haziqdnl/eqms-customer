@@ -114,14 +114,14 @@
         "_comment"              : "** Kata kunci dalam skrin 401 **",
         ""                      : "================================",
         "TITLE"                 : "Tiada Kebenaran",
-        "TITLE_DESCR"           : "Sesi anda mungkin telah pun tamat. Sila log masuk semula untuk meneruskan."
+        "TITLE_DESCR"           : "Sesi anda mungkin telah pun tamat. Sila log masuk semula untuk menyambung."
     },
 
     "SCRN_404"                  : {
         "_comment"              : "** Kata kunci dalam skrin 404 **",
         ""                      : "================================",
         "TITLE"                 : "Tidak Ditemui",
-        "TITLE_DESCR"           : "Maaf! Kami tidak dapat mencari halaman yang ada mahu akses."
+        "TITLE_DESCR"           : "Maaf! Kami tidak dapat menjumpai halaman yang anda mahukan."
     },
 
     "SCRN_REGISTER"             : {

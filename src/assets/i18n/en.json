@@ -121,7 +121,7 @@
         "_comment"              : "** Keywords in 404 screen **",
         ""                      : "============================",
         "TITLE"                 : "Not Found",
-        "TITLE_DESCR"           : "Sorry! We cannot find the requested page."
+        "TITLE_DESCR"           : "Sorry! We could not find the requested page."
     },
 
     "SCRN_REGISTER"             : {
