@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import { lastValueFrom } from 'rxjs';
 import { ApiProfileService } from 'src/app/api/api-profile.service';
@@ -100,7 +100,7 @@ export class ProfileComponent {
   /**
    *  Method: Edit info form
    */
-  public formEditInfo: FormGroup = this.fb.group({
+  public formEditInfo = this.fb.group({
     fullname        : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
     gender          : ['', [Validators.required]],
     address1        : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[#.0-9a-zA-Z\\s,-/]+$')]],
@@ -119,12 +119,12 @@ export class ProfileComponent {
    *  Method: Form unique call ID
    */
   public formEditUCID = this.fb.group({ uniqCallID: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern('^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z\\d\\(\\)\\*\\s]{5,30}$')]] });
-  public get errFormUniqCallId() { return this.g.getFormErrMsg(this.formEditUCID.controls['uniqCallID']); }
+  public get errFormEditUCID() { return this.g.getFormErrMsg(this.formEditUCID.controls['uniqCallID']); }
 
   /**
    *  Method: Change password form
    */
-  public formChangePwd: FormGroup = this.fb.group({
+  public formChangePwd = this.fb.group({
     password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
     confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,40}$')]],
   }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
@@ -156,10 +156,10 @@ export class ProfileComponent {
             IDNum     : this.profileData.IDNum,
             Email     : this.profileData.Email,
             MobileNo  : this.profileData.MobileNo,
-            Name      : this.formEditInfo.value.fullname.toUpperCase(),
+            Name      : this.formEditInfo.value.fullname?.toUpperCase(),
             Sex       : this.formEditInfo.value.gender,
-            Address1  : this.formEditInfo.value.address1.toUpperCase(),
-            Address2  : this.formEditInfo.value.address2.toUpperCase(),
+            Address1  : this.formEditInfo.value.address1?.toUpperCase(),
+            Address2  : this.formEditInfo.value.address2?.toUpperCase(),
             PostCode  : this.formEditInfo.value.postcode,
             State     : this.formEditInfo.value.state,
             UniqCallID: ucid.toUpperCase(),

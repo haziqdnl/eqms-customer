@@ -13,19 +13,19 @@
                         <form [formGroup]="formBasicInfo" class="w-100 text-start" (ngSubmit)="checkExist('NRIC', this.formBasicInfo.value.identificationNo?.replaceAll('-', ''))">
                             <div><!-- Fullname -->
                                 <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="floating" minlength="3" maxlength="80" 
-                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_fullname ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                                    class="px-2 border-bottom border-{{errFormBasicInfo_fullname ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                                 <ion-text class="input-err">{{errFormBasicInfo_fullname}}</ion-text>
                             </div>
                             <div><!-- Gender -->
                                 <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="floating" interface="action-sheet"
-                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_gender ? 'danger' : 'secondary-subtle')" (ionChange)="changeGender(gender.value)">
+                                    class="px-2 border-bottom border-{{errFormBasicInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
                                     <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
                                 </ion-select>
                                 <ion-text class="input-err">{{errFormBasicInfo_gender}}</ion-text>
                             </div>
                             <div><!-- NRIC no. -->
                                 <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" 
-                                    [class]="'px-2 border-bottom border-' + (errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle')" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
+                                    class="px-2 border-bottom border-{{errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
                                 <ion-text class="input-err">{{errFormBasicInfo_identificationNo}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
@@ -41,7 +41,7 @@
                         <form [formGroup]="formEmail" class="w-100 text-start" (ngSubmit)="checkExist('EMAIL', this.formEmail.value.email)">
                             <div>
                                 <ion-input type="email" #email formControlName="email" [label]="'EMAIL' | translate" [placeholder]="'PLACEHOLDER.EMAIL' | translate" labelPlacement="floating" maxlength="80" 
-                                    [class]="'px-2 border-bottom border-' + (errFormEmail ? 'danger' : 'secondary-subtle')" />
+                                    class="px-2 border-bottom border-{{errFormEmail ? 'danger' : 'secondary-subtle'}}" />
                                 <ion-text class="input-err">{{errFormEmail}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
@@ -57,7 +57,7 @@
                         <form [formGroup]="formMobileNo" class="w-100 text-start" (ngSubmit)="checkExist('MOBILENO', this.formMobileNo.value.mobileNo)">
                             <div>
                                 <ion-input type="text" #mobileNo formControlName="mobileNo" [label]="'MOBILENO' | translate" placeholder="+60" labelPlacement="floating" maxlength="15"
-                                    [class]="'px-2 border-bottom border-' + (errFormMobileNo ? 'danger' : 'secondary-subtle')" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
+                                    class="px-2 border-bottom border-{{errFormMobileNo ? 'danger' : 'secondary-subtle'}}" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
                                 <ion-text class="input-err">{{errFormMobileNo}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
@@ -76,14 +76,14 @@
                                 <mat-radio-button value="0" class="ms-lg-4">{{'SCRN_REGISTER.UCID.TITLE_DEFAULT' | translate}}</mat-radio-button>
                             </mat-radio-group>
                         </div>
-                        <div [class]="(isCustom ? 'pt-3 text-start' : 'py-4 text-center')">
+                        <div class="{{isCustom ? 'pt-3 text-start' : 'py-4 text-center'}}">
                             <ion-note *ngIf="isCustom" class="font-size-12">{{'SCRN_REGISTER.UCID.DESCR_CUSTOM' | translate}}</ion-note>
                             <ion-note *ngIf="!isCustom" class="font-size-16">{{'SCRN_REGISTER.UCID.DESCR_DEFAULT' | translate}}</ion-note>
                         </div>
                         <form *ngIf="isCustom" [formGroup]="formUniqCallId" class="w-100 text-start">
                             <div>
                                 <ion-input type="text" #uniqCallID formControlName="uniqCallID" [label]="'UCID' | translate" [placeholder]="'PLACEHOLDER.UCID' | translate" labelPlacement="floating" minlength="5" maxlength="30"
-                                    [class]="'px-2 border-bottom border-' + (errFormUniqCallId ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                                    class="px-2 border-bottom border-{{errFormUniqCallId ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                                 <ion-text class="input-err">{{errFormUniqCallId}}</ion-text>
                             </div>
                             <div class="my-2">
@@ -103,12 +103,12 @@
                         <form [formGroup]="formPassword" class="w-100 text-start" (ngSubmit)="submitFormPassword()">
                             <div>
                                 <ion-input type="password" #password formControlName="password" [label]="'PASSWORD' | translate" [placeholder]="'PLACEHOLDER.PASSWORD' | translate" labelPlacement="floating" minlength="8" maxlength="40" 
-                                    [class]="'px-2 border-bottom border-' + (errFormPassword_password ? 'danger' : 'secondary-subtle')" />
+                                    class="px-2 border-bottom border-{{errFormPassword_password ? 'danger' : 'secondary-subtle'}}" />
                                 <ion-text class="input-err">{{errFormPassword_password}}</ion-text>
                             </div>
                             <div>
                                 <ion-input type="password" #confirmPassword formControlName="confirmPassword" [label]="'PASSWORD_RETYPE' | translate" [placeholder]="'PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="floating" minlength="8" maxlength="40" 
-                                    [class]="'px-2 border-bottom border-' + (errFormPassword_confirmPassword ? 'danger' : 'secondary-subtle')" />
+                                    class="px-2 border-bottom border-{{errFormPassword_confirmPassword ? 'danger' : 'secondary-subtle'}}" />
                                 <ion-text class="input-err">{{errFormPassword_confirmPassword}}</ion-text>
                             </div>
                             <div class="mt-4">

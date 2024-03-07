@@ -3,7 +3,7 @@
         <div class="wrap-center">
             <div class="content bg-light shadow-lg rounded-3 p-5 text-center">
                 <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="150" />
-                <h1 [class]="'text-center fw-bold text-uppercase title ' + (urlParamStatus == 'success' ? 'text-success' : 'text-danger')">
+                <h1 class="title fw-bold text-uppercase text-center text-{{urlParamStatus == 'success' ? 'success' : 'danger'}}">
                     {{urlParamStatus == 'success'       ? ('SCRN_REGISTER_STATUS.REG_STATUS_SUCCESS' | translate) : ''}}
                     {{urlParamStatus == 'exist'         ? ('SCRN_REGISTER_STATUS.REG_STATUS_EXISTS'  | translate) : ''}}
                     {{urlParamStatus == 'unverified'    ? ('SCRN_REGISTER_STATUS.REG_STATUS_EXISTS'  | translate) : ''}}

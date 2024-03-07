@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-toolbar [class]="'topbar ' + (g.isMobileWeb ? 'pt-5' : '')">
+    <ion-toolbar class="topbar {{g.isMobileWeb ? 'pt-5' : ''}}">
         <ion-title>{{'SCRN_PROFILE.TITLE' | translate}}</ion-title>
     </ion-toolbar>
     <div id="profileTop" class="text-center text-light pt-2 pb-4">
@@ -56,34 +56,34 @@
                 <form *ngIf="modalMode == '0'" id="formEditInfo" class="px-5 py-3 w-100" [formGroup]="formEditInfo" (ngSubmit)="submitForm()">
                     <div><!-- Fullname -->
                         <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="stacked" minlength="3" maxlength="80" 
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_fullname ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                            class="px-2 border-bottom border-{{errFormEditInfo_fullname ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                         <ion-text class="input-err">{{errFormEditInfo_fullname}}</ion-text>
                     </div>
                     <div><!-- Gender -->
                         <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_gender ? 'danger' : 'secondary-subtle')" (ionChange)="changeGender(gender.value)">
+                            class="px-2 border-bottom border-{{errFormEditInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
                             <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
                         </ion-select>
                         <ion-text class="input-err">{{errFormEditInfo_gender}}</ion-text>
                     </div>
                     <div><!-- Address: Line 1 -->
                         <ion-input type="text" #address1 formControlName="address1" [label]="'ADDRESS' | translate" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" labelPlacement="stacked" minlength="3" maxlength="80"
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_address1 ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                            class="px-2 border-bottom border-{{errFormEditInfo_address1 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                         <ion-text class="input-err">{{errFormEditInfo_address1}}</ion-text>
                     </div>
                     <div><!-- Address: Line 2 -->
                         <ion-input type="text" #address2 formControlName="address2" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" minlength="3" maxlength="80" 
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_address2 ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
+                            class="px-2 border-bottom border-{{errFormEditInfo_address2 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                         <ion-text class="input-err">{{errFormEditInfo_address2}}</ion-text>
                     </div>
                     <div><!-- Postcode -->
                         <ion-input type="text" #postcode formControlName="postcode" [label]="'POSTCODE' | translate" placeholder="ex. 12345" labelPlacement="stacked" minlength="5" maxlength="5"
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_postcode ? 'danger' : 'secondary-subtle')" (keypress)="g.numberOnly($event)" />
+                            class="px-2 border-bottom border-{{errFormEditInfo_postcode ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" />
                         <ion-text class="input-err">{{errFormEditInfo_postcode}}</ion-text>
                     </div>
                     <div><!-- State -->
                         <ion-select #state formControlName="state" [label]="'STATE' | translate" [placeholder]="'PLACEHOLDER.STATE_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
-                            [class]="'px-2 border-bottom border-' + (errFormEditInfo_state ? 'danger' : 'secondary-subtle')" (ionChange)="changeState(state.value)">
+                            class="px-2 border-bottom border-{{errFormEditInfo_state ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeState(state.value)">
                             <ion-select-option *ngFor="let item of stateList" [value]="item.StateID">{{item.StateSDesc}}</ion-select-option>
                         </ion-select>
                         <ion-text class="input-err">{{errFormEditInfo_state}}</ion-text>
@@ -94,8 +94,8 @@
                 <form *ngIf="modalMode == '1'" id="formEditUCID" class="px-5 py-3 w-100" [formGroup]="formEditUCID" (ngSubmit)="submitForm()">
                     <div>
                         <ion-input type="text" #uniqCallID formControlName="uniqCallID" [label]="'UCID' | translate" [placeholder]="'PLACEHOLDER.UCID' | translate" labelPlacement="stacked" minlength="5" maxlength="30"
-                            [class]="'px-2 border-bottom border-' + (errFormUniqCallId ? 'danger' : 'secondary-subtle')" oninput="this.value = this.value.toUpperCase()" />
-                        <ion-text class="input-err">{{errFormUniqCallId}}</ion-text>
+                            class="px-2 border-bottom border-{{errFormEditUCID ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
+                        <ion-text class="input-err">{{errFormEditUCID}}</ion-text>
                     </div>
                     <div class="my-2">
                         <mat-password-strength #uniqCallIDStrength [password]="formEditUCID.value.uniqCallID ? formEditUCID.value.uniqCallID : ''" [enableSpecialCharRule]="false" [enableLowerCaseLetterRule]="false" [enableUpperCaseLetterRule]="false" [min]="5" [max]="30"></mat-password-strength>
@@ -118,12 +118,12 @@
                 <form *ngIf="modalMode == '3'" id="formChangePwd" class="px-5 py-3 w-100" [formGroup]="formChangePwd" (ngSubmit)="submitForm()">
                     <div>
                         <ion-input type="password" #password formControlName="password" [label]="'PASSWORD' | translate" [placeholder]="'PLACEHOLDER.PASSWORD' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
-                            [class]="'px-2 border-bottom border-' + (errFormChangePwd_password ? 'danger' : 'secondary-subtle')" />
+                            class="px-2 border-bottom border-{{errFormChangePwd_password ? 'danger' : 'secondary-subtle'}}" />
                         <ion-text class="input-err">{{errFormChangePwd_password}}</ion-text>
                     </div>
                     <div>
                         <ion-input type="password" #confirmPassword formControlName="confirmPassword" [label]="'PASSWORD_RETYPE' | translate" [placeholder]="'PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
-                            [class]="'px-2 border-bottom border-' + (errFormChangePwd_confirmPassword ? 'danger' : 'secondary-subtle')" />
+                            class="px-2 border-bottom border-{{errFormChangePwd_confirmPassword ? 'danger' : 'secondary-subtle'}}" />
                         <ion-text class="input-err">{{errFormChangePwd_confirmPassword}}</ion-text>
                     </div>
                     <div class="my-2">

@@ -12,12 +12,12 @@
                 <form [formGroup]="formIdPassword" class="w-100" (ngSubmit)="submit()">
                     <div>
                         <ion-input type="text" formControlName="id" label="ID" placeholder="+60" labelPlacement="floating" maxlength="14"
-                            [class]="'px-2 border-bottom border-' + (errFormIdPassword_id ? 'danger' : 'secondary-subtle')" [maskito]="idMask" [maskitoElement]="maskPredicate" />
+                            class="px-2 border-bottom border-{{errFormIdPassword_id ? 'danger' : 'secondary-subtle'}}" [maskito]="idMask" [maskitoElement]="maskPredicate" />
                         <ion-text class="input-err">{{errFormIdPassword_id}}</ion-text>
                     </div>
                     <div>
                         <ion-input type="password" formControlName="password" [label]="'PASSWORD' | translate" labelPlacement="floating" 
-                            [class]="'px-2 border-bottom border-' + (errFormIdPassword_password ? 'danger' : 'secondary-subtle')" />
+                            class="px-2 border-bottom border-{{errFormIdPassword_password ? 'danger' : 'secondary-subtle'}}" />
                         <ion-text class="input-err">{{errFormIdPassword_password}}</ion-text>
                     </div>
                     <button class="btn btn-success w-100 mt-3" type="submit">{{'SCRN_LOGIN.BTN_LOGIN' | translate}}</button>
