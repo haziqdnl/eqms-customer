@@ -41,7 +41,7 @@ export class RegisterComponent {
   public changeGender(e: any) { this.formBasicInfo.controls['gender']?.setValue(e, { onlySelf: true }); }
   //  NRIC masking
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
-  readonly maskIdentificationNo: MaskitoOptions = { mask: [/\d/, /\d/, /[01]/, /\d/, /[01]/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]};
+  readonly maskIdentificationNo: MaskitoOptions = { mask: [/\d/, /\d/, /[01]/, /\d/, /[0123]/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]};
   //  Form
   public formBasicInfo = this.fb.group({ 
     fullname        : ['', [Validators.required, Validators.minLength(3),  Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
