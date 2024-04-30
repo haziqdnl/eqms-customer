@@ -1,5 +1,5 @@
 <ion-content>
-    <ion-toolbar class="topbar {{g.isMobileWeb ? 'pt-5' : ''}}">
+    <ion-toolbar class="topbar {{g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''}}">
         <ion-title>{{'SCRN_PROFILE.TITLE' | translate}}</ion-title>
     </ion-toolbar>
     <div id="profileTop" class="text-center text-light pt-2 pb-4">

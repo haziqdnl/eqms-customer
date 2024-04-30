@@ -73,7 +73,7 @@ export class GeneralService {
     this.snackBar.open(msg, 'OK', {
       duration          : duration,
       horizontalPosition: pos,
-      verticalPosition  : this.isMobileWeb ? 'bottom' : 'top',
+      verticalPosition  : this.isMobile ? 'bottom' : this.isMobileWeb ? 'bottom' : 'top',
       panelClass        : panelClass,
     });
   }

@@ -1,5 +1,5 @@
 <ion-header *ngIf="loaded" class="ion-no-border">
-    <ion-toolbar class="topbar px-3 {{g.isMobileWeb ? 'pt-5' : ''}}">
+    <ion-toolbar class="topbar px-3 {{g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''}}">
         <ion-buttons class="text-light fw-bolder" (click)="g.redirectBack('');"><fa-icon icon="arrow-left" class="me-2"></fa-icon></ion-buttons>
         <ion-title>{{'CHECKIN' | translate}}</ion-title>
     </ion-toolbar>
