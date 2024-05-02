@@ -4,11 +4,9 @@
         <ion-title>{{'CHECKIN' | translate}}</ion-title>
     </ion-toolbar>
 </ion-header>
-<ion-content *ngIf="loaded">
-    <section>
-        <div #square class="square"></div>
-    </section>
-</ion-content>
+<section>
+    <div #square class="square"></div>
+</section>
 <!-- Modals -->
 <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]">
     <ng-template>
