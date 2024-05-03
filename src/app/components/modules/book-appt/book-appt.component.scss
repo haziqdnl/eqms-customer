@@ -1,11 +1,10 @@
-#panelDate {
-    ion-chip {
-        font-size: 12px;
-        width: 120px !important;
+#panelDate, #panelTime {
+    ion-chip { 
+        font-size: 15px;
+        width: 125px !important;
+        height: 75px !important;
     }
 }
-
-#panelTime { ion-chip { font-size: 12px; } }
 
 ion-chip:hover { transform: scale(0.9); transition: 0.3s; }
 
@@ -16,14 +15,7 @@ ion-chip:hover { transform: scale(0.9); transition: 0.3s; }
 @media only screen and (min-width: 992px) {}
 
 /* Landscape tablets, 992px and down */
-@media only screen and (max-width: 992px) {
-    #panelDate {
-        ion-chip {
-            font-size: 11px;
-            width: 110px !important;
-        }
-    }
-}
+@media only screen and (max-width: 992px) {}
 
 /* Landscape tablets, 768px and up */
 @media only screen and (min-width: 768px) {}

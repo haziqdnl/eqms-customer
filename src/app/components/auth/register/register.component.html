@@ -24,7 +24,7 @@
                                 <ion-text class="input-err">{{errFormBasicInfo_gender}}</ion-text>
                             </div>
                             <div><!-- NRIC no. -->
-                                <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" 
+                                <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" inputmode="numeric"
                                     class="px-2 border-bottom border-{{errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
                                 <ion-text class="input-err">{{errFormBasicInfo_identificationNo}}</ion-text>
                             </div>
@@ -56,7 +56,7 @@
                         <ng-template matStepLabel><fa-icon icon="phone"></fa-icon></ng-template>
                         <form [formGroup]="formMobileNo" class="w-100 text-start" (ngSubmit)="checkExist('MOBILENO', this.formMobileNo.value.mobileNo)">
                             <div>
-                                <ion-input type="text" #mobileNo formControlName="mobileNo" [label]="'MOBILENO' | translate" placeholder="+60" labelPlacement="floating" maxlength="15"
+                                <ion-input type="text" #mobileNo formControlName="mobileNo" [label]="'MOBILENO' | translate" placeholder="+60" labelPlacement="floating" maxlength="15" inputmode="numeric"
                                     class="px-2 border-bottom border-{{errFormMobileNo ? 'danger' : 'secondary-subtle'}}" [maskito]="maskMobileNo" [maskitoElement]="maskPredicate" />
                                 <ion-text class="input-err">{{errFormMobileNo}}</ion-text>
                             </div>

@@ -37,7 +37,7 @@
                 </ng-template>
                 <div id="panelDate" class="text-center mt-3 fw-bold">
                     <section *ngIf="apptDateList.length > 0">
-                        <ion-chip *ngFor="let item of apptDateList" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)" [color]="item.ApptDate_Data == selectedDate_Data ? 'tertiary' : 'dark'" class="py-3 m-2">{{item.ApptDate_Disp}}</ion-chip>
+                        <ion-chip *ngFor="let item of apptDateList" (click)="getApptTime(item.ApptDate_Data, item.ApptDate_Disp)" [color]="item.ApptDate_Data == selectedDate_Data ? 'tertiary' : 'dark'" class="py-3 m-1"><ion-label class="mx-auto">{{item.ApptDate_Disp}}</ion-label></ion-chip>
                     </section>
                     <p *ngIf="apptDateList.length == 0" class="text-secondary fst-italic">{{'SCRN_BOOK_APPT.NO_AVAILABLE_DATE' | translate}}</p>
                 </div>
@@ -51,7 +51,7 @@
                 </ng-template>
                 <div id="panelTime" class="text-center mt-3 fw-bold">
                     <section *ngIf="apptTimeList.length > 0">
-                        <ion-chip *ngFor="let item of apptTimeList" (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)" [color]="item.SlotTime_Data == selectedTime_Data ? 'tertiary' : 'dark'" class="px-3 py-4">{{item.SlotTime_Disp}}</ion-chip>
+                        <ion-chip *ngFor="let item of apptTimeList" (click)="setApptTime(item.SlotTime_Data, item.SlotTime_Disp)" [color]="item.SlotTime_Data == selectedTime_Data ? 'tertiary' : 'dark'" class="p-3"><ion-label class="mx-auto">{{item.SlotTime_Disp}}</ion-label></ion-chip>
                     </section>
                     <p *ngIf="apptTimeList.length == 0" class="text-secondary fst-italic">{{'SCRN_BOOK_APPT.NO_AVAILABLE_TIME' | translate}}</p>
                 </div>
