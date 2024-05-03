@@ -13,9 +13,10 @@ dependencies {
     implementation project(':capacitor-haptics')
     implementation project(':capacitor-local-notifications')
     implementation project(':capacitor-push-notifications')
-
+    implementation "com.onesignal:OneSignal:5.1.10"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.10"
 }
-
+apply from: "../../node_modules/onesignal-cordova-plugin/build-extras-onesignal.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()
