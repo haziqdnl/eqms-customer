@@ -32,6 +32,7 @@ import { LoaderInterceptor } from './services/loader/loader.interceptor';
 import { LoaderComponent } from './services/loader/loader.component';
 import { NotFoundComponent } from './components/error/not-found/not-found.component';
 import { UnauthorizedComponent } from './components/error/unauthorized/unauthorized.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 //  Components: Auth Modules
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
@@ -54,6 +55,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     LoaderComponent,
     UnauthorizedComponent,
     NotFoundComponent,
+    PrivacyPolicyComponent,
     //  Components: Auth Modules
     RegisterComponent,
     RegisterStatusComponent,

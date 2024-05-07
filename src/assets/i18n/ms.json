@@ -104,8 +104,8 @@
             "YES"               : "Dibenarkan untuk menggunakan pengimbas",
             "NO"                : "Tidak dibenarkan menggunakan pengimbas"
         },
-        "TURNED_ON"             : "Pengimbas dibuka",
         "TURNED_OFF"            : "Pengimbas ditutup",
+        "TURNED_ON"             : "Pengimbas dibuka",
         "UNSUPPORTED"           : "Untuk menggunakan pengimbas daftar masuk, sila muat turun aplikasi ini daripada Play Store atau App Store.",
         "WALKIN_ENABLED"        : "Pengimbas daftar masuk diaktifkan untuk walk-in."
     },
@@ -122,6 +122,13 @@
         ""                      : "================================",
         "TITLE"                 : "Tidak Ditemui",
         "TITLE_DESCR"           : "Maaf! Kami tidak dapat menjumpai halaman yang anda mahukan."
+    },
+
+    "SCRN_PRIVACY_POLICY"       : {
+        "_comment"              : "** Kata kunci dalam skrin PRIVACY POLICY **",
+        ""                      : "==============================",
+        "TITLE"                 : "Polisi Privasi",
+        "CONTENT"               : "<p><i>Terjemahan kandungan ini sedang dikemaskini</i></p>"
     },
 
     "SCRN_REGISTER"             : {
@@ -179,7 +186,11 @@
         "BTN_LOGIN"             : "Log Masuk",
         "FORGOT_PASSWORD"       : "Lupa kata laluan",
         "INVALID_LOGIN"         : "ID / Kata Laluan Tidak Sah!",
-        "SIGN_UP"               : "Daftar akaun",
+        "SIGN_UP"               : "Daftar",
+        "TERMS_POLICY"          : {
+            "DESC"              : "Dengan mengetik \"Log Masuk\", anda bersetuju menerima ",
+            "PRIVACY_POLICY"    : "Polisi Privasi"
+        },
         "TITLE"                 : "Log Masuk Pelanggan"
     },
 

@@ -22,14 +22,18 @@
                     </div>
                     <button class="btn btn-success w-100 mt-3" type="submit">{{'SCRN_LOGIN.BTN_LOGIN' | translate}}</button>
                 </form>
-                <div class="mt-3 font-size-12">
-                    <ion-grid class="text-center text-primary">
-                        <ion-row>
-                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('forgot-password')">{{'SCRN_LOGIN.FORGOT_PASSWORD' | translate}}</a><br></ion-col>
-                            <ion-col><a href="javascript:void(0)" class="fw-bold" (click)="g.redirectTo('register')">{{'SCRN_LOGIN.SIGN_UP' | translate}}</a><br></ion-col>
+                <div class="mt-2 font-size-12">
+                    <ion-grid>
+                        <ion-row class="fw-bold">
+                            <ion-col class="text-start"><a href="javascript:void(0)" (click)="g.redirectTo('forgot-password')">{{'SCRN_LOGIN.FORGOT_PASSWORD' | translate}}</a><br></ion-col>
+                            <ion-col class="text-end"><a href="javascript:void(0)" (click)="g.redirectTo('register')">{{'SCRN_LOGIN.SIGN_UP' | translate}}</a><br></ion-col>
                         </ion-row>
                     </ion-grid>
-                    <ion-select #drpLanguage [(ngModel)]="defaultLang" class="text-center border-bottom" [label]="('LANGUAGE' | translate) + ':'" interface="action-sheet" (ionChange)="g.setLanguage(drpLanguage.value)">
+                    <p class="mt-2 text-center">
+                        {{'SCRN_LOGIN.TERMS_POLICY.DESC' | translate}}
+                        <a href="javascript:void(0)" (click)="g.redirectTo('privacy-policy')"><u>{{'SCRN_LOGIN.TERMS_POLICY.PRIVACY_POLICY' | translate}}</u></a>.
+                    </p>
+                    <ion-select #drpLanguage [(ngModel)]="defaultLang" class="text-center border-bottom font-size-10" [label]="('LANGUAGE' | translate) + ':'" interface="action-sheet" (ionChange)="g.setLanguage(drpLanguage.value)">
                         <ion-select-option value="en">English</ion-select-option>
                         <ion-select-option value="ms">Bahasa Melayu</ion-select-option>
                     </ion-select>

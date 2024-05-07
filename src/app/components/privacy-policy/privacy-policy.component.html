@@ -1,0 +1,18 @@
+<ion-content>
+    <div class="bg-default">
+        <div class="wrap-center">
+            <div id="formIdPassword" class="bg-light shadow-lg rounded-3 p-lg-5 p-4">
+                <!-- Logo & Title -->
+                <section class="text-center">
+                    <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="200" />
+                    <h5 class="mt-3 text-center fw-bold">{{'SCRN_PRIVACY_POLICY.TITLE' | translate}}</h5>
+                </section>
+                <!-- Content -->
+                <section class="mt-2">
+                    <div [innerHTML]="'SCRN_PRIVACY_POLICY.CONTENT' | translate"></div>
+                    <button type="button" class="btn btn-secondary mt-3" (click)="g.redirectTo('')">{{'BACK' | translate}}</button>
+                </section>
+            </div>
+        </div>
+    </div>
+</ion-content>

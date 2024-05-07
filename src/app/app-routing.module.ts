@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 //  Components: Misc Modules
 import { NotFoundComponent } from './components/error/not-found/not-found.component';
 import { UnauthorizedComponent } from './components/error/unauthorized/unauthorized.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 //  Components: Auth Modules
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
@@ -94,9 +95,9 @@ const routes: Routes = [
    *  ========================
    */
   {
-    path: 'error/401',
-    component: UnauthorizedComponent,
-    title: `${appName} | Unauthorized`
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    title: `${appName} | Privacy Policy`
   },
   {
     path: 'error/401',
