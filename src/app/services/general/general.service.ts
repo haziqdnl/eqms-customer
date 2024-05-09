@@ -19,7 +19,7 @@ export class GeneralService {
     private navCtrl: NavController,
     private platform: Platform,
     private translate: TranslateService
-  ) { }
+  ) {}
 
   /**
    *  Method: Get environment details

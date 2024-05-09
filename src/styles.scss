@@ -108,8 +108,6 @@ form {
 
 .mat-mdc-snack-bar-container {
     --mdc-snackbar-supporting-text-color: #ffffff;
-    margin-bottom: 30px !important;
-    
     button  { 
         color: #000 !important;
         background-color: #fff;
@@ -117,7 +115,6 @@ form {
         transition: 0.3s;
         &:hover { transform: scale(0.9);}
     }
-
     &.error     { --mdc-snackbar-container-color: #bc1d32; }
     &.success   { --mdc-snackbar-container-color: #1a9d48; }
     &.info      { --mdc-snackbar-container-color: var(--primary-color); }
@@ -138,7 +135,13 @@ ion-title { text-align: center; }
 @media only screen and (min-width: 768px) {}
 
 /* Portrait tablets and larger phones, 768px and down */
-@media only screen and (max-width: 768px) {}
+@media only screen and (max-width: 768px) {
+    .mat-mdc-snack-bar-container {
+        margin-bottom: 30px !important;
+        margin-left: 20px !important;
+        margin-right: 20px !important;
+    }
+}
 
 /* Portrait tablets and larger phones, 600px and up */
 @media only screen and (min-width: 600px) {

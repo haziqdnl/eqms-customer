@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ApiAuthService } from 'src/app/api/api-auth.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
+import { OnesignalService } from 'src/app/services/onesignal/onesignal.service';
 
 @Component({
   selector    : 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent {
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
     public  g: GeneralService,
+    private oneSignalService: OnesignalService,
     private translate: TranslateService
   ) {}
 
@@ -28,7 +30,7 @@ export class LoginComponent {
    *  Method: Auto login if token from the previous login still valid
    */
   public defaultLang = this.g.getDefaultLanguage;
-  private validateToken() {
+  private async validateToken() {
     if (this.g.getCustToken) {
       this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
     }
@@ -59,6 +61,16 @@ export class LoginComponent {
     this.apiAuthService.apiCustomerLogin(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.RespData[0].Token);
+        this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
+          if (rsp.d.RespCode == "200") {
+            this.oneSignalService.setExternalId(rsp.d.RespData[0].pid);
+            this.oneSignalService.createPushNotification("You have logged in another device. Is that you?" , rsp.d.RespData[0].pid)
+          }
+          else {
+            rsp.d.RespCode = "401";
+            this.g.apiRespError(rsp.d);
+          }
+        });
         this.g.redirectTo('');
       }
       else {
