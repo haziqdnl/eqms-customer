@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace "com.dgss.eqms.customer"
+    namespace "com.eqms.customer.angular"
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "com.dgss.eqms.customer"
