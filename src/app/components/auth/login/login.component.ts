@@ -61,10 +61,11 @@ export class LoginComponent {
     this.apiAuthService.apiCustomerLogin(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.RespData[0].Token);
-        this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
+        this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( async rsp => {
           if (rsp.d.RespCode == "200") {
-            this.oneSignalService.setExternalId(rsp.d.RespData[0].pid);
-            this.oneSignalService.createPushNotification("You have logged in another device. Is that you?" , rsp.d.RespData[0].pid)
+            console.log(rsp.d.RespData[0].pid);
+            await this.oneSignalService.setExternalId(rsp.d.RespData[0].pid);
+            await this.oneSignalService.createPushNotification("You have logged in another device. Is that you?" , rsp.d.RespData[0].pid)
           }
           else {
             rsp.d.RespCode = "401";
@@ -78,5 +79,13 @@ export class LoginComponent {
         this.g.setCustToken("");
       }
     });
+  }
+
+  /**
+   *  Method: To Privacy Policy page
+   */
+  public toPrivacyPolicy() {
+    this.g.setBackPage('login');
+    this.g.redirectTo('privacy-policy');
   }
 }

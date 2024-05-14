@@ -62,6 +62,8 @@ export class GeneralService {
    */
   public redirectTo   (c: string) { this.navCtrl.navigateForward(c);  }
   public redirectBack (c: string) { this.navCtrl.navigateBack(c);     }
+  public setBackPage  (c: string) { localStorage.setItem('eqmsCustomer_backPage', c); }
+  public get getBackPage()        { return localStorage.getItem('eqmsCustomer_backPage') != null ? localStorage.getItem('eqmsCustomer_backPage')! : ''; }
 
   /**
    *  Method: Success/Error Handling
@@ -155,14 +157,12 @@ export class GeneralService {
    *  Method: Get preferred default language
    */
   public get getDefaultLanguage() { 
-    if (localStorage.getItem('eqmsCustomer_defLanguage') != null) return localStorage.getItem('eqmsCustomer_defLanguage')!;
-    else                                                          return "en";
+    return localStorage.getItem('eqmsCustomer_defLanguage') != null ? localStorage.getItem('eqmsCustomer_defLanguage')! : "en";
   }
   /**
    *  Method: Set default translate language when visiting the app
    */
   public setDefaultLanguage() {
-    if (this.getDefaultLanguage != null)  this.translate.setDefaultLang(this.getDefaultLanguage);
-    else                                  this.translate.setDefaultLang('en');
+    this.translate.setDefaultLang(this.getDefaultLanguage != null ? this.getDefaultLanguage : 'en');
   }
 }

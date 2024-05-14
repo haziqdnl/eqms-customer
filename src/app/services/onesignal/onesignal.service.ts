@@ -32,7 +32,7 @@ export class OnesignalService {
   /**
    *  Method: Set external ID for user that login with the current subscribed device
    */
-  public setExternalId(id: any) { this.oneSignal.login(id); }
+  public async setExternalId(id: any) { await this.oneSignal.login(id); }
 
   /**
    *  Method: OneSignal API to create push notification

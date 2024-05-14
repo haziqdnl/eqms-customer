@@ -94,7 +94,7 @@
         "UCID"                  : "Masukkan ID Panggilan Unik anda"
     },
 
-    "SCANNER_STATUS"          : {
+    "SCANNER_STATUS"            : {
         "_comment"              : "** Kata kunci untuk pengimbas **",
         ""                      : "================================",
         "APPT_DISABLED"         : "Pengimbas daftar masuk dinyahaktifkan buat sementara waktu sehingga ke tarikh temujanji yang ditempah.",
@@ -126,8 +126,15 @@
 
     "SCRN_PRIVACY_POLICY"       : {
         "_comment"              : "** Kata kunci dalam skrin PRIVACY POLICY **",
-        ""                      : "==============================",
+        ""                      : "===========================================",
         "TITLE"                 : "Polisi Privasi",
+        "CONTENT"               : "<p><i>Terjemahan kandungan ini sedang dikemaskini</i></p>"
+    },
+
+    "SCRN_SUPPORT"              : {
+        "_comment"              : "** Kata kunci dalam skrin SUPPORT **",
+        ""                      : "====================================",
+        "TITLE"                 : "Maklumat Sokongan Aplikasi",
         "CONTENT"               : "<p><i>Terjemahan kandungan ini sedang dikemaskini</i></p>"
     },
 
@@ -153,7 +160,7 @@
         }
     },
 
-    "SCRN_REGISTER_STATUS": {
+    "SCRN_REGISTER_STATUS"      : {
         "_comment"              : "** Keywords in REGISTER STATUS screen **",
         ""                      : "========================================",
         "REG_STATUS_SUCCESS"    : "Account Created",
@@ -178,6 +185,14 @@
             "RESET"             : "Tetapan Semula Kata Laluan"
         },
         "RESET_SUCCESS"         : "Tetapan semula kata laluan berjaya!"
+    },
+
+    "SCRN_ACCOUNT_DELETION"     : {
+        "_comment"              : "** Kata kunci dalam skrin ACCOUNT DELETION **",
+        ""                      : "=============================================",
+        "TITLE"                 : "Permohonan Pemadaman Akaun",
+        "FORM"                  : "<p><i>Terjemahan kandungan ini sedang dikemaskini</i></p>",
+        "SUBMITTED"             : "<p><i>Terjemahan kandungan ini sedang dikemaskini</i></p>"
     },
 
     "SCRN_LOGIN"                : {
@@ -258,11 +273,14 @@
     "SCRN_PROFILE"              : {
         "_comment"              : "** Kata kunci dalam skrin PROFILE **",
         ""                      : "====================================",
+        "BASIC_INFO"            : "Butiran Anda",
+        "DELETE_ACCOUNT"        : "Mohon Pemadaman Akaun",
         "MODAL"                 : {
             "EDIT_PROFILE"      : "Edit Profil",
             "RENAME_UCID"       : "Penamaan Semula UCID",
             "EDIT_PICTURE"      : "Edit Gambar Profil"
         },
+        "SECURITY"              : "Tetapan Keselamatan",
         "TITLE"                 : "Profil Saya"
     }
 }

@@ -207,4 +207,12 @@ export class ProfileComponent {
     this.urlSvgRepo + "530197/hedgehog.svg",
     this.urlSvgRepo + "530198/fox.svg",
   ];
+
+  /**
+   *  Method: Redirect to Account Deletion Request page
+   */
+  public toAccountDeletionRequest() {
+    this.g.setBackPage('profile');
+    this.g.redirectTo('account-deletion');
+  }
 }

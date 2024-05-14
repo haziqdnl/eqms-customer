@@ -15,6 +15,7 @@
         </h5>
     </div>
     <ion-list class="px-4 py-2 rounded-4 border border-secondary-subtle m-3">
+        <h3 class="fw-bold text-secondary">{{'SCRN_PROFILE.BASIC_INFO' | translate}}</h3>
         <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="mars-and-venus"></fa-icon>
             <ion-label><h2>{{'GENDER' | translate}}</h2><p>{{profileData.Sex}}</p></ion-label>
@@ -38,7 +39,11 @@
                 <p>{{profileData.Address1}}<br>{{profileData.Address2 + ', ' + profileData.PostCode}}<br>{{profileData.State}}</p>
             </ion-label>
         </ion-item>
-        <button id="btnChangePwd" class="my-3 btn btn-primary w-100" (click)="openModal(true, '3')">{{'CHANGE_PASSWORD' | translate}}</button>
+    </ion-list>
+    <ion-list class="px-4 py-2 rounded-4 border border-secondary-subtle m-3">
+        <h3 class="fw-bold text-secondary">{{'SCRN_PROFILE.SECURITY' | translate}}</h3>
+        <button id="btnChangePwd" class="my-1 btn btn-primary w-100" (click)="openModal(true, '3')">{{'CHANGE_PASSWORD' | translate}}</button>
+        <button id="btnReqAccDelete" class="my-1 btn btn-danger w-100" (click)="toAccountDeletionRequest()">{{'SCRN_PROFILE.DELETE_ACCOUNT' | translate}}</button>
     </ion-list>
     <!-- Modal: Edit Profile -->
     <ion-modal [isOpen]="modalIsOpen" [canDismiss]="!modalIsOpen" [initialBreakpoint]="1" [breakpoints]="[0, 1]">

@@ -1,0 +1,29 @@
+<ion-content>
+    <div class="bg-default">
+        <div class="wrap-center">
+            <div id="mainContent" class="bg-light shadow-lg rounded-3 p-4">
+                <!-- Logo & Title -->
+                <section class="text-center">
+                    <img id="logo" src="assets/img/arx_logo.jpeg" alt="Ar-Rahnu" width="200" />
+                    <h5 class="mt-3 text-center fw-bold">{{'SCRN_ACCOUNT_DELETION.TITLE' | translate}}</h5>
+                </section>
+                <!-- Form -->
+                <section *ngIf="!submitted" class="m-3 text-center">
+                    <div class="ion-text-justify m-lg-3 m-1" [innerHTML]="'SCRN_ACCOUNT_DELETION.FORM' | translate"></div>
+                    <div class="btn-group w-100">
+                        <button type="button" class="btn btn-secondary mt-3 w-50" (click)="this.g.redirectTo(this.g.getBackPage)">{{'CANCEL' | translate}}</button>
+                        <a [href]="mailto" class="btn btn-danger mt-3 w-50" (click)="submit()">{{'SUBMIT' | translate}}</a>
+                    </div>
+                </section>
+                <!-- Form Submitted -->
+                <section *ngIf="submitted" class="m-3 text-center">
+                    <div class="text-center m-lg-3 m-1">
+                        <fa-icon icon="hourglass-half" size="6x" class="text-secondary my-4 d-block" animation="shake" style="--fa-animation-duration: 15s"></fa-icon>
+                        <p>{{'SCRN_ACCOUNT_DELETION.SUBMITTED' | translate}}</p>
+                    </div>
+                    <button type="button" class="btn btn-secondary mt-3 w-100" (click)="this.g.redirectTo(this.g.getBackPage)">{{'BACK' | translate}}</button>
+                </section>
+            </div>
+        </div>
+    </div>
+</ion-content>

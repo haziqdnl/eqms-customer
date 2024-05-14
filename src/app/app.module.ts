@@ -30,15 +30,17 @@ import { ToastrModule } from 'ngx-toastr';
 import { LoaderInterceptor } from './services/loader/loader.interceptor';
 //  Components: Misc Modules
 import { LoaderComponent } from './services/loader/loader.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { SupportComponent } from './components/support/support.component';
 import { NotFoundComponent } from './components/error/not-found/not-found.component';
 import { UnauthorizedComponent } from './components/error/unauthorized/unauthorized.component';
-import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 //  Components: Auth Modules
 import { RegisterComponent } from './components/auth/register/register.component';
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { AccountDeletionComponent } from './components/auth/account-deletion/account-deletion.component';
 //  Components: Layout Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
@@ -56,12 +58,14 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     UnauthorizedComponent,
     NotFoundComponent,
     PrivacyPolicyComponent,
+    SupportComponent,
     //  Components: Auth Modules
     RegisterComponent,
     RegisterStatusComponent,
     VerificationComponent,
     LoginComponent,
     ForgotPasswordComponent,
+    AccountDeletionComponent,
     //  Components: Layout Modules
     LayoutComponent,
     IndexComponent,

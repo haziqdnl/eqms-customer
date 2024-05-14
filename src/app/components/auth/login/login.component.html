@@ -31,7 +31,7 @@
                     </ion-grid>
                     <p class="mt-2 text-center">
                         {{'SCRN_LOGIN.TERMS_POLICY.DESC' | translate}}
-                        <a href="javascript:void(0)" (click)="g.redirectTo('privacy-policy')"><u>{{'SCRN_LOGIN.TERMS_POLICY.PRIVACY_POLICY' | translate}}</u></a>.
+                        <a href="javascript:void(0)" (click)="toPrivacyPolicy()"><u>{{'SCRN_LOGIN.TERMS_POLICY.PRIVACY_POLICY' | translate}}</u></a>.
                     </p>
                     <ion-select #drpLanguage [(ngModel)]="defaultLang" class="text-center border-bottom font-size-10" [label]="('LANGUAGE' | translate) + ':'" interface="action-sheet" (ionChange)="g.setLanguage(drpLanguage.value)">
                         <ion-select-option value="en">English</ion-select-option>

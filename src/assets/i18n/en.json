@@ -126,9 +126,16 @@
 
     "SCRN_PRIVACY_POLICY"       : {
         "_comment"              : "** Keywords in PRIVACY POLICY screen **",
-        ""                      : "==============================",
+        ""                      : "=======================================",
         "TITLE"                 : "Privacy Policy",
         "CONTENT"               : "<p> <b>Privacy Clause:</b><br> ARX EQMS Customer is committed to protecting the privacy of its users. This Privacy Policy describes how we collects, uses, and shares personal information obtained through the use of our application. </p> <p> <b>Information Collection and Use:</b><br> We may collect personal information such as name, email address, and location data from users in order to provide a personalized experience. The app may also collect non-personal information such as device information, app usage data, and analytics to improve the user experience. </p> <p> <b>Data Security:</b><br> We takes measures to safeguard the personal information collected from users to prevent unauthorized access, disclosure, or misuse. </p> <p> <b>Sharing of Information:</b><br> We does not sell or share personally identifiable information with third parties for marketing purposes. However, data may be shared with service providers for the purpose of app functionality and improvement. </p> <p> <b>Changes to Privacy Policy:</b><br> We reserves the right to update or modify this Privacy Policy at any time. Users will be notified of any changes through the app or via email. </p> <p> ---<br> By using the ARX EQMS Customer application, you agree to the terms outlined in this Privacy Policy. If you have any questions or concerns about our privacy practices, feel free to contact us. </p>"
+    },
+
+    "SCRN_SUPPORT"              : {
+        "_comment"              : "** Keywords in SUPPORT screen **",
+        ""                      : "================================",
+        "TITLE"                 : "Application Support Information",
+        "CONTENT"               : "<p> We strive to provide an excellent user experience and are committed to offering ongoing support. If you encounter any issues or have any questions, please refer to the following support options: </p> <p> <b>Email Support:</b><br> For personalized assistance, you can contact our support team via email by <a href=\"mailto:haziqdnl73@gmail.com?subject=EQSM Customer Support and Enquiry\">clicking this link</a>. Our team will respond to your queries promptly. </p> <p> <b>User Community:</b><br> Join our user community on social media platforms to connect with other users, share feedback, and stay updated on app-related news and updates. </p> <p> <b>App Updates:</b><br> To ensure that you are using the latest version with the newest features and bug fixes, please enable automatic updates on your device or visit the App Store regularly to download the latest version. </p> <p> --<br> We value your feedback and suggestions as they help us improve our app and cater to your needs effectively. Thank you for your support and for choosing our app! </p>"
     },
 
     "SCRN_REGISTER"             : {
@@ -153,7 +160,7 @@
         }
     },
 
-    "SCRN_REGISTER_STATUS": {
+    "SCRN_REGISTER_STATUS"      : {
         "_comment"              : "** Keywords in REGISTER STATUS screen **",
         ""                      : "========================================",
         "REG_STATUS_SUCCESS"    : "Account Created",
@@ -178,6 +185,14 @@
             "RESET"             : "Reset Password"
         },
         "RESET_SUCCESS"         : "Password reset successful"
+    },
+
+    "SCRN_ACCOUNT_DELETION"     : {
+        "_comment"              : "** Keywords in ACCOUNT DELETION screen **",
+        ""                      : "=========================================",
+        "TITLE"                 : "Account Deletion Request",
+        "FORM"                  : "<p> Are you sure to delete your account? If yes, we are sad to know. By clicking the button below, you will be redirected to your default emailing app to send the account deletion request.<br> </p> <p> In the email, please provide the required information as below for our references. We have the right to deny the request if the provided information is incomplete and unsupportive: </p> <ul> <li>Email address registered to the account</li> <li>Phone number registered to the account</li> <li>Reason for account deletion</li> </ul> <p> By submitting the request, you are acknowledge and understand the implications of deleting your account, including the loss of all data associated with your account. </p>",
+        "SUBMITTED"             : "We will process and notify you as soon as possible as we receive your email request. Please be aware that once we approved your account deletion, you will no longer be able to access the app."
     },
 
     "SCRN_LOGIN"                : {
@@ -258,11 +273,14 @@
     "SCRN_PROFILE"              : {
         "_comment"              : "** Keywords in PROFILE screen **",
         ""                      : "================================",
+        "BASIC_INFO"            : "Your Details",
+        "DELETE_ACCOUNT"        : "Request Account Deletion",
         "MODAL"                 : {
             "EDIT_PROFILE"      : "Edit Profile",
             "RENAME_UCID"       : "Rename UCID",
             "EDIT_PICTURE"      : "Edit Profile Picture"
         },
+        "SECURITY"              : "Security Settings",
         "TITLE"                 : "My Profile"
     }
 }
