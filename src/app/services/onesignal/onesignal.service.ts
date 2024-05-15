@@ -25,7 +25,7 @@ export class OnesignalService {
    */
   public async init() { 
     await this.oneSignal.init({ appId: this.getAppId });
-    //await this.oneSignal.Notifications.requestPermission();
+    await this.oneSignal.Notifications.requestPermission();
     //this.oneSignal.Notifications.addEventListener('click', async (e:any) => { console.log("Notification clicked"); });
   }
 
