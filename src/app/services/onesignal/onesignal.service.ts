@@ -31,7 +31,7 @@ export class OnesignalService {
       OneSignalMobile.Debug.setLogLevel(6);
       OneSignalMobile.initialize(this.getAppId);
       OneSignalMobile.Notifications.addEventListener('click', async (e) => { console.log("Notification Clicked : " + e.notification); })
-      OneSignalMobile.Notifications.requestPermission(true).then((success: Boolean) => { console.log("Notification permission granted " + success); })
+      OneSignalMobile.Notifications.requestPermission(true).then((success: Boolean) => { console.log("Notification permission: " + success); })
     }
     else {
       this.OneSignalWeb.init({ appId: this.getAppId });
