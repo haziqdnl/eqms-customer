@@ -211,8 +211,8 @@ export class ProfileComponent {
   /**
    *  Method: Redirect to Account Deletion Request page
    */
-  public toAccountDeletionRequest() {
+  public redirectTo(pageName: string) {
     this.g.setBackPage('profile');
-    this.g.redirectTo('account-deletion');
+    this.g.redirectTo(pageName);
   }
 }

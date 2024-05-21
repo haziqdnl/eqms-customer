@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" color="light" [class]="g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''">
+<ion-content *ngIf="loaded" [fullscreen]="true" color="light" [class]="g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''">
     <ion-toolbar class="topbar px-3 {{g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''}}">
         <ion-img slot="start" id="topbarLogo" class="mx-auto" src="assets/img/arx_logo.jpeg" alt="image"></ion-img>
         <ion-buttons slot="end">
@@ -8,7 +8,7 @@
         </ion-buttons>
     </ion-toolbar>
     <div class="header"></div>
-    <ion-grid *ngIf="loaded" class="ion-padding-horizontal">
+    <ion-grid class="ion-padding-horizontal">
         <!-- Summary & Widget -->
         <ion-row>
             <ion-col class="ion-text-center">

@@ -1,14 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import OneSignalMobile from 'onesignal-cordova-plugin';
 import { OneSignal } from 'onesignal-ngx';
 import { lastValueFrom } from 'rxjs';
+import { GeneralService } from '../general/general.service';
 
 @Injectable({ providedIn: 'root' })
 export class OnesignalService {
 
   constructor(
+    private g: GeneralService,
     private http: HttpClient,
-    private oneSignal: OneSignal
+    private OneSignalWeb: OneSignal
   ) {}
 
   /**
@@ -24,15 +27,23 @@ export class OnesignalService {
    *  Method: Initlize OneSignal connection
    */
   public async init() { 
-    await this.oneSignal.init({ appId: this.getAppId });
-    await this.oneSignal.Notifications.requestPermission();
-    //this.oneSignal.Notifications.addEventListener('click', async (e:any) => { console.log("Notification clicked"); });
+    if (this.g.isMobile) {
+      OneSignalMobile.Debug.setLogLevel(6);
+      OneSignalMobile.initialize(this.getAppId);
+      OneSignalMobile.Notifications.addEventListener('click', async (e) => { console.log("Notification Clicked : " + e.notification); })
+      OneSignalMobile.Notifications.requestPermission(true).then((success: Boolean) => { console.log("Notification permission granted " + success); })
+    }
+    else {
+      this.OneSignalWeb.init({ appId: this.getAppId });
+      //this.oneSignal.Notifications.addEventListener('click', async (e:any) => { console.log("Notification clicked"); });
+      this.OneSignalWeb.Notifications.requestPermission();
+    }
   }
 
   /**
    *  Method: Set external ID for user that login with the current subscribed device
    */
-  public async setExternalId(id: any) { await this.oneSignal.login(id); }
+  public async setExternalId(id: any) { this.g.isMobile ? OneSignalMobile.login(id) : this.OneSignalWeb.login(id); }
 
   /**
    *  Method: OneSignal API to create push notification

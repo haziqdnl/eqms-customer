@@ -27,12 +27,14 @@
     "PAWN"                      : "Pajak Gadai",
     "PAYMENT"                   : "Pembayaran",
     "POSTCODE"                  : "Poskod",
+    "PRIVACY_POLICY"            : "Polisi Privasi",
     "PROCEED"                   : "Teruskan",
     "REDEMPTION"                : "Penebusan",
     "RESET"                     : "Set Semula",
     "SAVE"                      : "Simpan",
     "STATE"                     : "Negeri",
     "SUBMIT"                    : "Hantar",
+    "SUPPORT"                   : "Sokongan",
     "UCID"                      : "Panggilan ID Unik (UCID)",
     "UNDEFINED"                 : "Tidak ditakrif",
     "VERIFY"                    : "Sahkan",
@@ -176,6 +178,7 @@
     "SCRN_FORGOT_PASSWORD"      : {
         "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
         ""                      : "============================================",
+        "EMAIL_NOT_EXIST"       : "E-mel tidak ditemui atau tidak didaftarkan",
         "DESCR"                 : {
             "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
             "RESET"             : "Sila masukkan kata laluan baharu anda"

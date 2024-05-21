@@ -33,8 +33,7 @@ export class GeneralService {
    *  Method: HTTP request to back-end services handler
    */
   private getHttpHeader(token?: string): any {
-    if (token)  return { 'headers': { 'content-type': 'application/json', 'SessionToken': token } };
-    else        return { 'headers': { 'content-type': 'application/json' }                        };
+    return token ? { 'headers': { 'content-type': 'application/json', 'SessionToken': token } } : { 'headers': { 'content-type': 'application/json' } };
   }
   public httpGet(service: string, method: string, token?: string) {
     return this.http.get(`${this.getEnvApiUrl}/${service}/${method}?lang=${this.getDefaultLanguage}`, this.getHttpHeader(token)).pipe( catchError( err => { throw err; } ) );

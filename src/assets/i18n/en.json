@@ -27,12 +27,14 @@
     "PAWN"                      : "Pawn",
     "PAYMENT"                   : "Payment",
     "POSTCODE"                  : "Postcode",
+    "PRIVACY_POLICY"            : "Privacy Policy",
     "PROCEED"                   : "Proceed",
     "REDEMPTION"                : "Redemption",
     "RESET"                     : "Reset",
     "SAVE"                      : "Save",
     "STATE"                     : "State",
     "SUBMIT"                    : "Submit",
+    "SUPPORT"                   : "Support",
     "UCID"                      : "Unique Call ID",
     "UNDEFINED"                 : "Undefined",
     "VERIFY"                    : "Verify",
@@ -176,6 +178,7 @@
     "SCRN_FORGOT_PASSWORD"      : {
         "_comment"              : "** Keywords in FORGOT PASSWORD screen **",
         ""                      : "========================================",
+        "EMAIL_NOT_EXIST"       : "Email not found or not registered",
         "DESCR"                 : {
             "FORGOT"            : "Enter your ID to get the password reset link",
             "RESET"             : "Please enter your new password"

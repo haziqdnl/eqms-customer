@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { MaskitoElementPredicate, MaskitoOptions } from '@maskito/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiProfileService } from 'src/app/api/api-profile.service';
 import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
@@ -15,6 +16,7 @@ export class ForgotPasswordComponent {
   
   constructor(
     private alertCtrl: AlertController,
+    private apiProfileService: ApiProfileService,
     private apiUtilityService: ApiUtilityService,
     private fb: FormBuilder,
     public  g: GeneralService,
@@ -49,14 +51,23 @@ export class ForgotPasswordComponent {
   public get errFormEmail() { return this.g.getFormErrMsg(this.formEmail.controls['email']); }
   private otp: string = "";
   public  submitForgotPassword(mode: number) {
-    this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
-    this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
+    //  Check email if exist
+    this.apiProfileService.apiCheckExists({ objRequest: { Mode: "EMAIL", SearchValue: this.formEmail.value.email } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
-        this.otp = rsp.d.RespData[0].OTP;
-        this.g.toastSuccess(rsp.d.RespData[0].Status);
-        //  reveal OTP Verification form
-        this.setFormMode(false, true, false);
-        setTimeout(() => { this.otp1.nativeElement.focus(); }, 500);
+        //  If email exist
+        if (rsp.d.RespData[0].Status === "TRUE") {
+          this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
+          this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
+            if (rsp.d.RespCode == "200") {
+              this.otp = rsp.d.RespData[0].OTP;
+              this.g.toastSuccess(rsp.d.RespData[0].Status);
+              this.setFormMode(false, true, false); // reveal OTP Verification form
+              setTimeout(() => { this.otp1.nativeElement.focus(); }, 500);
+            }
+            else this.g.toastError(rsp.d.RespMessage);
+          });
+        }
+        else this.g.toastError(this.translate.instant("SCRN_FORGOT_PASSWORD.EMAIL_NOT_EXIST"));
       }
       else this.g.toastError(rsp.d.RespMessage);
     });
