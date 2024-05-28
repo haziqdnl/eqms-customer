@@ -210,9 +210,9 @@ export class IndexComponent {
         {
           text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => {
             let request = {
-              objRequest: { 
-                Mode    : "DELETE",
-                ApptData: {
+              objRequest  : { 
+                Mode      : "DELETE",
+                ApptData  : {
                   AgencyID: this.apptData[0].AgencyID,
                   OutletID: this.apptData[0].OutletID, 
                   ApptID  : this.apptData[0].ApptID,

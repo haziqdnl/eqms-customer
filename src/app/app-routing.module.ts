@@ -11,7 +11,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 //  Components: Main Modules
 import { LayoutComponent } from './components/layout/layout.component';
 import { IndexComponent } from './components/index/index.component';
@@ -47,9 +47,9 @@ const routes: Routes = [
     title     : `${appName} | Login`
   },
   {
-    path      : 'forgot-password', 
-    component : ForgotPasswordComponent, 
-    title     : `${appName} | Forgot Password`
+    path      : 'reset-password', 
+    component : ResetPasswordComponent, 
+    title     : `${appName} | Reset Password`
   },
   {
     path      : 'account-deletion', 

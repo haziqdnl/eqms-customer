@@ -10,7 +10,7 @@
                 <!-- Content -->
                 <section class="m-3 text-center">
                     <div class="ion-text-justify m-lg-3 m-1" [innerHTML]="'SCRN_PRIVACY_POLICY.CONTENT' | translate"></div>
-                    <button type="button" class="btn btn-secondary mt-3 w-100" (click)="this.g.redirectTo(this.g.getBackPage)">{{'BACK' | translate}}</button>
+                    <button type="button" class="btn btn-secondary mt-3 w-100" (click)="this.g.redirectTo('', this.g.getBackPage)">{{'BACK' | translate}}</button>
                 </section>
             </div>
         </div>

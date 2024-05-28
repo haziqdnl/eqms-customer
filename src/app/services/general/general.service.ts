@@ -45,8 +45,8 @@ export class GeneralService {
   /**
    *  Method: Customer Token
    */
-  public setCustToken(t: any)  { localStorage.setItem('eqmsCustomer_jwtToken', t);      }
-  public get getCustToken()    { return localStorage.getItem('eqmsCustomer_jwtToken');  }
+  public setCustToken(t: any) { localStorage.setItem('eqmsCustomer_jwtToken', t);      }
+  public get getCustToken()   { return localStorage.getItem('eqmsCustomer_jwtToken');  }
 
   /**
    *  Method: End Session / Reset Token
@@ -59,10 +59,13 @@ export class GeneralService {
   /**
    *  Method: URL redirect/navigation
    */
-  public redirectTo   (c: string) { this.navCtrl.navigateForward(c);  }
-  public redirectBack (c: string) { this.navCtrl.navigateBack(c);     }
-  public setBackPage  (c: string) { localStorage.setItem('eqmsCustomer_backPage', c); }
-  public get getBackPage()        { return localStorage.getItem('eqmsCustomer_backPage') != null ? localStorage.getItem('eqmsCustomer_backPage')! : ''; }
+  public redirectTo (currentPage: string, toPage: string) {
+    this.setBackPage(currentPage);
+    this.navCtrl.navigateForward(toPage);
+  }
+  public redirectBack(c: string) { this.navCtrl.navigateBack(c); }
+  public setBackPage (c: string) { localStorage.setItem('eqmsCustomer_backPage', c); }
+  public get getBackPage()       { return localStorage.getItem('eqmsCustomer_backPage') != null ? localStorage.getItem('eqmsCustomer_backPage')! : ''; }
 
   /**
    *  Method: Success/Error Handling
@@ -84,7 +87,7 @@ export class GeneralService {
    *  Method: Ionic loader
    */
   public async showLoading(duration: number) {
-    const loading = await this.loadingCtrl.create({ message: 'Loading', duration: duration });
+    const loading = await this.loadingCtrl.create({ message: 'Loading', duration: duration, spinner: 'circular' });
     loading.present();
   }
 

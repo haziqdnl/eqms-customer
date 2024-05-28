@@ -14,9 +14,7 @@ export class AccountDeletionComponent {
    *  Method: Submit account deletion form
    */
   public submitted: boolean = false;
-  public submit() {
-    setTimeout( () => { this.submitted = true; }, 3000);
-  }
+  public submit() { setTimeout( () => { this.submitted = true; }, 3000); }
 
   /**
    *  Method: Create mailto template

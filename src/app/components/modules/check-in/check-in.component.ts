@@ -95,7 +95,7 @@ export class CheckInComponent {
       BarcodeScanner.checkPermissions().then((result) => { this.translate.instant('SCANNER_STATUS.GRANTED.' + (result.camera === 'granted' ? 'YES' : 'NO')) });
       setTimeout(() => { this.startScan(); }, 250);
     }
-    else this.g.redirectTo('');
+    else this.g.redirectTo('', '');
   }
 
   /**
@@ -138,7 +138,7 @@ export class CheckInComponent {
       };
       this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-        if      (rsp.d.RespCode == "200") this.g.redirectTo('');
+        if      (rsp.d.RespCode == "200") this.g.redirectTo('', '');
         else if (rsp.d.RespCode == "444") this.openModal(true, "walkInServiceType");
         else {
           if      (rsp.d.RespCode == "400") this.openAlertErrorScan(this.translate.instant('SCRN_CHECKIN.ERROR.QR_INVALID'));
@@ -156,7 +156,7 @@ export class CheckInComponent {
   public selectedWalkInServiceType: string = '';
   public walkIn() {
     let request = {
-      objRequest: { 
+      objRequest  : { 
         Service   : this.selectedWalkInServiceType,
         QRCodeData: this.qrValue
       }
@@ -166,7 +166,7 @@ export class CheckInComponent {
         this.openAlertErrorScan(rsp.d.RespMessage);
       else {
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-        this.g.redirectTo('');
+        this.g.redirectTo('', '');
       }
     });
   }

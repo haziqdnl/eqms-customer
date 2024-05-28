@@ -39,7 +39,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { RegisterStatusComponent } from './components/auth/register-status/register-status.component';
 import { VerificationComponent } from './components/auth/verification/verification.component';
 import { LoginComponent } from './components/auth/login/login.component';
-import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 import { AccountDeletionComponent } from './components/auth/account-deletion/account-deletion.component';
 //  Components: Layout Modules
 import { LayoutComponent } from './components/layout/layout.component';
@@ -64,7 +64,7 @@ import { ProfileComponent } from './components/modules/profile/profile.component
     RegisterStatusComponent,
     VerificationComponent,
     LoginComponent,
-    ForgotPasswordComponent,
+    ResetPasswordComponent,
     AccountDeletionComponent,
     //  Components: Layout Modules
     LayoutComponent,

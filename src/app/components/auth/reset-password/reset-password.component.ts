@@ -8,11 +8,11 @@ import { ApiUtilityService } from 'src/app/api/api-utility.service';
 import { GeneralService } from 'src/app/services/general/general.service';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  styleUrls: ['./forgot-password.component.scss']
+  selector: 'app-reset-password',
+  templateUrl: './reset-password.component.html',
+  styleUrls: ['./reset-password.component.scss']
 })
-export class ForgotPasswordComponent {
+export class ResetPasswordComponent {
   
   constructor(
     private alertCtrl: AlertController,
@@ -31,17 +31,17 @@ export class ForgotPasswordComponent {
   }
 
   /**
-   *  Method: Set forgot password form mode
+   *  Method: Set reset password form mode
    */
-  public formMode = { forgot: true, otp: false, reset: false }
-  public setFormMode(f: boolean, o: boolean, r: boolean) {
-    this.formMode.forgot  = f;
-    this.formMode.otp     = o;
-    this.formMode.reset   = r;
+  public formMode = { request: true, otp: false, reset: false }
+  public setFormMode(req: boolean, otp: boolean, rst: boolean) {
+    this.formMode.request = req;
+    this.formMode.otp     = otp;
+    this.formMode.reset   = rst;
   }
 
   /**
-   *  Method: Forgot Password with mobile number or email form
+   *  Method: Reset Password with mobile number or email form
    */
   readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly phoneMask: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
@@ -50,14 +50,14 @@ export class ForgotPasswordComponent {
   public formEmail = this.fb.group({ email: ['', [Validators.required, Validators.maxLength(80), Validators.pattern('^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$')]] });
   public get errFormEmail() { return this.g.getFormErrMsg(this.formEmail.controls['email']); }
   private otp: string = "";
-  public  submitForgotPassword(mode: number) {
+  public  submitResetPassword(mode: number) {
     //  Check email if exist
     this.apiProfileService.apiCheckExists({ objRequest: { Mode: "EMAIL", SearchValue: this.formEmail.value.email } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         //  If email exist
         if (rsp.d.RespData[0].Status === "TRUE") {
           this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
-          this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
+          this.apiUtilityService.SendOTPEmail({ objRequest: { Mode: 'chgpsw', Email: this.formEmail.value.email } }).subscribe(rsp => {
             if (rsp.d.RespCode == "200") {
               this.otp = rsp.d.RespData[0].OTP;
               this.g.toastSuccess(rsp.d.RespData[0].Status);
@@ -67,7 +67,7 @@ export class ForgotPasswordComponent {
             else this.g.toastError(rsp.d.RespMessage);
           });
         }
-        else this.g.toastError(this.translate.instant("SCRN_FORGOT_PASSWORD.EMAIL_NOT_EXIST"));
+        else this.g.toastError(this.translate.instant("SCRN_RESET_PASSWORD.EMAIL_NOT_EXIST"));
       }
       else this.g.toastError(rsp.d.RespMessage);
     });
@@ -84,7 +84,7 @@ export class ForgotPasswordComponent {
         {
           text: this.translate.instant('YES'),    role: 'confirm',  cssClass: 'text-primary', handler: () => {
             this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
-            this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
+            this.apiUtilityService.SendOTPEmail({ objRequest: { Mode: 'chgpsw', Email: this.formEmail.value.email } }).subscribe(rsp => {
               if (rsp.d.RespCode == "200") {
                 this.otp = rsp.d.RespData[0].OTP;
                 this.g.toastSuccess(rsp.d.RespData[0].Status);
@@ -111,12 +111,32 @@ export class ForgotPasswordComponent {
     otp5: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(1), Validators.pattern('^[0-9]{1}$')]],
     otp6: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(1), Validators.pattern('^[0-9]{1}$')]],
   });
-  public submitFormOTPVerification() {
-    if (this.formOTPVerification.valid) {
-      let otpCombine = `${this.formOTPVerification.value.otp1}${this.formOTPVerification.value.otp2}${this.formOTPVerification.value.otp3}${this.formOTPVerification.value.otp4}${this.formOTPVerification.value.otp5}${this.formOTPVerification.value.otp6}`
-      if (otpCombine == this.otp) this.setFormMode(false, false, true);
-      else                        this.g.toastError(this.translate.instant('OTP_VERIFICATION.INVALID_OTP'));
-    }
+  public submitFormOTPVerification() { if (this.formOTPVerification.valid) this.setFormMode(false, false, true); }
+
+  /**
+   *  Method: Reset Password form
+   */
+  public formResetPwd = this.fb.group({ 
+    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
+    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
+  }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
+  public get errFormResetPwd_password()         { return this.g.getFormErrMsg(this.formResetPwd.controls['password']);        }
+  public get errFormResetPwd_confirmPassword()  { return this.g.getFormErrMsg(this.formResetPwd.controls['confirmPassword']); }
+  public submitFormResetPwd() {
+    let request: any = {
+      objRequest   : {
+        Mode       : "CHGPSW",
+        ProfileData: { 
+          Email    : this.formEmail.value.email,
+          Password : this.formResetPwd.value.password,
+          OTP      : `${this.formOTPVerification.value.otp1}${this.formOTPVerification.value.otp2}${this.formOTPVerification.value.otp3}${this.formOTPVerification.value.otp4}${this.formOTPVerification.value.otp5}${this.formOTPVerification.value.otp6}`
+        }
+      }
+    };
+    this.apiProfileService.apiCRUD(request, this.g.getCustToken).subscribe(rsp => {
+      rsp.d.RespCode == "200" ? this.g.toastSuccess(rsp.d.RespMessage) : this.g.toastError(rsp.d.RespMessage);
+    });
+    this.g.redirectTo('', this.g.getBackPage);
   }
 
   /**
@@ -162,19 +182,5 @@ export class ForgotPasswordComponent {
       this.otp5.nativeElement.focus();
     else if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105))
       this.btnSubmitFormOTPVerification.nativeElement.focus();
-  }
-
-  /**
-   *  Method: Reset Password form
-   */
-  public formResetPwd = this.fb.group({ 
-    password        : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
-    confirmPassword : ['', [Validators.required,  Validators.minLength(8),  Validators.maxLength(40), Validators.pattern('^(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[!@#$%^&*a-zA-Z\\d]{8,}$')]],
-  }, { validator: this.g.matchPasswords('password', 'confirmPassword') });
-  public get errFormResetPwd_password()         { return this.g.getFormErrMsg(this.formResetPwd.controls['password']);        }
-  public get errFormResetPwd_confirmPassword()  { return this.g.getFormErrMsg(this.formResetPwd.controls['confirmPassword']); }
-  public submitFormResetPwd() {
-    this.g.toastSuccess(this.translate.instant('SCRN_FORGOT_PASSWORD.RESET_SUCCESS'));
-    this.g.redirectTo('login');
   }
 }

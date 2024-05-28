@@ -213,9 +213,9 @@ export class BookApptComponent {
   private selectedAgencyID: any = "39";
   public createAppt() {
     let request = {
-      objRequest: { 
-        Mode    : "CREATE",
-        ApptData: {
+      objRequest  : { 
+        Mode      : "CREATE",
+        ApptData  : {
           AgencyID: this.selectedAgencyID, 
           OutletID: this.selectedOutletID,
           ApptDate: this.selectedDate_Data, 

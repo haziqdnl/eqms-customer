@@ -51,7 +51,7 @@ export class VerificationComponent {
         {
           text: this.translate.instant('YES'),    role: 'confirm',  cssClass: 'text-primary', handler: () => {
             this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
-            this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.registerData.Email } }).subscribe(rsp => {
+            this.apiUtilityService.SendOTPEmail({ objRequest: { Mode: "verify", Email: this.registerData.Email } }).subscribe(rsp => {
               if (rsp.d.RespCode == "200") {
                 this.registerData.OTP = rsp.d.RespData[0].OTP;
                 this.g.toastSuccess(rsp.d.RespData[0].Status);
@@ -87,27 +87,21 @@ export class VerificationComponent {
       let otpCombine = `${this.formOTPVerification.value.otp1}${this.formOTPVerification.value.otp2}${this.formOTPVerification.value.otp3}${this.formOTPVerification.value.otp4}${this.formOTPVerification.value.otp5}${this.formOTPVerification.value.otp6}`
       if (otpCombine == this.registerData.OTP) {
         let request = {
-          objRequest: {
-            Mode    : "CREATE",
+          objRequest    : {
+            Mode        : "CREATE",
             ProfileData : {
+              Name      : this.registerData.Name,
               Email     : this.registerData.Email,
               MobileNo  : this.registerData.MobileNo,
-              Name      : this.registerData.Name,
-              Sex       : this.registerData.Sex,
-              Address1  : '',
-              Address2  : '',
-              PostCode  : '',
-              State     : '',
-              Password  : this.registerData.Password,
-              IDNum     : this.registerData.IDNum,
               UniqCallID: this.registerData.UniqCallID,
+              Password  : this.registerData.Password
             },
           }
         };
         this.apiProfileService.apiCRUD(request, "").subscribe(rsp => {
           if (rsp.d.RespCode == "200") {
             this.g.toastSuccess(rsp.d.RespMessage);
-            this.g.redirectTo(`register/status?is=success` + (this.urlParamType == 'adhoc' ? `&t=${this.urlParamType}` : ''));
+            this.g.redirectTo('register/verification', `register/status?is=success` + (this.urlParamType == 'adhoc' ? `&t=${this.urlParamType}` : ''));
           }
           else this.g.toastError(rsp.d.RespMessage);
         });
@@ -161,3 +155,12 @@ export class VerificationComponent {
       this.btnSubmitFormOTPVerification.nativeElement.focus();
   }
 }
+/** ========== Scrapped code ==========
+ *  * Attributes in objRequest.ProfileData in submitFormOTPVerification()
+ *  IDNum   : this.registerData.IDNum
+ *  Sex     : this.registerData.Sex
+ *  Address1: ''
+ *  Address2: ''
+ *  PostCode: ''
+ *  State   : ''
+ * */

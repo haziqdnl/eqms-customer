@@ -32,7 +32,7 @@ export class LoginComponent {
   public defaultLang = this.g.getDefaultLanguage;
   private async validateToken() {
     if (this.g.getCustToken) {
-      this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo(''); });
+      this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => { if (rsp.d.RespCode == "200") this.g.redirectTo('login', ''); });
     }
   }
 
@@ -61,31 +61,22 @@ export class LoginComponent {
     this.apiAuthService.apiCustomerLogin(request).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
         this.g.setCustToken(rsp.d.RespData[0].Token);
-        this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( async rsp => {
+        this.apiUtilityService.apiDecodeJWTToken({ objRequest: { Token: this.g.getCustToken } }).subscribe( rsp => {
           if (rsp.d.RespCode == "200") {
-            console.log(rsp.d.RespData[0].pid);
-            await this.oneSignalService.setExternalId(rsp.d.RespData[0].pid);
-            await this.oneSignalService.createPushNotification("You have logged in another device. Is that you?" , rsp.d.RespData[0].pid)
+            this.oneSignalService.setExternalId(rsp.d.RespData[0].pid);
+            //await this.oneSignalService.createPushNotification("You have logged in another device. Is that you?" , rsp.d.RespData[0].pid);
           }
           else {
             rsp.d.RespCode = "401";
             this.g.apiRespError(rsp.d);
           }
         });
-        this.g.redirectTo('');
+        this.g.redirectTo('login', '');
       }
       else {
         this.g.toastError(this.translate.instant('SCRN_LOGIN.INVALID_LOGIN'));
         this.g.setCustToken("");
       }
     });
-  }
-
-  /**
-   *  Method: To Privacy Policy page
-   */
-  public toPrivacyPolicy() {
-    this.g.setBackPage('login');
-    this.g.redirectTo('privacy-policy');
   }
 }

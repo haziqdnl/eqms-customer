@@ -7,26 +7,14 @@
                 <h5 class="mt-2 fw-bold">{{'SCRN_REGISTER.TITLE' | translate}}</h5>
                 <!-- Forms -->
                 <mat-stepper #stepperRegister id="stepperRegister" linear [orientation]="g.isMobile ? 'vertical' : 'horizontal'" animationDuration="700" style="background: none;">
-                    <!-- Step 1: Fullname & NRIC Verification -->
+                    <!-- Step 1: Fullname -->
                     <mat-step [stepControl]="formBasicInfo" editable="true">
                         <ng-template matStepLabel><fa-icon icon="id-card"></fa-icon></ng-template>
-                        <form [formGroup]="formBasicInfo" class="w-100 text-start" (ngSubmit)="checkExist('NRIC', this.formBasicInfo.value.identificationNo?.replaceAll('-', ''))">
+                        <form [formGroup]="formBasicInfo" class="w-100 text-start" (ngSubmit)="btnNextBasicInfo.click()">
                             <div><!-- Fullname -->
                                 <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="floating" minlength="3" maxlength="80" 
                                     class="px-2 border-bottom border-{{errFormBasicInfo_fullname ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                                 <ion-text class="input-err">{{errFormBasicInfo_fullname}}</ion-text>
-                            </div>
-                            <div><!-- Gender -->
-                                <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="floating" interface="action-sheet"
-                                    class="px-2 border-bottom border-{{errFormBasicInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
-                                    <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
-                                </ion-select>
-                                <ion-text class="input-err">{{errFormBasicInfo_gender}}</ion-text>
-                            </div>
-                            <div><!-- NRIC no. -->
-                                <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" inputmode="numeric"
-                                    class="px-2 border-bottom border-{{errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
-                                <ion-text class="input-err">{{errFormBasicInfo_identificationNo}}</ion-text>
                             </div>
                             <div class="mt-3 btn-group w-100">
                                 <button type="button" class="btn btn-secondary w-50" (click)="back()">{{'BACK' | translate}}</button>
@@ -132,3 +120,17 @@
         </div>
     </div>
 </ion-content>
+<!-- ======= Scrapped Code =======
+<div>
+    <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="floating" interface="action-sheet"
+        class="px-2 border-bottom border-{{errFormBasicInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
+        <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
+    </ion-select>
+    <ion-text class="input-err">{{errFormBasicInfo_gender}}</ion-text>
+</div>
+<div>
+    <ion-input type="text" #identificationNo formControlName="identificationNo" [label]="'NRIC' | translate" [placeholder]="'PLACEHOLDER.NRIC' | translate" labelPlacement="floating" maxlength="14" inputmode="numeric"
+        class="px-2 border-bottom border-{{errFormBasicInfo_identificationNo ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" [maskito]="maskIdentificationNo" [maskitoElement]="maskPredicate" />
+    <ion-text class="input-err">{{errFormBasicInfo_identificationNo}}</ion-text>
+</div>
+-->

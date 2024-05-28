@@ -11,7 +11,7 @@
                 <section *ngIf="!submitted" class="m-3 text-center">
                     <div class="ion-text-justify m-lg-3 m-1" [innerHTML]="'SCRN_ACCOUNT_DELETION.FORM' | translate"></div>
                     <div class="btn-group w-100">
-                        <button type="button" class="btn btn-secondary mt-3 w-50" (click)="this.g.redirectTo(this.g.getBackPage)">{{'CANCEL' | translate}}</button>
+                        <button type="button" class="btn btn-secondary mt-3 w-50" (click)="g.redirectTo('', this.g.getBackPage)">{{'CANCEL' | translate}}</button>
                         <a [href]="mailto" class="btn btn-danger mt-3 w-50" (click)="submit()">{{'SUBMIT' | translate}}</a>
                     </div>
                 </section>
@@ -21,7 +21,7 @@
                         <fa-icon icon="hourglass-half" size="6x" class="text-secondary my-4 d-block" animation="shake" style="--fa-animation-duration: 15s"></fa-icon>
                         <p>{{'SCRN_ACCOUNT_DELETION.SUBMITTED' | translate}}</p>
                     </div>
-                    <button type="button" class="btn btn-secondary mt-3 w-100" (click)="this.g.redirectTo(this.g.getBackPage)">{{'BACK' | translate}}</button>
+                    <button type="button" class="btn btn-secondary mt-3 w-100" (click)="g.redirectTo('', this.g.getBackPage)">{{'BACK' | translate}}</button>
                 </section>
             </div>
         </div>

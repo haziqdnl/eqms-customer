@@ -175,18 +175,15 @@
         "REG_BACK"              : "Kembali"
     },
 
-    "SCRN_FORGOT_PASSWORD"      : {
-        "_comment"              : "** Kata kunci dalam skrin FORGOT PASSWORD **",
+    "SCRN_RESET_PASSWORD"      : {
+        "_comment"              : "** Kata kunci dalam skrin RESET PASSWORD **",
         ""                      : "============================================",
         "EMAIL_NOT_EXIST"       : "E-mel tidak ditemui atau tidak didaftarkan",
         "DESCR"                 : {
-            "FORGOT"            : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
+            "REQUEST"           : "Masukkan ID anda bagi mendapatkan pautan tetapan semula kata laluan",
             "RESET"             : "Sila masukkan kata laluan baharu anda"
         },
-        "TITLE"                 : {
-            "FORGOT"            : "Lupa Kata Laluan",
-            "RESET"             : "Tetapan Semula Kata Laluan"
-        },
+        "TITLE"                 : "Tetapan Semula Kata Laluan",
         "RESET_SUCCESS"         : "Tetapan semula kata laluan berjaya!"
     },
 
@@ -202,7 +199,7 @@
         "_comment"              : "** Kata kunci dalam skrin LOGIN **",
         ""                      : "==================================",
         "BTN_LOGIN"             : "Log Masuk",
-        "FORGOT_PASSWORD"       : "Lupa kata laluan",
+        "RESET_PASSWORD"       : "Lupa kata laluan",
         "INVALID_LOGIN"         : "ID / Kata Laluan Tidak Sah!",
         "SIGN_UP"               : "Daftar",
         "TERMS_POLICY"          : {

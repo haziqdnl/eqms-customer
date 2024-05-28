@@ -36,21 +36,8 @@ export class RegisterComponent {
   /**
    *  Method: Basic profile form
    */
-  //  Gender dropdown
-  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') }];
-  public changeGender(e: any) { this.formBasicInfo.controls['gender']?.setValue(e, { onlySelf: true }); }
-  //  NRIC masking
-  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
-  readonly maskIdentificationNo: MaskitoOptions = { mask: [/\d/, /\d/, /[01]/, /\d/, /[0123]/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]};
-  //  Form
-  public formBasicInfo = this.fb.group({ 
-    fullname        : ['', [Validators.required, Validators.minLength(3),  Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]],
-    gender          : ['', [Validators.required]],
-    identificationNo: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
-  });
-  public get errFormBasicInfo_fullname()          { return this.g.getFormErrMsg(this.formBasicInfo.controls['fullname']);          }
-  public get errFormBasicInfo_gender()            { return this.g.getFormErrMsg(this.formBasicInfo.controls['gender']);            }
-  public get errFormBasicInfo_identificationNo()  { return this.g.getFormErrMsg(this.formBasicInfo.controls['identificationNo']);  }
+  public formBasicInfo = this.fb.group({ fullname: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(80), Validators.pattern('^[a-zA-Z\\s\'@]+$')]]});
+  public get errFormBasicInfo_fullname() { return this.g.getFormErrMsg(this.formBasicInfo.controls['fullname']); }
 
   /**
    *  Method: Form email
@@ -61,6 +48,7 @@ export class RegisterComponent {
   /**
    *  Method: Form mobile no.
    */
+  readonly maskPredicate: MaskitoElementPredicate = async (el) => (el as HTMLIonInputElement).getInputElement();
   readonly maskMobileNo: MaskitoOptions = { mask: ['+', '6', '0', /[1]/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/, /\d/] };
   public formMobileNo = this.fb.group({ mobileNo: ['', [Validators.required, Validators.minLength(9), Validators.maxLength(15), Validators.pattern('[+][6][0][1][0-9]\\d*$')]], });
   public get errFormMobileNo() { return this.g.getFormErrMsg(this.formMobileNo.controls['mobileNo']); }
@@ -92,23 +80,20 @@ export class RegisterComponent {
         message   : this.translate.instant('SCRN_REGISTER.ALERT_CONFIRM.DESCR'),
         buttons   : [
           { text: this.translate.instant('CANCEL'),   role: 'cancel',   cssClass: 'text-danger',  handler: () => {} },
-          {
-            text: this.translate.instant('PROCEED'),  role: 'confirm',  cssClass: 'text-primary', handler: () => {
+          { text: this.translate.instant('PROCEED'),  role: 'confirm',  cssClass: 'text-primary', handler: () => {
               this.g.toastSuccess(this.translate.instant('TOAST_MSG.SENDING_OTP'));
-              this.apiUtilityService.SendOTPEmail({ objRequest: { Email: this.formEmail.value.email } }).subscribe(rsp => {
+              this.apiUtilityService.SendOTPEmail({ objRequest: { Mode: 'verify', Email: this.formEmail.value.email } }).subscribe(rsp => {
                 if (rsp.d.RespCode == "200") {
                   localStorage['eqmsCustomer_registerData'] = JSON.stringify({
+                    Name      : this.formBasicInfo.value.fullname?.toUpperCase(),
                     Email     : this.formEmail.value.email,
                     MobileNo  : this.formMobileNo.value.mobileNo,
-                    Name      : this.formBasicInfo.value.fullname?.toUpperCase(),
-                    Sex       : this.formBasicInfo.value.gender,
-                    Password  : this.formPassword.value.password,
-                    IDNum     : this.formBasicInfo.value.identificationNo?.replaceAll('-', ''),
                     UniqCallID: this.formUniqCallId.value.uniqCallID == "DEFAULT123" ? '' : this.formUniqCallId.value.uniqCallID?.toUpperCase(),
+                    Password  : this.formPassword.value.password,
                     OTP       : rsp.d.RespData[0].OTP,
                   });
                   this.g.toastSuccess(rsp.d.RespData[0].Status);
-                  this.g.redirectTo(`register/verification` + (this.urlParam == 'adhoc' ? `?t=${this.urlParam}` : ''));
+                  this.g.redirectTo('register', `register/verification` + (this.urlParam == 'adhoc' ? `?t=${this.urlParam}` : ''));
                 }
                 else this.g.toastError(rsp.d.RespMessage);
               });
@@ -123,14 +108,13 @@ export class RegisterComponent {
   /**
    *  Method: Check if value already exist
    */
-  @ViewChild('btnNextBasicInfo')  private btnNextBasicInfo: any;
+  @ViewChild('btnNextBasicInfo')  public  btnNextBasicInfo: any;
   @ViewChild('btnNextEmail')      private btnNextEmail: any;
   @ViewChild('btnNextMobileNo')   private btnNextMobileNo: any;
   @ViewChild('btnNextUniqCallId') private btnNextUniqCallId: any;
   public checkExist(mode: string, searchVal: any) {
     this.apiProfileService.apiCheckExists({ objRequest: { Mode: mode, SearchValue: searchVal } }).subscribe( rsp => {
       if (rsp.d.RespCode == "200") {
-        if (mode == "NRIC")       rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('SCRN_REGISTER.VERIFY.NRIC'))     : this.btnNextBasicInfo.nativeElement.click();
         if (mode == "EMAIL")      rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('SCRN_REGISTER.VERIFY.EMAIL'))    : this.btnNextEmail.nativeElement.click();
         if (mode == "MOBILENO")   rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('SCRN_REGISTER.VERIFY.MOBILENO')) : this.btnNextMobileNo.nativeElement.click();
         if (mode == "UNIQCALLID") rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('SCRN_REGISTER.VERIFY.UCID'))     : this.btnNextUniqCallId.nativeElement.click();
@@ -140,7 +124,26 @@ export class RegisterComponent {
   }
 
   /**
-   *  Method: Back button
+   *  Method: Dynamic back button
    */
   public back() { this.urlParam == 'adhoc' ? window.location.href = this.g.getEnvDomainUrl + 'eqmskiosk/#/' : this.g.redirectBack('login'); }
 }
+
+/** ========== Scrapped code ==========
+ *  * Attributes in formBasicInfo
+ *  gender          : ['', [Validators.required]]
+ *  identificationNo: ['', [Validators.required, Validators.minLength(14), Validators.maxLength(14)]]
+ *  * Attributes in localStorage['eqmsCustomer_registerData']
+ *  Sex  : this.formBasicInfo.value.gender
+ *  IDNum: this.formBasicInfo.value.identificationNo?.replaceAll('-', '')
+ *  * Methods for FormBasicInfo form control
+ *  public get errFormBasicInfo_gender()            { return this.g.getFormErrMsg(this.formBasicInfo.controls['gender']);           }
+ *  public get errFormBasicInfo_identificationNo()  { return this.g.getFormErrMsg(this.formBasicInfo.controls['identificationNo']); }
+ *  * Methods for gender control
+ *  public genderList: any = [{ id: 'M', desc: this.translate.instant('MALE') }, { id: 'F', desc: this.translate.instant('FEMALE') }];
+ *  public changeGender(e: any) { this.formBasicInfo.controls['gender']?.setValue(e, { onlySelf: true }); }
+ *  * NRIC masking
+ *  readonly maskIdentificationNo: MaskitoOptions = { mask: [/\d/, /\d/, /[01]/, /\d/, /[0123]/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]};
+ *  * Check if exist
+ *  if (mode == "NRIC") rsp.d.RespData[0].Status === "TRUE" ? this.g.toastError(this.translate.instant('SCRN_REGISTER.VERIFY.NRIC')) : this.btnNextBasicInfo.nativeElement.click();
+ * */

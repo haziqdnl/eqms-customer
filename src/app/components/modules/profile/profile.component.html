@@ -1,4 +1,4 @@
-<ion-content class="ion-padding-bottom">
+<ion-content *ngIf="loaded" class="ion-padding-bottom">
     <ion-toolbar class="topbar {{g.isMobile ? 'pt-5' : g.isMobileWeb ? 'pt-5' : ''}}">
         <ion-title>{{'SCRN_PROFILE.TITLE' | translate}}</ion-title>
     </ion-toolbar>
@@ -17,14 +17,6 @@
     <ion-list class="px-4 py-2 rounded-4 border border-secondary-subtle m-3">
         <h3 class="fw-bold text-secondary">{{'SCRN_PROFILE.BASIC_INFO' | translate}}</h3>
         <ion-item lines="none" class="text-secondary">
-            <fa-icon slot="start" icon="mars-and-venus"></fa-icon>
-            <ion-label><h2>{{'GENDER' | translate}}</h2><p>{{profileData.Sex}}</p></ion-label>
-        </ion-item>
-        <ion-item lines="none" class="text-secondary">
-            <fa-icon slot="start" icon="id-card"></fa-icon>
-            <ion-label><h2>{{'NRIC' | translate}}</h2><p>{{profileData.IDNum}}</p></ion-label>
-        </ion-item>
-        <ion-item lines="none" class="text-secondary">
             <fa-icon slot="start" icon="phone"></fa-icon>
             <ion-label><h2>{{'MOBILENO' | translate}}</h2><p>{{profileData.MobileNo}}</p></ion-label>
         </ion-item>
@@ -32,26 +24,19 @@
             <fa-icon slot="start" icon="envelope"></fa-icon>
             <ion-label><h2>{{'EMAIL' | translate}}</h2><p>{{profileData.Email}}</p></ion-label>
         </ion-item>
-        <ion-item lines="none" class="text-secondary">
-            <fa-icon slot="start" icon="address-book"></fa-icon>
-            <ion-label>
-                <h2>{{'ADDRESS' | translate}}</h2>
-                <p>{{profileData.Address1}}<br>{{profileData.Address2 + ', ' + profileData.PostCode}}<br>{{profileData.State}}</p>
-            </ion-label>
-        </ion-item>
     </ion-list>
     <ion-list class="px-4 py-2 rounded-4 border border-secondary-subtle m-3">
         <h3 class="fw-bold text-secondary">{{'SCRN_PROFILE.SECURITY' | translate}}</h3>
-        <ion-item lines="none" class="text-secondary" [button]="true" (click)="openModal(true, '3')">
+        <ion-item lines="none" class="text-secondary" [button]="true" (click)="g.redirectTo('profile', 'reset-password');">
             <ion-label><p>{{'CHANGE_PASSWORD' | translate}}</p></ion-label>
         </ion-item>
-        <ion-item lines="none" class="text-secondary" [button]="true" (click)="redirectTo('account-deletion')">
+        <ion-item lines="none" class="text-secondary" [button]="true" (click)="g.redirectTo('profile', 'account-deletion');">
             <ion-label><p>{{'SCRN_PROFILE.DELETE_ACCOUNT' | translate}}</p></ion-label>
         </ion-item>
-        <ion-item lines="none" class="text-secondary" [button]="true" (click)="redirectTo('privacy-policy')">
+        <ion-item lines="none" class="text-secondary" [button]="true" (click)="g.redirectTo('profile', 'privacy-policy');">
             <ion-label><p>{{'PRIVACY_POLICY' | translate}}</p></ion-label>
         </ion-item>
-        <ion-item lines="none" class="text-secondary" [button]="true" (click)="redirectTo('support')">
+        <ion-item lines="none" class="text-secondary" [button]="true" (click)="g.redirectTo('profile', 'support');">
             <ion-label><p>{{'SUPPORT' | translate}}</p></ion-label>
         </ion-item>
     </ion-list>
@@ -73,35 +58,6 @@
                         <ion-input type="text" #fullname formControlName="fullname" [label]="'FULLNAME' | translate" [placeholder]="'PLACEHOLDER.FULLNAME' | translate" labelPlacement="stacked" minlength="3" maxlength="80" 
                             class="px-2 border-bottom border-{{errFormEditInfo_fullname ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
                         <ion-text class="input-err">{{errFormEditInfo_fullname}}</ion-text>
-                    </div>
-                    <div><!-- Gender -->
-                        <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
-                            class="px-2 border-bottom border-{{errFormEditInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
-                            <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
-                        </ion-select>
-                        <ion-text class="input-err">{{errFormEditInfo_gender}}</ion-text>
-                    </div>
-                    <div><!-- Address: Line 1 -->
-                        <ion-input type="text" #address1 formControlName="address1" [label]="'ADDRESS' | translate" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" labelPlacement="stacked" minlength="3" maxlength="80"
-                            class="px-2 border-bottom border-{{errFormEditInfo_address1 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
-                        <ion-text class="input-err">{{errFormEditInfo_address1}}</ion-text>
-                    </div>
-                    <div><!-- Address: Line 2 -->
-                        <ion-input type="text" #address2 formControlName="address2" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" minlength="3" maxlength="80" 
-                            class="px-2 border-bottom border-{{errFormEditInfo_address2 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
-                        <ion-text class="input-err">{{errFormEditInfo_address2}}</ion-text>
-                    </div>
-                    <div><!-- Postcode -->
-                        <ion-input type="text" #postcode formControlName="postcode" [label]="'POSTCODE' | translate" placeholder="ex. 12345" labelPlacement="stacked" minlength="5" maxlength="5" inputmode="numeric"
-                            class="px-2 border-bottom border-{{errFormEditInfo_postcode ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" />
-                        <ion-text class="input-err">{{errFormEditInfo_postcode}}</ion-text>
-                    </div>
-                    <div><!-- State -->
-                        <ion-select #state formControlName="state" [label]="'STATE' | translate" [placeholder]="'PLACEHOLDER.STATE_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
-                            class="px-2 border-bottom border-{{errFormEditInfo_state ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeState(state.value)">
-                            <ion-select-option *ngFor="let item of stateList" [value]="item.StateID">{{item.StateSDesc}}</ion-select-option>
-                        </ion-select>
-                        <ion-text class="input-err">{{errFormEditInfo_state}}</ion-text>
                     </div>
                     <button type="submit" class="btn btn-success mt-3 w-100" [disabled]="!formEditInfo.valid">{{'SAVE' | translate}}</button>
                 </form>
@@ -129,25 +85,53 @@
                     </ion-grid>
                     <button type="submit" class="btn btn-success mt-3 w-100" disabled>{{'SAVE' | translate}}</button>
                 </form>
-                <!-- Form: Change Password -->
-                <form *ngIf="modalMode == '3'" id="formChangePwd" class="px-5 py-3 w-100" [formGroup]="formChangePwd" (ngSubmit)="submitForm()">
-                    <div>
-                        <ion-input type="password" #password formControlName="password" [label]="'PASSWORD' | translate" [placeholder]="'PLACEHOLDER.PASSWORD' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
-                            class="px-2 border-bottom border-{{errFormChangePwd_password ? 'danger' : 'secondary-subtle'}}" />
-                        <ion-text class="input-err">{{errFormChangePwd_password}}</ion-text>
-                    </div>
-                    <div>
-                        <ion-input type="password" #confirmPassword formControlName="confirmPassword" [label]="'PASSWORD_RETYPE' | translate" [placeholder]="'PLACEHOLDER.PASSWORD_RETYPE' | translate" labelPlacement="stacked" minlength="8" maxlength="40" 
-                            class="px-2 border-bottom border-{{errFormChangePwd_confirmPassword ? 'danger' : 'secondary-subtle'}}" />
-                        <ion-text class="input-err">{{errFormChangePwd_confirmPassword}}</ion-text>
-                    </div>
-                    <div class="my-2">
-                        <mat-password-strength #pwdStrength [password]="formChangePwd.value.password ? formChangePwd.value.password : ''" [enableSpecialCharRule]="false"></mat-password-strength>
-                        <mat-password-strength-info [passwordComponent]="pwdStrength" class="font-size-10"></mat-password-strength-info>
-                    </div>
-                    <button type="submit" class="btn btn-success mt-3 w-100" [disabled]="!formChangePwd.valid">{{'SAVE' | translate}}</button>
-                </form>
             </div>
         </ng-template>
     </ion-modal>
 </ion-content>
+<!-- ======= Scrapped Code =======
+<ion-item lines="none" class="text-secondary">
+    <fa-icon slot="start" icon="id-card"></fa-icon>
+    <ion-label><h2>{{'NRIC' | translate}}</h2><p>{{profileData.IDNum}}</p></ion-label>
+</ion-item>
+<ion-item lines="none" class="text-secondary">
+    <fa-icon slot="start" icon="mars-and-venus"></fa-icon>
+    <ion-label><h2>{{'GENDER' | translate}}</h2><p>{{profileData.Sex}}</p></ion-label>
+</ion-item>
+<ion-item lines="none" class="text-secondary">
+    <fa-icon slot="start" icon="address-book"></fa-icon>
+    <ion-label>
+        <h2>{{'ADDRESS' | translate}}</h2>
+        <p>{{profileData.Address1}}<br>{{profileData.Address2 + ', ' + profileData.PostCode}}<br>{{profileData.State}}</p>
+    </ion-label>
+</ion-item>
+<div>
+    <ion-select #gender formControlName="gender" [label]="'GENDER' | translate" [placeholder]="'PLACEHOLDER.GENDER_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
+        class="px-2 border-bottom border-{{errFormEditInfo_gender ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeGender(gender.value)">
+        <ion-select-option *ngFor="let item of genderList" [value]="item.id">{{item.desc}}</ion-select-option>
+    </ion-select>
+    <ion-text class="input-err">{{errFormEditInfo_gender}}</ion-text>
+</div>
+<div>
+    <ion-input type="text" #address1 formControlName="address1" [label]="'ADDRESS' | translate" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" labelPlacement="stacked" minlength="3" maxlength="80"
+        class="px-2 border-bottom border-{{errFormEditInfo_address1 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
+    <ion-text class="input-err">{{errFormEditInfo_address1}}</ion-text>
+</div>
+<div>
+    <ion-input type="text" #address2 formControlName="address2" [placeholder]="'PLACEHOLDER.ADDRESS' | translate" minlength="3" maxlength="80" 
+        class="px-2 border-bottom border-{{errFormEditInfo_address2 ? 'danger' : 'secondary-subtle'}}" oninput="this.value = this.value.toUpperCase()" />
+    <ion-text class="input-err">{{errFormEditInfo_address2}}</ion-text>
+</div>
+<div>
+    <ion-input type="text" #postcode formControlName="postcode" [label]="'POSTCODE' | translate" placeholder="ex. 12345" labelPlacement="stacked" minlength="5" maxlength="5" inputmode="numeric"
+        class="px-2 border-bottom border-{{errFormEditInfo_postcode ? 'danger' : 'secondary-subtle'}}" (keypress)="g.numberOnly($event)" />
+    <ion-text class="input-err">{{errFormEditInfo_postcode}}</ion-text>
+</div>
+<div>
+    <ion-select #state formControlName="state" [label]="'STATE' | translate" [placeholder]="'PLACEHOLDER.STATE_DRP' | translate" labelPlacement="stacked" interface="action-sheet"
+        class="px-2 border-bottom border-{{errFormEditInfo_state ? 'danger' : 'secondary-subtle'}}" (ionChange)="changeState(state.value)">
+        <ion-select-option *ngFor="let item of stateList" [value]="item.StateID">{{item.StateSDesc}}</ion-select-option>
+    </ion-select>
+    <ion-text class="input-err">{{errFormEditInfo_state}}</ion-text>
+</div>
+-->

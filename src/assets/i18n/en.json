@@ -175,18 +175,15 @@
         "REG_BACK"              : "Back"
     },
 
-    "SCRN_FORGOT_PASSWORD"      : {
-        "_comment"              : "** Keywords in FORGOT PASSWORD screen **",
+    "SCRN_RESET_PASSWORD"      : {
+        "_comment"              : "** Keywords in RESET PASSWORD screen **",
         ""                      : "========================================",
         "EMAIL_NOT_EXIST"       : "Email not found or not registered",
         "DESCR"                 : {
-            "FORGOT"            : "Enter your ID to get the password reset link",
+            "REQUEST"           : "Enter your ID to get the password reset link",
             "RESET"             : "Please enter your new password"
         },
-        "TITLE"                 : {
-            "FORGOT"            : "Forgot Password",
-            "RESET"             : "Reset Password"
-        },
+        "TITLE"                 : "Reset Password",
         "RESET_SUCCESS"         : "Password reset successful"
     },
 
@@ -202,7 +199,7 @@
         "_comment"              : "** Keywords in LOGIN screen **",
         ""                      : "==============================",
         "BTN_LOGIN"             : "Login",
-        "FORGOT_PASSWORD"       : "Forgot password",
+        "RESET_PASSWORD"       : "Forgot password",
         "INVALID_LOGIN"         : "Invalid ID / Password !",
         "SIGN_UP"               : "Register",
         "TERMS_POLICY"          : {

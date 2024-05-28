@@ -8,5 +8,5 @@ import { GeneralService } from 'src/app/services/general/general.service';
 })
 export class CheckInRedirectComponent {
   constructor(public  g: GeneralService) {}
-  ionViewWillEnter()  { this.g.redirectTo('checkin'); }
+  ionViewWillEnter()  { this.g.redirectTo('', 'checkin'); }
 }
