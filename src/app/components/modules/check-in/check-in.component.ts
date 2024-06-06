@@ -43,11 +43,8 @@ export class CheckInComponent {
   public openModal(open: boolean, mode: string) {
     this.modalIsOpen = open;
     this.modalMode = mode;
-    if (open) {
-      if (mode == "walkInServiceType") this.modalTitle = "Walk-In";
-      else                             this.modalTitle = this.translate.instant('UNDEFINED');
-      this.stopScan();
-    }
+    if (open)
+      this.modalTitle = mode == "0" ? "Walk-In" : this.translate.instant('UNDEFINED');
     else {
       this.modalTitle = "";
       this.startScan();
@@ -128,22 +125,23 @@ export class CheckInComponent {
    */
   private qrValue: string = "";
   public  onScanSuccess(resultString: string) {
-    if (resultString !== undefined && !this.qrValue) {
+    if (resultString !== undefined) {
       this.qrValue = resultString;
-      let request = {
+      this.stopScan();
+      this.apiUtilityService.apiCheckInByQRCode({
         objRequest  : { 
           Service   : this.scannerData.isAppt ? '1' : null,
           QRCodeData: resultString 
         }
-      };
-      this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
+      }, this.g.getCustToken).subscribe( rsp => {
         localStorage['eqmsCustomer_scanResult'] = JSON.stringify(rsp.d);
-        if      (rsp.d.RespCode == "200") this.g.redirectTo('', '');
-        else if (rsp.d.RespCode == "444") this.openModal(true, "walkInServiceType");
+        if      (rsp.d.RespCode == "200")   this.g.redirectTo('', '');
+        else if (rsp.d.RespCode == "444")   this.openModal(true, '0');
         else {
           if      (rsp.d.RespCode == "400") this.openAlertErrorScan(this.translate.instant('SCRN_CHECKIN.ERROR.QR_INVALID'));
           else if (rsp.d.RespCode == "401") this.openAlertErrorScan(this.translate.instant('SCRN_CHECKIN.ERROR.QR_EXPIRED'));
           else                              this.openAlertErrorScan(this.translate.instant('SCRN_CHECKIN.ERROR.UNRECOGNIZED'));
+          this.startScan();
         }
       });
     }
@@ -155,13 +153,12 @@ export class CheckInComponent {
    */
   public selectedWalkInServiceType: string = '';
   public walkIn() {
-    let request = {
+    this.apiUtilityService.apiCheckInByQRCode({
       objRequest  : { 
         Service   : this.selectedWalkInServiceType,
         QRCodeData: this.qrValue
       }
-    };
-    this.apiUtilityService.apiCheckInByQRCode(request, this.g.getCustToken).subscribe( rsp => {
+    }, this.g.getCustToken).subscribe( rsp => {
       if (rsp.d.RespCode != "200")
         this.openAlertErrorScan(rsp.d.RespMessage);
       else {

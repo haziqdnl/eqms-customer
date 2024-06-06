@@ -19,7 +19,7 @@
                     </ion-button>
                 </ion-buttons>
             </ion-toolbar>
-            <section *ngIf="modalMode == 'walkInServiceType'" class="w-100 px-5">
+            <section *ngIf="modalMode == '0'" class="w-100 px-5">
                 <p class="text-center text-secondary font-size-12 mt-3">{{'SCRN_CHECKIN.SELECT_SERVICE' | translate}}:</p>
                 <div class="fw-bold mt-1 text-center">
                     <ion-chip (click)="selectedWalkInServiceType = '0'" [color]="selectedWalkInServiceType == '0' ? 'primary' : 'medium'" class="px-4 py-3 w-100"><ion-label class="mx-auto">{{'REDEMPTION' | translate}}</ion-label></ion-chip>
