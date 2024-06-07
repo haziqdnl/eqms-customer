@@ -1,11 +1,12 @@
 {
   "name": "eqms-customer",
-  "version": "1.0.31",
+  "version": "1.0.32",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "prebuild": "npm --no-git-tag-version version patch",
-    "build": "ng build",
+    "update-versions": "node update-android-version.js && node update-ios-version.js",
+    "build": "npm run update-versions && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
