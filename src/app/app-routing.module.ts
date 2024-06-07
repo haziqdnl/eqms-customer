@@ -27,96 +27,96 @@ const routes: Routes = [
    *  Components: Auth Modules
    */
   {
-    path      : 'register', 
-    component : RegisterComponent, 
-    title     : `${appName} | Register`
+    path     : 'register', 
+    component: RegisterComponent, 
+    title    : `${appName} | Register`
   },
   {
-    path      : 'register/verification', 
-    component : VerificationComponent, 
-    title     : `${appName} | Verification`
+    path     : 'register/verification', 
+    component: VerificationComponent, 
+    title    : `${appName} | Verification`
   },
   {
-    path      : 'register/status', 
-    component : RegisterStatusComponent, 
-    title     : `${appName} | Register`
+    path     : 'register/status', 
+    component: RegisterStatusComponent, 
+    title    : `${appName} | Register`
   },
   {
-    path      : 'login', 
-    component : LoginComponent, 
-    title     : `${appName} | Login`
+    path     : 'login', 
+    component: LoginComponent, 
+    title    : `${appName} | Login`
   },
   {
-    path      : 'reset-password', 
-    component : ResetPasswordComponent, 
-    title     : `${appName} | Reset Password`
+    path     : 'reset-password', 
+    component: ResetPasswordComponent, 
+    title    : `${appName} | Reset Password`
   },
   {
-    path      : 'account-deletion', 
-    component : AccountDeletionComponent, 
-    title     : `${appName} | Account Deletion Request`
+    path     : 'account-deletion', 
+    component: AccountDeletionComponent, 
+    title    : `${appName} | Account Deletion Request`
   },
   /**
    *  Components: Main Modules
    */
   {
-    path      : '', 
-    component : LayoutComponent,
-    children  : [
+    path     : '', 
+    component: LayoutComponent,
+    children : [
       {
         path      : '',
         pathMatch : 'full',
         redirectTo: 'home'
       },
       {
-        path      : 'home',
-        component : IndexComponent,
-        title     : `${appName} | Home`
+        path     : 'home',
+        component: IndexComponent,
+        title    : `${appName} | Home`
       },
       {
-        path      : 'book-appt',
-        component : BookApptComponent,
-        title     : `${appName} | Book Appointment`
+        path     : 'book-appt',
+        component: BookApptComponent,
+        title    : `${appName} | Book Appointment`
       },
       {
-        path      : 'checkinredirect', 
-        component : CheckInRedirectComponent, 
-        title     : `${appName} | Check-In`
+        path     : 'checkinredirect', 
+        component: CheckInRedirectComponent, 
+        title    : `${appName} | Check-In`
       },
       {
-        path      : 'profile', 
-        component : ProfileComponent, 
-        title     : `${appName} | Profile`
+        path     : 'profile', 
+        component: ProfileComponent, 
+        title    : `${appName} | Profile`
       },
     ]
   },
   {
-    path      : 'checkin',
-    component : CheckInComponent,
-    title     : `${appName} | Check-In`
+    path     : 'checkin',
+    component: CheckInComponent,
+    title    : `${appName} | Check-In`
   },
   /**
    *  Components: Misc Modules
    */
   {
-    path      : 'privacy-policy',
-    component : PrivacyPolicyComponent,
-    title     : `${appName} | Privacy Policy`
+    path     : 'privacy-policy',
+    component: PrivacyPolicyComponent,
+    title    : `${appName} | Privacy Policy`
   },
   {
-    path      : 'support',
-    component : SupportComponent,
-    title     : `${appName} | Support`
+    path     : 'support',
+    component: SupportComponent,
+    title    : `${appName} | Support`
   },
   {
-    path      : 'error/401',
-    component : UnauthorizedComponent,
-    title     : `${appName} | Unauthorized`
+    path     : 'error/401',
+    component: UnauthorizedComponent,
+    title    : `${appName} | Unauthorized`
   },
   {
-    path      : 'error/404',
-    component : NotFoundComponent,
-    title     : `${appName} | Not Found`
+    path     : 'error/404',
+    component: NotFoundComponent,
+    title    : `${appName} | Not Found`
   },
   { path: '**', redirectTo: 'error/404', pathMatch: 'full' },
 ];

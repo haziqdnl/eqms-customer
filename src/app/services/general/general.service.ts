@@ -24,10 +24,10 @@ export class GeneralService {
   /**
    *  Method: Get environment details
    */
-  public get getEnvName()       { return environment.environmentName; }
-  public get getEnvDomainUrl()  { return environment.domainUrl;       }
-  public get getEnvApiUrl()     { return environment.apiUrl;          }
-  public get getEnvAppVer()     { return environment.appVersion;      }
+  public get getEnvName()      { return environment.environmentName; }
+  public get getEnvDomainUrl() { return environment.domainUrl;       }
+  public get getEnvApiUrl()    { return environment.apiUrl;          }
+  public get getEnvAppVer()    { return environment.appVersion;      }
 
   /**
    *  Method: HTTP request to back-end services handler
@@ -70,9 +70,9 @@ export class GeneralService {
   /**
    *  Method: Success/Error Handling
    */
-  public toastSuccess(msg: string)  { this.toastTemplate(msg, 5000, 'right', 'success') }
-  public toastError(msg: string)    { this.toastTemplate(msg, 5000, 'right', 'error') }
-  public toastInfo(msg: string)     { this.toastTemplate(msg, 5000, 'right', 'info') }
+  public toastSuccess(msg: string) { this.toastTemplate(msg, 5000, 'right', 'success') }
+  public toastError(msg: string)   { this.toastTemplate(msg, 5000, 'right', 'error') }
+  public toastInfo(msg: string)    { this.toastTemplate(msg, 5000, 'right', 'info') }
   public toastTemplate(msg: string, duration: number, pos: any, panelClass: string) {
     this.snackBar.open(msg, 'OK', {
       duration          : duration,
@@ -97,11 +97,11 @@ export class GeneralService {
   public getFormErrMsg(form: any) {
     var msg = "";
     if (form.touched && form.invalid) {
-      if (form.hasError('required'))          msg = '_ERROR.REQUIRED';
-      if (form.hasError('pattern'))           msg = '_ERROR.INVALID';
-      if (form.hasError('minlength'))         msg = '_ERROR.MINLENGTH';
-      if (form.hasError('maxlength'))         msg = '_ERROR.MAXLENGTH';
-      if (form.hasError('passwordMismatch'))  msg = '_ERROR.PASSWORD.CRITERIA.NOTMATCH';
+      if (form.hasError('required'))         msg = '_ERROR.REQUIRED';
+      if (form.hasError('pattern'))          msg = '_ERROR.INVALID';
+      if (form.hasError('minlength'))        msg = '_ERROR.MINLENGTH';
+      if (form.hasError('maxlength'))        msg = '_ERROR.MAXLENGTH';
+      if (form.hasError('passwordMismatch')) msg = '_ERROR.PASSWORD.CRITERIA.NOTMATCH';
     }
     return msg ? this.translate.instant(msg).toLowerCase() : "";
   }
@@ -132,9 +132,9 @@ export class GeneralService {
   /**
    *  Method: To get user device information
    */
-  public get isMobile()       { return this.platform.is('android') || this.platform.is('ios');  }
-  public get isMobileWeb()    { return this.platform.is('mobileweb');                           }
-  public get getDeviceInfo()  { return this.deviceDetectorService;                              }
+  public get isMobile()      { return this.platform.is('android') || this.platform.is('ios');  }
+  public get isMobileWeb()   { return this.platform.is('mobileweb');                           }
+  public get getDeviceInfo() { return this.deviceDetectorService;                              }
 
   /**
    *  Method: Get current Date (no time)
