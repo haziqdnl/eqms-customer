@@ -2,42 +2,43 @@
 
 ion-content {
     * { 
-        font-family: "Poppins", sans-serif; 
+        font-family   : "Poppins", sans-serif; 
         letter-spacing: 1px;
     }
 
     .header {
-        height: 200px;
-        background: var(--primary-color);
-        box-shadow: 0 1px 10px var(--ion-color-light);
+        background   : var(--primary-color);
         border-radius: 0 0 10% 10%;
+        box-shadow   : 0 1px 10px var(--ion-color-light);
+        height       : 200px;
     }
 
     ion-grid {
-        width: 100%;
-        position: absolute;
-        left: 0;
-        top: 10vh;
+        left          : 0;
         padding-bottom: 8vh;
+        position      : absolute;
+        top           : 10vh;
+        width         : 100%;
         
         ion-row {
             ion-col {
                 ion-label { ion-note { line-height: 8px; } }
 
                 ion-card {
-                    margin: 3px 0;
                     cursor: pointer;
+                    margin: 3px 0;
 
                     ion-card-content {
-                        display: flex;
-                        flex-flow: column;
+                        background     : linear-gradient(rgba(189, 159, 50, 0.9), rgba(189, 159, 50, 0.9)), url("^assets/img/linear_abstract.jpg") repeat-x !important;
                         background-size: cover;
-                        background: linear-gradient(rgba(189, 159, 50, 0.9), rgba(189, 159, 50, 0.9)), url("^assets/img/linear_abstract.jpg") repeat-x !important;
-                        color: #fff;
-                        padding: 30px !important;
+                        color          : #fff;
+                        display        : flex;
+                        flex-flow      : column;
+                        padding        : 30px !important;
                         
-                        h2      { line-height: 28px; font-size: 30px; font-weight: 600; }
-                        h3      { line-height: 25px; font-size: 20px; font-weight: 600; margin: 10px 0px; }
+                        h2      { font-size: 30px; font-weight: 600; line-height: 28px; }
+                        h3      { font-size: 20px; font-weight: 600; line-height: 25px; margin: 10px 0px; }
+                        h4      { font-weight: 600; }
                         button  { width: 180px; }
                     }
 
@@ -47,33 +48,33 @@ ion-content {
         }
 
         .section {
+            margin        : 50px 0;
             padding-bottom: 15px;
-            text-align: center;
-            margin: 50px 0;
+            text-align    : center;
 
             .title {
-                font-size: 25px;
-                font-weight: 600;
+                font-size     : 25px;
+                font-weight   : 600;
                 padding-bottom: 10px;
-                position: relative;
+                position      : relative;
         
                 &:after {
-                    content: "";
-                    position: absolute;
-                    display: block;
-                    width: 50px;
-                    height: 3px;
                     background: var(--secondary-color);
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                    margin: auto;
+                    bottom    : 0;
+                    content   : "";
+                    display   : block;
+                    height    : 3px;
+                    left      : 0;
+                    margin    : auto;
+                    position  : absolute;
+                    right     : 0;
+                    width     : 50px;
                 }
             }
         
             p {
+                color        : #6f6f6f;
                 margin-bottom: 0;
-                color: #6f6f6f;
             }
         }
     }

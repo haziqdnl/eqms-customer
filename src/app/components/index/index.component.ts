@@ -1,6 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { AlertController, IonContent } from '@ionic/angular';
+import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { AlertController } from '@ionic/angular';
 import { interval } from 'rxjs';
 import { ApiApptService } from 'src/app/api/api-appt.service';
 import { ApiNewsfeedService } from 'src/app/api/api-newsfeed.service';
@@ -13,9 +14,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector    : 'app-index',
-  templateUrl : './index.component.html',
-  styleUrls   : ['./index.component.scss']
+  selector   : 'app-index',
+  templateUrl: './index.component.html',
+  styleUrls  : ['./index.component.scss']
 })
 export class IndexComponent {
 
@@ -49,13 +50,19 @@ export class IndexComponent {
    */
   private destroyPage() {
     this.loaded = false
-    if (this.alertLogout)               this.alertLogout.dismiss();
-    if (this.alertCheckInSuccess)       this.alertCheckInSuccess.dismiss();
-    if (this.alertCancelAppt)           this.alertCancelAppt.dismiss();
-    if (this.intervalGetApptInfo)       this.intervalGetApptInfo.unsubscribe();
-    if (this.intervalGetWalkInInfo)     this.intervalGetWalkInInfo.unsubscribe();
-    if (this.intervalIsCheckInEnabled)  this.intervalIsCheckInEnabled.unsubscribe();
+    if (this.alertLogout)              this.alertLogout.dismiss();
+    if (this.alertCheckInSuccess)      this.alertCheckInSuccess.dismiss();
+    if (this.alertCancelAppt)          this.alertCancelAppt.dismiss();
+    if (this.intervalGetApptInfo)      this.intervalGetApptInfo.unsubscribe();
+    if (this.intervalGetWalkInInfo)    this.intervalGetWalkInInfo.unsubscribe();
+    if (this.intervalIsCheckInEnabled) this.intervalIsCheckInEnabled.unsubscribe();
   }
+
+  /**
+   *  Method: Check the check-in scanner enablement status
+   */
+  public checkInData: any = { enableScanner: false, isAppt: false, isSupported: false, msgDisabledScanner: "" };
+  private intervalIsCheckInEnabled: any = interval(1000).subscribe(async () => { this.checkInData = await this.checkInService.isCheckInEnabled(); });
 
   /**
    *  Method: Validate customer/token
@@ -67,7 +74,6 @@ export class IndexComponent {
         this.getNewsFeed();
         this.getApptInfo();
         this.getWalkInInfo();
-        this.isCheckInEnabled();
       }
       else {
         rsp.d.RespCode = "401";
@@ -119,55 +125,89 @@ export class IndexComponent {
   /**
    *  Method: Get appt data
    */
-  public  apptData: any = [];
+  public  apptData: any = {};
   private intervalGetApptInfo: any;
   private getApptInfo() {
     this.intervalGetApptInfo = interval(1000).subscribe( () => {
       this.apiApptService.apiGetAppt(this.g.getCustToken).subscribe( rsp => {
-        this.apptData = [];
+        this.apptData = null;
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
           if (rsp.d.RespData != "" && rsp.d.RespData != null) {
-            rsp.d.RespData.forEach( (e: any) => { if (e.AppStat != "COMPLETE" && e.AppStat != "NOSHOW") this.apptData.push(e) });
+            rsp.d.RespData.forEach( (data: any) => { 
+              if (data.AppStat != "COMPLETE" && data.AppStat != "NOSHOW") {
+                if (data.CallFlag) this.vibrateCalling(data);
+                this.apptData = data;
+              }
+            });
           }
         }
         else this.g.apiRespError(rsp.d);
       });
     });
+  }
+  public apptRender: { icon: any, class: string, customMsg: string, notice: string } = { icon: "", class: "", customMsg: "", notice: "" };
+  public isAppt(data: any = this.apptData) {
+    this.apptRender = { icon: "notdef", class: "", customMsg: "", notice: ""};
+    if (data != null && data.ApptStat != 'COMPLETE') {
+      if (data.ApptStat == "NEW")     this.apptRender = { icon: "calendar-check", class: "text-primary", customMsg: this.translate.instant('SCRN_HOME.APPT_NEW_MSG'),    notice: this.translate.instant('SCRN_HOME.APPT_NEW_NOTICE') };
+      if (data.ApptStat == "QUEUING") this.apptRender = { icon: "check-double",   class: "text-success", customMsg: this.translate.instant('SCRN_HOME.CHECKIN_SUCCESS'), notice: this.translate.instant('SCRN_HOME.WAIT_MSG') };
+      if (data.ApptStat == "SERVING") this.apptRender = { icon: "bell-concierge", class: "text-dark",    customMsg: this.translate.instant('SCRN_HOME.SERVING_MSG'),     notice: "" };
+      return true;
+    }
+    else return false
   }
 
   /**
    *  Method: Get walk-in data
    */
-  public  walkInData: any = [];
+  public  walkInData: any = {};
   private intervalGetWalkInInfo: any;
   private getWalkInInfo() {
     this.intervalGetWalkInInfo = interval(1000).subscribe( () => {
       this.apiWalkInService.apiGetWalkinByProfile(this.g.getCustToken).subscribe( rsp => {
-        this.walkInData = [];
+        this.walkInData = null;
         if (rsp.d.RespCode == "200") {
           this.g.setCustToken(rsp.d.ExtendedToken);
           if (rsp.d.RespData != "" && rsp.d.RespData != null) {
-            rsp.d.RespData.forEach( (e: any) => { if (e.WalkInStat != "COMPLETE" && e.WalkInStat != "NOSHOW") this.walkInData.push(e) });
+            rsp.d.RespData.forEach( (data: any) => { 
+              if (data.WalkInStat != "COMPLETE" && data.WalkInStat != "NOSHOW") {
+                if (data.CallFlag) this.vibrateCalling(data);
+                this.walkInData = data;
+              }
+            });
           }
         }
         else this.g.apiRespError(rsp.d);
       });
     });
   }
+  public walkInRender: { icon: any, class: string, customMsg: string } = { icon: "", class: "", customMsg: "" };
+  public isWalkin(data: any = this.walkInData) {
+    this.walkInRender = { icon: "notdef", class: "", customMsg: ""};
+    if (data != null && data.WalkInStat != 'COMPLETE') {
+      if (data.WalkInStat == "QUEUING") this.walkInRender = { icon: "check-double",   class: "text-success",              customMsg: this.translate.instant('SCRN_HOME.CHECKIN_SUCCESS')};
+      if (data.WalkInStat == "UNKNOWN") this.walkInRender = { icon: "phone-volume",   class: "text-danger-emphasis wave", customMsg: this.translate.instant('SCRN_HOME.CALLING_MSG')};
+      if (data.WalkInStat == "SERVING") this.walkInRender = { icon: "bell-concierge", class: "text-dark",                 customMsg: this.translate.instant('SCRN_HOME.SERVING_MSG')};
+      return true;
+    }
+    else return false
+  }
 
   /**
-   *  Method: Check the check-in scanner enablement status
+   *  Method: Vibrate the user device based on the call flag value
    */
-  public checkInData: any = {
-    enableScanner     : false,
-    isAppt            : false,
-    isSupported       : false,
-    msgDisabledScanner: "",
-  };
-  private intervalIsCheckInEnabled: any;
-  private isCheckInEnabled() {
-    this.intervalIsCheckInEnabled = interval(1000).subscribe(async () => { this.checkInData = await this.checkInService.isCheckInEnabled(); });
+  private vibrateCalling(data: any) {
+    var dateCallFlag = new Date(data.CallFlag)
+    var nowAddSec = new Date();
+    nowAddSec = new Date(nowAddSec.getTime()+1500);
+    var nowSubSec = new Date();
+    nowSubSec = new Date(nowSubSec.getTime()-1500);
+    if (dateCallFlag >= nowSubSec && dateCallFlag <= nowAddSec) {
+      console.log("vibration is triggered");
+      Haptics.impact ({ style   : ImpactStyle.Medium });
+      Haptics.vibrate({ duration: 5000 });
+    }
   }
 
   /**
@@ -178,8 +218,8 @@ export class IndexComponent {
     this.alertLogout = await this.alertController.create({
       header  : this.translate.instant('SCRN_HOME.ALERT.LOGOUT'),
       buttons : [
-        { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
-        { text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => { this.g.endSession(); } },
+        { text: this.translate.instant('NO'),  role: 'cancel',  cssClass: 'text-primary', handler: () => {} },
+        { text: this.translate.instant('YES'), role: 'confirm', cssClass: 'text-danger',  handler: () => { this.g.endSession(); } },
       ],
     });
     await this.alertLogout.present();
@@ -206,30 +246,22 @@ export class IndexComponent {
     this.alertCancelAppt = await this.alertController.create({
       header  : this.translate.instant('SCRN_HOME.ALERT.APPT_CANCEL'),
       buttons : [
-        { text: this.translate.instant('NO'),   role: 'cancel',   cssClass: 'text-primary', handler: () => {} },
-        {
-          text: this.translate.instant('YES'),  role: 'confirm',  cssClass: 'text-danger',  handler: () => {
-            let request = {
+        { text: this.translate.instant('NO'),  role: 'cancel',  cssClass: 'text-primary', handler: () => {} },
+        { text: this.translate.instant('YES'), role: 'confirm', cssClass: 'text-danger',  handler: () => {
+            this.apiApptService.apiCRUD({
               objRequest  : { 
                 Mode      : "DELETE",
                 ApptData  : {
-                  AgencyID: this.apptData[0].AgencyID,
-                  OutletID: this.apptData[0].OutletID, 
-                  ApptID  : this.apptData[0].ApptID,
+                  AgencyID: this.apptData.AgencyID,
+                  OutletID: this.apptData.OutletID, 
+                  ApptID  : this.apptData.ApptID,
                 }
               }
-            };
-            this.apiApptService.apiCRUD(request, this.g.getCustToken).subscribe(rsp => { rsp.d.RespCode == "200" ? this.getApptInfo() : this.g.apiRespError(rsp.d); });
+            }, this.g.getCustToken).subscribe(rsp => { rsp.d.RespCode == "200" ? this.getApptInfo() : this.g.apiRespError(rsp.d); });
           },
         },
       ],
     });
     await this.alertCancelAppt.present();
   }
-
-  /**
-   *  Method: Scroll to top
-   */
-  @ViewChild(IonContent) content!: IonContent;
-  public scrollToTop() { this.content.scrollToTop(500); }
 }
