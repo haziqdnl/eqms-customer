@@ -197,16 +197,22 @@ export class IndexComponent {
   /**
    *  Method: Vibrate the user device based on the call flag value
    */
-  private vibrateCalling(data: any) {
-    var dateCallFlag = new Date(data.CallFlag)
-    var nowAddSec = new Date();
-    nowAddSec = new Date(nowAddSec.getTime()+1500);
-    var nowSubSec = new Date();
-    nowSubSec = new Date(nowSubSec.getTime()-1500);
-    if (dateCallFlag >= nowSubSec && dateCallFlag <= nowAddSec) {
-      console.log("vibration is triggered");
-      Haptics.impact ({ style   : ImpactStyle.Medium });
-      Haptics.vibrate({ duration: 5000 });
+  private async vibrateCalling(data: any) {
+    var dateCallFlag = new Date(data.CallFlag);
+    var timeBuffer = new Date();
+    timeBuffer = new Date(timeBuffer.getTime()-2000);
+    if (dateCallFlag >= timeBuffer) {
+      Haptics.impact ({ style: ImpactStyle.Heavy });
+      const vibrate = async (ms: number) => await Haptics.vibrate({ duration: ms });
+      const delay   = async (ms: number) => await new Promise(resolve => setTimeout(resolve, ms));
+      for (let i = 0; i < 10; i++) {
+        await vibrate(100);
+        await delay(250);
+        await vibrate(100);
+        await delay(200);
+        await vibrate(800);
+        await delay(1000);
+      }
     }
   }
 
